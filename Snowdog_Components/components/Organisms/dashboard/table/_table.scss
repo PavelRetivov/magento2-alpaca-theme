@@ -1,0 +1,55 @@
+@import 'table-variables';
+
+.dashboard-table {
+    overflow: hidden;
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin: $dashboard-table__header-margin;
+        padding: $dashboard-table__header-padding;
+        background: $dashboard-table__header-background;
+        border: $dashboard-table__header-border;
+        border-width: $dashboard-table__header-border-width;
+
+        @include mq($screen-m) {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+
+    &__content {
+        margin: $dashboard-table__content-margin;
+        overflow-x: auto;
+    }
+
+    &__title {
+        margin: $dashboard-table__title-margin;
+        font-family: $dashboard-table__title-font-family;
+        font-size: $dashboard-table__title-font-size;
+        font-weight: $dashboard-table__title-font-weight;
+        text-transform: $dashboard-table__title-text-transform;
+    }
+
+    &__link {
+        display: inline-flex;
+        font-size: $dashboard-table__link-font-size;
+        font-weight: $dashboard-table__link-font-weight;
+        text-decoration: $dashboard-table__text-decoration;
+
+        @include mq($screen-m) {
+            font-size: $dashboard-table__link-font-size\@medium;
+        }
+    }
+
+    &__divider {
+        padding: $dashboard-table__divider;
+
+        @include mq($screen-m) {
+            padding: 0;
+        }
+    }
+}

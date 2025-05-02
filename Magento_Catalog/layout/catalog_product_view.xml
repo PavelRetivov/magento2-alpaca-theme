@@ -1,0 +1,588 @@
+<?xml version="1.0"?>
+<page
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+>
+    <head>
+        <remove src="mage/gallery/gallery.css" />
+        <css src="css/gallery-styles.css"/>
+    </head>
+    <body>
+        <referenceContainer
+            name="main.content"
+            htmlClass="page-main"
+        />
+        <referenceContainer
+            name="page.messages"
+            htmlClass="page messages container"
+        />
+
+        <container
+            name="product.container"
+            htmlClass="product-view container"
+            htmlTag="div"
+        >
+            <container
+                name="product.wrapper"
+                htmlClass="product-view__wrapper product-info-main"
+                htmlTag="section"
+            >
+                <container
+                    name="product.column.right.upper"
+                    htmlClass="product-view__description"
+                    htmlTag="div">
+                    <referenceBlock
+                        name="product.info.sku"
+                        template="Magento_Catalog::product/view/getSku.phtml"
+                    />
+
+                    <referenceBlock name="page.main.title">
+                        <arguments>
+                            <argument name="css_class" xsi:type="string">product-view__title</argument>
+                        </arguments>
+                    </referenceBlock>
+                </container>
+
+                <container
+                    name="product.column.left"
+                    htmlClass="product-view__gallery"
+                    htmlTag="div"
+                >
+                    <block
+                        class="Magento\Catalog\Block\Product\View"
+                        name="product.badge"
+                        template="Magento_Catalog::product/view/badge.phtml"
+                        before="-"
+                    />
+                    <referenceContainer
+                        name="product.info.media"
+                        htmlClass="gallery"
+                    />
+                </container>
+
+                <referenceContainer name="product.info.main" htmlClass="product-view__details">
+                    <container
+                        name="product.column.right.review"
+                        htmlClass="product-view__rating"
+                        htmlTag="div"
+                    />
+
+                    <referenceContainer
+                        name="product.info.price"
+                        htmlClass="product-view__price"
+                    >
+                        <block
+                            class="Magento\Catalog\Block\Product\View"
+                            name="product.info.freeshipping"
+                            template="Magento_Catalog::product/view/shipping-latency.phtml"
+                        />
+                    </referenceContainer>
+
+                    <referenceBlock
+                        name="product.info.overview"
+                        template="Magento_Catalog::product/view/shortDescription.phtml"
+                    />
+
+                    <referenceBlock name="product.info">
+                        <container
+                            name="product.column.right.options"
+                            htmlClass="product-view__options margin-bottom-m"
+                            htmlTag="div"
+                        />
+
+                        <container
+                            name="product.column.right.actions"
+                            htmlClass="product-view__main-actions"
+                            htmlTag="div"
+                        >
+                            <block
+                                class="Magento\Catalog\Block\Product\View"
+                                name="product.column.right.qty"
+                                template="Magento_Catalog::product/view/qty.phtml"
+                            />
+                            <block
+                                class="Magento\Framework\View\Element\Template"
+                                name="product.column.right.extra.actions.wrapper"
+                                template="Magento_Catalog::product/view/extra-actions.phtml"
+                            >
+                                <arguments>
+                                    <argument name="product_metadata" xsi:type="object">
+                                        Snowdog\AlpacaGeneral\ViewModel\ProductMetadata
+                                    </argument>
+                                </arguments>
+                                <container
+                                    name="product.column.right.extra.actions"
+                                    htmlClass="product-view__buttons"
+                                    htmlTag="div"
+                                >
+                                    <referenceContainer
+                                        name="product.info.social"
+                                        htmlClass="product-view__extra-actions"
+                                        htmlTag="div"
+                                    />
+                                </container>
+                            </block>
+
+                            <container name="product.addto.sticky">
+                                <block
+                                    class="Magento\Catalog\Block\Product\View"
+                                    name="product.info.addtocart.sticky"
+                                    as="addtocartsticky"
+                                    template="Magento_Catalog::product/view/addtocart-sticky.phtml"
+                                >
+                                    <arguments>
+                                        <argument
+                                            name="product_metadata"
+                                            xsi:type="object"
+                                        >
+                                            Snowdog\AlpacaGeneral\ViewModel\ProductMetadata
+                                        </argument>
+                                    </arguments>
+                                    <block
+                                        class="Magento\Catalog\Pricing\Render"
+                                        name="product.price.final.sticky"
+                                    >
+                                        <arguments>
+                                            <argument
+                                                name="price_render"
+                                                xsi:type="string"
+                                            >
+                                                product.price.render.default
+                                            </argument>
+                                            <argument
+                                                name="price_type_code"
+                                                xsi:type="string"
+                                            >
+                                                final_price
+                                            </argument>
+                                            <argument
+                                                name="zone"
+                                                xsi:type="string"
+                                            >
+                                                item_view
+                                            </argument>
+                                        </arguments>
+                                    </block>
+                                    <block
+                                        class="Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist"
+                                        name="view.addto.wishlist.sticky"
+                                        template="Magento_Wishlist::catalog/product/view/addto/wishlist.phtml"
+                                    >
+                                        <arguments>
+                                            <argument
+                                                name="additional_class"
+                                                xsi:type="string"
+                                            >
+                                                add-to-cart__button-additional product-view__button--wishlist
+                                            </argument>
+                                            <argument
+                                                name="has_text"
+                                                xsi:type="boolean"
+                                            >
+                                                true
+                                            </argument>
+                                            <argument
+                                                translate="true"
+                                                name="text"
+                                                xsi:type="string"
+                                            >
+                                                Wishlist
+                                            </argument>
+                                        </arguments>
+                                    </block>
+                                    <block
+                                        class="Magento\Catalog\Block\Product\View\AddTo\Compare"
+                                        name="view.addto.compare.sticky"
+                                        template="Magento_Catalog::product/view/addto/compare.phtml"
+                                    >
+                                        <arguments>
+                                            <argument
+                                                name="addToCompareViewModel"
+                                                xsi:type="object"
+                                            >
+                                                Magento\Catalog\ViewModel\Product\Checker\AddToCompareAvailability
+                                            </argument>
+                                            <argument
+                                                name="additional_class"
+                                                xsi:type="string"
+                                            >
+                                                add-to-cart__button-additional
+                                            </argument>
+                                            <argument
+                                                name="has_text"
+                                                xsi:type="boolean"
+                                            >
+                                                true
+                                            </argument>
+                                            <argument
+                                                translate="true"
+                                                name="text"
+                                                xsi:type="string"
+                                            >
+                                                Wishlist
+                                            </argument>
+                                        </arguments>
+                                    </block>
+                                </block>
+                            </container>
+                        </container>
+                    </referenceBlock>
+
+                    <block
+                        class="Magento\Catalog\Block\Product\View"
+                        name="product.column.right.benefits"
+                        template="Magento_Catalog::product/view/benefits.phtml"
+                    >
+                        <arguments>
+                            <argument name="button_cms_id_1" xsi:type="string">popup-product-button-benefit-1</argument>
+                            <argument name="button_cms_id_2" xsi:type="string">popup-product-button-benefit-2</argument>
+                        </arguments>
+                        <block
+                            class="Magento\Framework\View\Element\Template"
+                            name="popup.product.benefit1"
+                            template="Magento_Theme::html/modal-content-cms.phtml"
+                        >
+                            <arguments>
+                                <argument name="popup_id" xsi:type="string">popup-product-benefit-1</argument>
+                                <argument name="cms_block_id" xsi:type="string">popup-product-benefit-1</argument>
+                            </arguments>
+                        </block>
+                        <block
+                            class="Magento\Framework\View\Element\Template"
+                            name="popup.product.benefit2"
+                            template="Magento_Theme::html/modal-content-cms.phtml"
+                        >
+                            <arguments>
+                                <argument name="popup_id" xsi:type="string">popup-product-benefit-2</argument>
+                                <argument name="cms_block_id" xsi:type="string">popup-product-benefit-2</argument>
+                            </arguments>
+                        </block>
+                    </block>
+                </referenceContainer>
+            </container>
+
+            <container
+                name="product.tabs"
+                htmlClass="product-view__tabs"
+                htmlTag="div"
+            >
+                <referenceBlock name="reviews.tab">
+                    <arguments>
+                        <argument name="class" translate="true" xsi:type="string">reviews</argument>
+                    </arguments>
+
+                    <block
+                        class="Magento\Catalog\Block\Product\View"
+                        name="product.review.summary"
+                        template="Magento_Catalog::product/view/review.phtml"
+                        before="-"
+                    />
+
+                    <block
+                        class="Magento\Review\Block\Product\View\ListView"
+                        name="product.tabs.reviews"
+                        template="Magento_Review::product/view/list.phtml"
+                    >
+                        <block
+                            class="Magento\Theme\Block\Html\Pager"
+                            name="product_review_list.toolbar"
+                        />
+                    </block>
+
+                </referenceBlock>
+            </container>
+
+            <container
+                name="product.cms.content"
+                htmlTag="div"
+                htmlClass="product-view__additional-content"
+            >
+                <block class="Magento\Cms\Block\Block" name="product.cms.content.bottom">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">product-cms-content-bottom</argument>
+                    </arguments>
+                </block>
+            </container>
+        </container>
+        <referenceBlock name="view.addto.wishlist">
+            <arguments>
+                <argument
+                    name="additional_class"
+                    xsi:type="string"
+                >
+                    action
+                    towishlist
+                    product-view__button--wishlist
+                    product-view__addtowishlist
+                </argument>
+                <argument
+                    name="has_text"
+                    xsi:type="boolean"
+                >
+                    true
+                </argument>
+                <argument
+                    translate="true"
+                    name="text"
+                    xsi:type="string"
+                >
+                    Add to Wishlist
+                </argument>
+            </arguments>
+
+        </referenceBlock>
+
+        <referenceBlock name="view.addto.compare">
+            <arguments>
+                <argument
+                    name="additional_class"
+                    xsi:type="string"
+                >
+                    product-view__button
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="related.product.addto.wishlist">
+            <arguments>
+                <argument
+                    name="additional_class"
+                    xsi:type="string"
+                >
+                    action towishlist
+                </argument>
+                <argument
+                    name="has_text"
+                    xsi:type="boolean"
+                >
+                    false
+                </argument>
+                <argument
+                    translate="true"
+                    name="text"
+                    xsi:type="string"
+                >
+                    Add to Wishlist
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="upsell.product.addto.wishlist">
+            <arguments>
+                <argument
+                    name="additional_class"
+                    xsi:type="string"
+                >
+                    action towishlist
+                </argument>
+                <argument
+                    name="has_text"
+                    xsi:type="boolean"
+                >
+                    false
+                </argument>
+                <argument
+                    translate="true"
+                    name="text"
+                    xsi:type="string"
+                >
+                    Add to Wishlist
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="catalog.product.related">
+            <arguments>
+                <argument
+                    name="product_metadata"
+                    xsi:type="object"
+                >
+                    Snowdog\AlpacaGeneral\ViewModel\ProductMetadata
+                </argument>
+            </arguments>
+            <block
+                class="Magento\Framework\View\Element\RendererList"
+                name="related.product.type.details.renderers"
+                as="details.renderers"
+            >
+                <block class="Magento\Framework\View\Element\Template" as="default"/>
+                <block
+                    class="Magento\Swatches\Block\Product\Renderer\Listing\Configurable"
+                    name="related.product.type.details.renderers.configurable"
+                    as="configurable"
+                    template="Magento_Swatches::product/listing/renderer.phtml"
+                >
+                    <arguments>
+                        <argument
+                            name="configurable_view_model"
+                            xsi:type="object"
+                        >
+                            Magento\Swatches\ViewModel\Product\Renderer\Configurable
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceBlock>
+
+        <referenceBlock name="product.info.upsell">
+            <arguments>
+                <argument
+                    name="product_metadata"
+                    xsi:type="object"
+                >
+                    Snowdog\AlpacaGeneral\ViewModel\ProductMetadata
+                </argument>
+            </arguments>
+            <block
+                class="Magento\Framework\View\Element\RendererList"
+                name="upsells.product.type.details.renderers"
+                as="details.renderers"
+            >
+                <block
+                    class="Magento\Framework\View\Element\Template"
+                    as="default"
+                />
+                <block
+                    class="Magento\Swatches\Block\Product\Renderer\Listing\Configurable"
+                    name="upsells.product.type.details.renderers.configurable"
+                    as="configurable"
+                    template="Magento_Swatches::product/listing/renderer.phtml"
+                >
+                    <arguments>
+                        <argument
+                            name="configurable_view_model"
+                            xsi:type="object"
+                        >
+                            Magento\Swatches\ViewModel\Product\Renderer\Configurable
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceBlock>
+
+        <!--Moved blocks-->
+        <move
+            element="product.info.form.content"
+            destination="product.info"
+            before="-"
+        />
+        <move
+            element="product.container"
+            destination="content"
+            before="-"
+        />
+        <move
+            element="product.info.media"
+            destination="product.column.left"
+        />
+        <move
+            element="skip_gallery_before"
+            destination="skip_gallery_before.wrapper"
+            before="-"
+        />
+
+        <move
+            element="page.main.title"
+            destination="product.column.right.upper"
+            before="-"
+        />
+        <move
+            element="product.info.review"
+            destination="product.column.right.review"
+            before="-"
+        />
+        <move
+            element="product.info.freeshipping"
+            destination="product.column.right.review"
+            after="product.info.review"
+        />
+
+        <move
+            element="product.column.right.review"
+            destination="product.info.main"
+            before="product.info.price"
+        />
+
+        <move
+            element="product.info.options.wrapper"
+            destination="product.column.right.options"
+        />
+        <move
+            element="product.info.main"
+            destination="product.wrapper"
+        />
+        <move
+            element="product.info.addtocart"
+            destination="product.column.right.extra.actions"
+            before="-"
+        />
+        <move
+            element="product.info.social"
+            destination="product.column.right.extra.actions"
+            after="product.info.addtocart"
+        />
+        <move
+            element="view.addto.wishlist"
+            destination="product.column.right.extra.actions"
+            after="product.info.social"
+        />
+        <move
+            element="view.addto.requisition"
+            destination="product.column.right.extra.actions"
+            after="view.addto.wishlist"
+        />
+        <move
+            element="view.addto.compare"
+            destination="product.info.social"
+            before="product.info.mailto"
+        />
+        <move
+            element="product.info.sku"
+            destination="product.column.right.upper"
+            before="page.main.title"
+        />
+        <move
+            element="product.info.price"
+            destination="product.info.main"
+            before="product.info"
+        />
+        <move
+            element="product.info.overview"
+            destination="product.info.main"
+            after="product.info.price"
+        />
+        <move
+            element="product.info.type"
+            destination="product.info.main"
+            before="product.info"
+        />
+        <move
+            element="product.info.details"
+            destination="product.tabs"
+        />
+        <move
+            element="product.review.form"
+            destination="reviews.tab"
+            before="product.tabs.reviews"
+        />
+        <move
+            element="content.aside"
+            destination="product.container"
+        />
+        <move
+            element="product.cms.content"
+            destination="product.container"
+            after="content.aside"
+        />
+
+        <!-- Removed blocks -->
+        <referenceBlock
+            name="product.info.addto"
+            remove="true"
+        />
+        <referenceBlock
+            name="product.info.addtocart.additional"
+            remove="true"
+        />
+    </body>
+</page>

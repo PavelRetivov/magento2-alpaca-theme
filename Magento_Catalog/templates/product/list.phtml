@@ -1,0 +1,523 @@
+<?php
+use Magento\Framework\App\Action\Action;
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+?>
+<?php
+    $_productCollection = $block->getLoadedProductCollection();
+    /** @var \Magento\Catalog\Helper\Output $_helper */
+    $_helper = $block->getData('outputHelper');
+    /** @var \Snowdog\ShippingLatency\Helper\Data $shippingLatencyHelper */
+    $shippingLatencyHelper = $this->helper(\Snowdog\ShippingLatency\Helper\Data::class);
+
+    /** @var Snowdog\AlpacaGeneral\ViewModel\ProductMetadata $productMetadata */
+
+    $productMetadata = $block->getProductMetadata();
+
+    $_product = null;
+?>
+<?php if (!$_productCollection->count()): ?>
+    <div class="message info empty">
+        <?= $escaper->escapeHtml(__('We can\'t find products matching the selection.')) ?>
+    </div>
+<?php else: ?>
+    <?= $block->getToolbarHtml() ?>
+    <?= $block->getAdditionalHtml() ?>
+
+    <?php
+    if ($block->getMode() === 'grid') {
+        $viewMode = 'products-grid';
+        $imageDisplayArea = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'products-list';
+        $imageDisplayArea = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <a
+        href="#layered-filter-block"
+        class="skip-nav"
+        data-mage-init='{"skipNav": {} }'
+    >
+        <?= $escaper->escapeHtml(__('Go to filters')); ?>
+    </a>
+
+    <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+    <?php if ($viewMode === 'products-list'): ?>
+        <ul
+            class="list"
+            id="products-list"
+        >
+            <?php foreach ($_productCollection as $_product): ?>
+                <li
+                    class="
+                        product-list-item
+                        product-item
+                        product-item-info
+                        product-item-details
+                    "
+                    id="product-item-info_<?= /* @noEscape */ $_product->getId() ?>"
+                    data-container="product-<?= /* @noEscape */ $viewMode ?>"
+                >
+                    <?php
+                        $productImage = $block->getImage($_product, $imageDisplayArea);
+                        $productName = $_helper->productAttribute($_product, $_product->getName(), 'name');
+                    ?>
+                    <a
+                        href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
+                        class="
+                            link
+                            product-list-item__image-link
+                        "
+                        title="<?= $escaper->escapeHtmlAttr($productName) ?>"
+                    >
+                        <?= $productImage->toHtml() ?>
+
+                        <?php if ($_product->getBadge()): ?>
+                            <?php $productBadges = $_product->getAttributeText('badge'); ?>
+                            <div
+                                class="
+                                    badges
+                                    product-list-item__badges
+                                "
+                            >
+                                <?php if (is_array($productBadges)): ?>
+                                    <?php foreach ($productBadges as $productBadge): ?>
+                                        <div
+                                            class="
+                                                badge
+                                                badge--<?= $escaper->escapeHtmlAttr(preg_replace('/[[:space:]]+/', '-', mb_strtolower($productBadge, 'UTF-8'))) ?>
+                                            "
+                                        >
+                                            <?= $escaper->escapeHtml($productBadge) ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div
+                                        class="
+                                            badge
+                                            badge--<?= $escaper->escapeHtmlAttr(preg_replace('/[[:space:]]+/', '-', mb_strtolower($productBadges, 'UTF-8'))) ?>
+                                        "
+                                    >
+                                        <?= $escaper->escapeHtml($productBadges) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                    </a>
+                    <div
+                        class="
+                            product-list-item__main
+                            product-list-item__swatches
+                        "
+                    >
+                        <div class="product-list-item__details">
+                            <div class="product-list-item__rating">
+                                <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
+                            </div>
+
+                            <h2 class="product-list-item__name">
+                                <a
+                                    href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
+                                    class="
+                                        link
+                                        product-list-item__name-link
+                                    "
+                                    title="<?= $escaper->escapeHtmlAttr($productName) ?>"
+                                >
+                                    <?= $escaper->escapeHtml($productName) ?>
+                                </a>
+                            </h2>
+
+                            <div class="product-list-item__sku">
+                                <?= $escaper->escapeHtml(__('SKU:')) ?>
+                                <?= $escaper->escapeHtml($_product['sku']) ?>
+                            </div>
+
+                            <?php if (isset($_product['selling_features_bullets'])): ?>
+                                <!-- Markup generated by snowdog/module-bullet-points -->
+                                <div
+                                    class="product-list-item__list"
+                                    aria-label="<?= $escaper->escapeHtmlAttr(__('Product description list')) ?>"
+                                    tabindex="0"
+                                >
+                                    <?= /* @noEscape */ $_product['selling_features_bullets'] ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="product-list-item__actions">
+                            <?php
+                                $shippingLatencyText = $_product->getAttributeText('shipping_latency');
+                                $isShownInStock = $shippingLatencyHelper->isShippingLatencyAllowed($_product);
+                            ?>
+                            <?php if ($isShownInStock || $shippingLatencyText): ?>
+                                <div class="shipping_latency">
+                                    <button
+                                        class="
+                                            button
+                                            button--link
+                                            modal-trigger
+                                            product-view__stock
+                                        "
+                                        type="button"
+                                        aria-expanded="false"
+                                        data-modal-trigger="shipping-latency-popup-<?= $escaper->escapeHtmlAttr($_product->getId()); ?>"
+                                        data-mage-init='{ "modal" : {} }'
+                                    >
+                                        <?php if ($isShownInStock): ?>
+                                            <?= $escaper->escapeHtml(__('In stock')) ?>
+                                        <?php elseif ($shippingLatencyText->getText() !== 'None'): ?>
+                                            <?= $escaper->escapeHtml($shippingLatencyText); ?>
+                                        <?php else: ?>
+                                            <?= $escaper->escapeHtml(__('Out of stock')) ?>
+                                        <?php endif; ?>
+                                    </button>
+                                    <div
+                                        id="shipping-latency-popup-<?= $escaper->escapeHtmlAttr($_product->getId()); ?>"
+                                        role="dialog"
+                                        aria-hidden="true"
+                                        data-modal="shipping-latency-popup-<?= $escaper->escapeHtmlAttr($_product->getId()); ?>"
+                                        aria-labelledby="shipping-latency-title"
+                                        class="modal"
+                                    >
+                                        <div
+                                            class="modal__container"
+                                            role="document"
+                                            tabindex="0"
+                                        >
+                                            <div class="modal__content">
+                                                <?php if ($isShownInStock): ?>
+                                                    <?= $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('one-day-shipping')->toHtml(); ?>
+                                                <?php else: ?>
+                                                    <h3 id="shipping-latency-title">
+                                                        <?= $escaper->escapeHtml($shippingLatencyText); ?>
+                                                    </h3>
+                                                    <?= $shippingLatencyHelper->getProductPopupHtml($_product->getData()); ?>
+                                                <?php endif ?>
+                                            </div>
+                                            <button
+                                                    class="
+                                                        button
+                                                        button--icon
+                                                        button--rotate-icon
+                                                        modal__close-button
+                                                    "
+                                                    type="button"
+                                                    aria-label="<?= $escaper->escapeHtmlAttr(__('Close modal')) ?>"
+                                            >
+                                                <svg
+                                                        class="
+                                                            icon
+                                                            button__icon
+                                                            modal__close-button-icon
+                                                        "
+                                                        role="presentation"
+                                                        focusable="false"
+                                                >
+                                                    <use href="<?= $escaper->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#close')); ?>"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="product-list-item__price">
+                                <div class="price">
+                                    <span class="price__value">
+                                        <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <?= $block->getProductDetailsHtml($_product) ?>
+
+                            <div
+                                class="
+                                    product-list-item__actions-inner
+                                    <?= ($productMetadata->getEdition() == 'B2B') ? 'product-list-item__actions-inner--ee' : '' ?>
+                                "
+                            >
+                                <?php if ($addToBlock = $block->getChildBlock('addto')): ?>
+                                    <?= $addToBlock->setProduct($_product)->getChildHtml() ?>
+                                <?php endif ?>
+
+                                <?php if ($_product->isSaleable()): ?>
+                                    <?php $postParams = $block->getAddToCartPostParams($_product) ?>
+                                    <form
+                                        data-role="tocart-form"
+                                        data-product-sku="<?= $escaper->escapeHtmlAttr($_product->getSku()) ?>"
+                                        class="product-list-item__add-to-action"
+                                        action="<?= $escaper->escapeUrl($postParams['action']) ?>"
+                                        method="post"
+                                    >
+                                    <?php $options = $block->getData('viewModel')->getOptionsData($_product); ?>
+                                        <?php foreach ($options as $optionItem): ?>
+                                            <input
+                                                type="hidden"
+                                                name="<?= $escaper->escapeHtml($optionItem['name']) ?>"
+                                                value="<?= $escaper->escapeHtml($optionItem['value']) ?>"
+                                            >
+                                        <?php endforeach; ?>
+                                        <input
+                                            type="hidden"
+                                            name="product"
+                                            value="<?= /* @noEscape */ $postParams['data']['product'] ?>"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                            value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>"
+                                        >
+                                        <?= $block->getBlockHtml('formkey') ?>
+                                        <button
+                                            class="
+                                                button
+                                                button--fluid
+                                                button--add-to
+                                                product-list-item__add-to-button
+                                                button--fluid
+                                                action
+                                                tocart
+                                            "
+                                            aria-label="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                            type="submit"
+                                            disabled
+                                        >
+                                            <span class="button__text">
+                                                <?= $escaper->escapeHtml(__('Add to Cart')) ?>
+                                            </span>
+                                            <svg
+                                                class="
+                                                    icon
+                                                    button__icon
+                                                "
+                                                role="presentation"
+                                                focusable="false"
+                                            >
+                                                <use href="<?= $escaper->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#shopping-cart')) ?>"></use>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <ul
+            class="catalog-grid"
+            id="products-list"
+        >
+            <?php foreach ($_productCollection as $_product): ?>
+                <?php
+                    $productImage = $block->getImage($_product, $imageDisplayArea);
+                    $productName = $_product['name'];
+                ?>
+                <li
+                    class="
+                        product-grid-item
+                        product-item
+                        product-item-info
+                        product-item-details
+                    "
+                    id="product-item-info_<?= /* @noEscape */ $_product->getId() ?>"
+                    data-container="product-grid"
+                    tabindex="0"
+                    data-testid="list-product-item"
+                >
+                    <a
+                        href="<?= $escaper->escapeUrl($block->getProductUrl($_product)) ?>"
+                        class="product-grid-item__link"
+                        tabindex="-1"
+                    >
+                        <?php if ($_product->getBadge()): ?>
+                            <?php $productBadges = $_product->getAttributeText('badge'); ?>
+                            <div
+                                class="
+                                    badges
+                                    product-grid-item__badges
+                                "
+                            >
+                                <?php if (is_array($productBadges)): ?>
+                                    <?php foreach ($productBadges as $productBadge): ?>
+                                        <div
+                                            class="
+                                                badge
+                                                badge--<?= $escaper->escapeHtmlAttr(preg_replace('/[[:space:]]+/', '-', mb_strtolower($productBadge, 'UTF-8'))) ?>
+                                            "
+                                        >
+                                            <?= $escaper->escapeHtml($productBadge) ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div
+                                        class="
+                                            badge
+                                            badge--<?= $escaper->escapeHtmlAttr(preg_replace('/[[:space:]]+/', '-', mb_strtolower($productBadges, 'UTF-8'))) ?>
+                                        "
+                                    >
+                                        <?= $escaper->escapeHtml($productBadges) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="product-grid-item__image-wrapper">
+                            <?= $productImage->toHtml() ?>
+                        </div>
+                    </a>
+                    <section
+                        class="
+                            product-grid-item__details
+                            product-grid-item__swatches
+                        "
+                    >
+                        <div class="product-grid-item__rating">
+                            <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
+                        </div>
+                        <div
+                            class="product-grid-item__name"
+                            data-testid="list-product-item-name"
+                        >
+                            <a
+                                href="<?= $escaper->escapeUrl($block->getProductUrl($_product)) ?>"
+                                class="product-grid-item__name-link"
+                            >
+                                <?php
+                                    $productName = $escaper->escapeHtml($productName);
+
+                                    if (strlen($productName) > 42) {
+                                        $productName = substr($productName, 0, 42) . '...';
+                                    }
+                                ?>
+                                <?= $escaper->escapeHtml($productName) ?>
+                            </a>
+                        </div>
+
+                        <?php if ($_product->isAvailable()): ?>
+                            <?= $block->getProductDetailsHtml($_product) ?>
+                        <?php endif; ?>
+
+                        <div class="product-grid-item__details-bottom">
+                            <div class="product-grid-item__price">
+                                <div
+                                    class="price"
+                                    data-testid="list-product-item-price"
+                                >
+                                    <span class="price__value">
+                                        <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div
+                                class="
+                                    product-grid-item__actions
+                                    <?= ($productMetadata->getEdition() == 'B2B') ? 'product-grid-item__actions--ee' : '' ?>
+                                "
+                            >
+                                <div class="product-grid-item__secondary-action">
+                                    <?php if ($addToBlock = $block->getChildBlock('addto')): ?>
+                                        <?= $addToBlock->setProduct($_product)->getChildHtml() ?>
+                                    <?php endif; ?>
+                                </div>
+
+                                <?php if ($_product->isSaleable()): ?>
+                                    <?php $postParams = $block->getAddToCartPostParams($_product) ?>
+                                    <form
+                                        class="product-grid-item__primary-action"
+                                        data-product-sku="<?= $escaper->escapeHtmlAttr($_product->getSku()) ?>"
+                                        data-role="tocart-form"
+                                        action="<?= $escaper->escapeUrl($postParams['action']) ?>"
+                                        method="post"
+                                    >
+                                        <input
+                                            type="hidden"
+                                            name="product"
+                                            value="<?= /* @noEscape */ $postParams['data']['product'] ?>"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                            value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>"
+                                        >
+                                        <?= $block->getBlockHtml('formkey') ?>
+                                        <button
+                                            class="
+                                                button
+                                                button--add-to
+                                                action
+                                                tocart
+                                            "
+                                            type="submit"
+                                            aria-label="<?= $escaper->escapeHtmlAttr(__('Add to cart')) ?>"
+                                            disabled
+                                        >
+                                            <svg
+                                                class="icon button__icon"
+                                                role="presentation"
+                                                focusable="false"
+                                            >
+                                                <use href="<?= $escaper->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#shopping-cart')) ?>"></use>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                <?php else: ?>
+                                    <?php if ($_product->getIsSalable()): ?>
+                                        <span
+                                            class="
+                                                product-grid-item__stock-status
+                                                product-grid-item__stock-status--in-stock
+                                            "
+                                        >
+                                            <?= $escaper->escapeHtml(__('In stock')) ?>
+                                        </span>
+                                    <?php else: ?>
+                                        <span
+                                            class="
+                                                product-grid-item__stock-status
+                                                product-grid-item__stock-status--out-of-stock
+                                            "
+                                        >
+                                            <?= $escaper->escapeHtml(__('Out of stock')) ?>
+                                        </span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </section>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
+    <?= $block->getChildBlock('toolbar')->setIsBottom(true)->toHtml() ?>
+
+    <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                    "product_sku": "<?= $escaper->escapeJs($_product->getSku()) ?>"
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

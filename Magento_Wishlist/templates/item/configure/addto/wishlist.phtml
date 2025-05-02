@@ -1,0 +1,41 @@
+<?php
+/** @var \Magento\Wishlist\Block\Item\Configure $block */
+/** @var Snowdog\AlpacaGeneral\ViewModel\ProductMetadata $productMetadata */
+
+$productMetadata = $block->getProductMetadata();
+?>
+<?php if ($this->helper(\Magento\Wishlist\Helper\Data::class)->isAllow()) : ?>
+    <button
+        data-post='<?= /* @noEscape */ $block->getUpdateParams() ?>'
+        data-multiplewishlist='<?= /* @noEscape */ $block->getUpdateParams() ?>'
+        class="
+            button
+            button--icon
+            action
+            towishlist
+            product-view__addtowishlist
+            product-view__addtowishlist--update
+        "
+        data-action="add-to-wishlist"
+        type="button"
+    >
+        <svg
+            class="icon button__icon"
+            role="presentation"
+            focusable="false"
+        >
+            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#heart')); ?>"></use>
+        </svg>
+        <span class="button__text">
+            <?= ($productMetadata->getEdition() == 'B2B') ? $block->escapeHtml(__('Update Wish List')) : $block->escapeHtml(__('Update')) ?>
+        </span>
+    </button>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "addToWishlist": <?= /* @noEscape */ $this->helper(\Magento\Framework\Json\Helper\Data::class)
+                ->jsonEncode($block->getWishlistOptions()) ?>
+        }
+    }
+</script>

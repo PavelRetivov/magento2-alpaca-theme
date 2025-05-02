@@ -1,0 +1,37 @@
+<?php /** @var \Snowdog\Menu\Block\NodeType\Category $block */ ?>
+<?php
+    $nodeId = $block->getId();
+    $class = $block->getMenuClass();
+    $categoryUrl = $block->getCategoryUrl($nodeId);
+    $categoryUrl = $categoryUrl ?: '#';
+    $dataAttribute = '';
+    $imageUrl = $block->getImageUrl();
+    $imageAltText = $block->getImageAltText();
+
+    $classLink = $block->getIsRoot() ? $class . '__link' : $class . '__inner-link';
+    $title = $block->getTitle();
+
+    if ($nodeId) {
+        $dataAttribute = ' data-menu="menu-' . $nodeId . '"';
+    }
+
+    if ($block->isCurrentCategory($nodeId)) {
+        $classLink .= ' current';
+    }
+?>
+<a
+    href="<?= $block->escapeUrl($categoryUrl) ?>"
+    class="<?= $block->escapeHtmlAttr($classLink) ?>"
+    <?= /* @noEscape */ $dataAttribute ?>
+>
+    <?= $block->escapeHtml($title) ?>
+</a>
+
+<?php if($imageUrl): ?>
+    <img
+        src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAABCAQAAABN/Pf1AAAAC0lEQVR42mNkwAIAACoAAgu1Hc4AAAAASUVORK5CYII="
+        data-src="<?= $block->escapeUrl($imageUrl); ?>"
+        alt="<?= $block->escapeHtmlAttr($imageAltText); ?>"
+        class="image lazyload"
+    />
+<?php endif; ?>

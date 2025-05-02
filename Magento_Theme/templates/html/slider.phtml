@@ -1,0 +1,180 @@
+<?php
+/**
+ * use before-slides as slider_html to get html before slides
+ * use after-slides as slider_html to get html after slides
+ */
+?>
+
+<?php
+//slider basis
+$sliderHtml = $block->getSliderHtml();
+$sliderClass = $block->getSliderClass();
+$wrapperClass = $block->getWrapperClass();
+$slidesElement = $block->getSlidesElement() ?: '.slider__slides';
+
+//slider config
+$sliderIsAjax = $block->getIsAjax();
+$sliderMobileFirst = $block->getMobileFirst();
+$sliderInfinite = $block->getInfinite();
+$sliderCenterMode = $block->getCenterMode();
+$sliderDots = $block->getDots();
+$sliderArrows = $block->getArrows();
+$sliderAutoplay = $block->getAutoplay();
+$sliderAutoplaySpeed = $block->getAutoplaySpeed();
+$sliderPauseOnFocus = $block->getPauseOnFocus();
+$sliderPauseOnHover = $block->getPauseOnHover();
+$sliderSlidesToShow = $block->getSlidesToShow();
+$sliderSlidesToScroll = $block->getSlidesToScroll();
+$sliderResponsiveConfig = $block->getResponsiveConfig();
+$sliderSwipeToSlide = $block->getResponsiveConfig();
+
+//slider defaults
+$sliderMobileFirst = ($sliderMobileFirst === 'no') ? 'false' : 'true';
+$sliderInfinite = ($sliderInfinite === 'no') ? 'false' : 'true';
+$sliderCenterMode = ($sliderCenterMode === 'yes') ? 'true' : 'false';
+$sliderDots = ($sliderDots === 'no') ? 'false' : 'true';
+$sliderAutoplay = ($sliderAutoplay === 'yes') ? 'true' : 'false';
+$sliderAutoplaySpeed = $sliderAutoplaySpeed ? $block->escapeHtmlAttr($sliderAutoplaySpeed) : '3000';
+$sliderPauseOnFocus = ($sliderPauseOnFocus === 'no') ? 'false' : 'true';
+$sliderPauseOnHover = ($sliderPauseOnHover === 'no') ? 'false' : 'true';
+$sliderSlidesToShow = $sliderSlidesToShow ? $block->escapeHtmlAttr($sliderSlidesToShow) : '1';
+$sliderSlidesToScroll = $sliderSlidesToScroll ? $block->escapeHtmlAttr($sliderSlidesToScroll) : '1';
+$sliderResponsiveConfig = $sliderResponsiveConfig ? $block->escapeHtmlAttr($sliderResponsiveConfig) : 'false';
+$sliderSwipeToSlide = ($sliderSwipeToSlide === 'no') ? 'false' : 'true';
+
+//slider data
+$sliderDisplayTitle = $block->getDisplayTitle();
+$sliderTitle = $block->getSliderTitle();
+$sliderTitleClass = $block->getTitleClass();
+$sliderContentBefore = $block->getContentBefore();
+$sliderContentAfter = $block->getContentAfter();
+?>
+<?php if ($sliderHtml == 'before-slides'): ?>
+    <?php if ($wrapperClass): ?>
+        <div class="<?= $block->escapeHtmlAttr($wrapperClass) ?>">
+    <?php endif; ?>
+
+    <div
+        class="
+            slider
+            slider--loading
+            <?= $block->escapeHtmlAttr($sliderClass) ?>
+        "
+        data-mobile-first="<?= $block->escapeHtmlAttr($sliderMobileFirst) ?>"
+        data-infinite="<?= $block->escapeHtmlAttr($sliderInfinite) ?>"
+        data-center-mode="<?= $block->escapeHtmlAttr($sliderCenterMode) ?>"
+        data-dots="<?= $block->escapeHtmlAttr($sliderDots) ?>"
+        data-autoplay="<?= $block->escapeHtmlAttr($sliderAutoplay) ?>"
+        data-autoplay-speed="<?= $block->escapeHtmlAttr($sliderAutoplaySpeed) ?>"
+        data-pause-on-focus="<?= $block->escapeHtmlAttr($sliderPauseOnFocus) ?>"
+        data-pause-on-hover="<?= $block->escapeHtmlAttr($sliderPauseOnHover) ?>"
+        data-slides-to-show="<?= $block->escapeHtmlAttr($sliderSlidesToShow) ?>"
+        data-slides-to-scroll="<?= $block->escapeHtmlAttr($sliderSlidesToScroll) ?>"
+        data-responsive-config="<?= $block->escapeHtml($sliderResponsiveConfig) ?>"
+        data-swipe-to-slide="<?= $block->escapeHtmlAttr($sliderSwipeToSlide) ?>"
+        data-element-slides="<?= $block->escapeHtmlAttr($slidesElement) ?>"
+        data-dots-class="slider__dots"
+        data-loading-class="slider--loading"
+        data-loader-visible-class="loader--visible"
+        data-element-slide=".slider__item"
+        data-element-loader=".loader"
+        data-element-nav-prev=".slider__prev"
+        data-element-nav-next=".slider__next"
+        data-element-keyboard-nav-info=".slider__keyboard-nav-info"
+        <?php if (!$sliderIsAjax): ?>
+            data-mage-init = '{"slider": {}}'
+        <?php endif; ?>
+    >
+        <div class="slider__keyboard-nav-info skip-nav">
+            <?= $escaper->escapeHtml(__('Use the Left and Right arrow keys to navigate between slides. Use the Escape key to skip slider.')) ?>
+        </div>
+
+        <?php if ($sliderDisplayTitle): ?>
+            <h2 class="slider__heading">
+                <span class="<?= $block->escapeHtmlAttr($sliderTitleClass) ?>">
+                    <?= $block->escapeHtml($sliderTitle) ?>
+                </span>
+            </h2>
+        <?php endif ?>
+
+        <?php if ($sliderContentBefore): ?>
+            <div class="slider__before">
+                <?= /* @noEscape */ $sliderContentBefore ?>
+            </div>
+        <?php endif ?>
+
+        <div class="slider__handler">
+            <?php if ($sliderArrows): ?>
+                <div class="slider__navigation">
+                    <div class="slider__arrows">
+                        <button
+                            class="
+                                button
+                                button--icon
+                                button--icon-border
+                                slider__nav-button
+                                slider__prev
+                            "
+                            type="button"
+                            aria-label="<?= $block->escapeHtmlAttr(__('Go to previous slide')) ?>"
+                        >
+                            <svg
+                                class="
+                                    icon
+                                    button__icon
+                                    slider__nav-icon
+                                "
+                                role="presentation"
+                                focusable="false"
+                            >
+                                <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#arrow-left')); ?>"></use>
+                            </svg>
+                        </button>
+                        <button
+                            class="
+                                button
+                                button--icon
+                                button--icon-border
+                                slider__nav-button
+                                slider__next
+                            "
+                            type="button"
+                            aria-label="<?= $block->escapeHtmlAttr(__('Go to next slide')) ?>"
+                        >
+                            <svg
+                                class="
+                                    icon
+                                    button__icon
+                                    slider__nav-icon
+                                "
+                                role="presentation"
+                                focusable="false"
+                            >
+                                <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#arrow-right')); ?>"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="slider__container">
+                <div class="slider__slides">
+
+<?php endif; //before-slides end ?>
+<?php if ($sliderHtml == 'after-slides'): ?>
+
+                </div>
+            </div>
+        </div>
+
+        <?php if ($sliderContentAfter): ?>
+            <div class="slider__after">
+                <?= /* @noEscape */ $sliderContentAfter ?>
+            </div>
+        <?php endif ?>
+    </div>
+
+    <?php if ($wrapperClass): ?>
+        </div>
+    <?php endif; ?>
+<?php endif; //after-slides end ?>

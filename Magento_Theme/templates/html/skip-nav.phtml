@@ -1,0 +1,28 @@
+<?php
+$anchor = $block->getLinkAnchor();
+$label = $block->getLinkText();
+$cssClass = $block->hasCssClass() ? $block->getCssClass() : '';
+?>
+<?php if (is_array($anchor) && is_array($label)): ?>
+    <ul class="list">
+        <?php foreach ($anchor as $key => $value): ?>
+            <li class="list__item <?= $block->escapeHtmlAttr($key) ?>">
+                <a
+                    href="<?= $block->escapeUrl($value) ?>"
+                    class="skip-nav <?= $block->escapeHtmlAttr($cssClass); ?>"
+                    data-mage-init='{"skipNav": {} }'
+                >
+                    <?= $block->escapeHtml($label[$key]); ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+<?php else: ?>
+    <a
+        href="<?= $block->escapeUrl($anchor) ?>"
+        class="skip-nav <?= $block->escapeHtmlAttr($cssClass) ?>"
+        data-mage-init='{"skipNav": {} }'
+    >
+        <?= $block->escapeHtml($label) ?>
+    </a>
+<?php endif; ?>

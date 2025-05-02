@@ -1,0 +1,289 @@
+<?php
+// phpcs:disable PSR2.ControlStructures.SwitchDeclaration
+// phpcs:disable Generic.WhiteSpace.ScopeIndent
+
+/** @var $block \Magento\Swatches\Block\LayeredNavigation\RenderLayered */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+<?php
+$swatchData = $block->getSwatchData();
+$swatchCode = $swatchData['attribute_code'];
+$swatchCodeScope = $swatchCode . 'Filter';
+$swatchLabel = $swatchData['attribute_label'];
+$helper = $this->helper('Snowdog\ProductAttributeDescription\Helper\Attribute');
+$attributeDescriptions = $helper->getAttributesDescriptions([$swatchCode]);
+?>
+<li
+    class="
+        dropdown-list__item
+        dropdown-list__item--collapse
+        filter
+        swatch-layered
+        <?= $block->escapeHtmlAttr($swatchCode) ?>
+    "
+>
+    <div
+        class="
+            dropdown-list__label-wrapper
+            filter__label-wrapper
+        "
+    >
+        <button
+            type="button"
+            class="dropdown-list__label"
+            aria-controls="<?= $block->escapeHtmlAttr($swatchCodeScope) ?>"
+            aria-expanded="true"
+        >
+            <h3 class="filter__heading">
+                <?= $block->escapeHtml($swatchLabel) ?>
+            </h3>
+            <svg
+                class="
+                    icon
+                    dropdown-list__icon
+                "
+                role="presentation"
+                focusable="false"
+            >
+                <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#angle-down')); ?>"></use>
+            </svg>
+        </button>
+    </div>
+    <div
+        class="
+            dropdown-list__content
+            filter__content
+        "
+        id="<?= $block->escapeHtmlAttr($swatchCodeScope) ?>"
+        aria-hidden="false"
+    >
+        <div
+            class="more-info"
+            <?php if ($attributeDescriptions[$swatchCode]): ?>
+                data-mage-init='{"moreInfo": {"attributeDescription": "<?= $block->escapeJs($attributeDescriptions[$swatchCode]) ?>"}}'
+            <?php endif ?>
+            aria-hidden="true"
+        >
+            <button
+                class="
+                    button
+                    button--icon
+                    button--fluid
+                    more-info__trigger
+                "
+                type="button"
+                aria-expanded="false"
+            >
+                <span class="button__text">
+                    <?= $block->escapeHtml(__('More information')) ?>
+                </span>
+                <svg
+                    class="
+                        icon
+                        button__icon
+                    "
+                    role="presentation"
+                    focusable="false"
+                >
+                    <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#info')); ?>"></use>
+                </svg>
+            </button>
+
+            <div
+                class="more-info__content-wrapper"
+                aria-hidden="true"
+            >
+                <div class="more-info__content">
+                    <h3 class="more-info__heading">
+                        <?= $block->escapeHtml($swatchLabel); ?>
+                    </h3>
+
+                    <div class="more-info__data"></div>
+
+                    <button
+                        class="
+                            button
+                            button--icon
+                            button--rotate-icon
+                            more-info__close
+                        "
+                        type="button"
+                        aria-label="<?= $block->escapeHtmlAttr(__('Close more information')) ?>"
+                    >
+                        <svg
+                            class="icon"
+                            role="presentation"
+                            focusable="false"
+                        >
+                            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#close')); ?>"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <ul
+            class="
+                list
+                filter__list
+            "
+            data-attribute-code="<?= $block->escapeHtmlAttr($swatchCodeScope) ?>"
+            data-attribute-id="<?= $block->escapeHtmlAttr($swatchData['attribute_id']) ?>"
+        >
+            <?php foreach ($swatchData['options'] as $option => $label): ?>
+                <?php if (isset($swatchData['swatches'][$option]['type'])): ?>
+                    <?php
+                    switch ($swatchData['swatches'][$option]['type']) {
+                        case '3': //other swatches
+                    ?>
+                        <li
+                            class="
+                                filter__swatch-item
+                                <?= $block->escapeHtmlAttr($label['custom_style']) ?>
+                            "
+                        >
+                            <a
+                                class="filter__swatch-option"
+                                href="<?= $block->escapeUrl($label['link']) ?>"
+                                aria-label="<?= $block->escapeHtmlAttr($label['label']) ?>"
+                                rel="nofollow"
+                            >
+                                <div
+                                    data-option-type="3"
+                                    data-option-id="<?= $block->escapeHtmlAttr($option) ?>"
+                                    data-option-label="<?= $block->escapeHtmlAttr($label['label']) ?>"
+                                ></div>
+                            </a>
+                        </li>
+                    <?php
+                            break;
+                        case '2': //color swatch with image background
+                    ?>
+                        <?php $swatchThumbPath = $block->getSwatchPath(
+                            'swatch_thumb',
+                            $swatchData['swatches'][$option]['value']
+                        ); ?>
+                        <?php $swatchImagePath = $block->getSwatchPath(
+                            'swatch_image',
+                            $swatchData['swatches'][$option]['value']
+                        );
+                        $escapedUrl = $block->escapeUrl($swatchImagePath);
+                        ?>
+
+                        <li
+                            class="
+                                filter__color-item
+                                <?= $block->escapeHtmlAttr($label['custom_style']) ?>
+                            "
+                        >
+                            <a
+                                href="<?= $block->escapeUrl($label['link']) ?>"
+                                aria-label="<?= $block->escapeHtmlAttr($label['label']) ?>"
+                                class="filter__color-option"
+                                rel="nofollow"
+                            >
+                                <div
+                                    class="filter__color-sample"
+                                    tabindex="-1"
+                                    data-option-type="2"
+                                    data-option-id="<?= $block->escapeHtmlAttr($option) ?>"
+                                    data-option-label="<?= $block->escapeHtmlAttr($label['label']) ?>"
+                                    data-option-tooltip-thumb="<?= $block->escapeHtmlAttr($swatchThumbPath) ?>"
+                                    data-option-tooltip-value=""
+                                    title="<?= $block->escapeHtmlAttr($label['label']) ?>"
+                                ></div>
+                                <span class="filter__color-label">
+                                    <?= $block->escapeHtml($label['label']) ?>
+                                </span>
+                            </a>
+                            <?php
+                            $element = 'swatchImageOption' .$escaper->escapeJs($option);
+                            $script = 'var ' . $element
+                                . ' = document.querySelector(\'div[data-option-id="' . $escaper->escapeJs($option)
+                                . '"]\');' . PHP_EOL;
+                            $script .= $element . '.style.background = "url(\''
+                                . $escapedUrl . '\') no-repeat center";' . PHP_EOL;
+                            $script .= $element . '.style.backgroundSize = "cover";';
+                            ?>
+                            <?= /* @noEscape*/ $secureRenderer->renderTag('script', [], $script, false); ?>
+                        </li>
+                    <?php
+                            break;
+                        case '1': //color swatch with #hex background
+                    ?>
+                        <li
+                            class="
+                                filter__color-item
+                                <?= $block->escapeHtmlAttr($label['custom_style']) ?>
+                            "
+                        >
+                            <a
+                                href="<?= $block->escapeUrl($label['link']) ?>"
+                                class="filter__color-option"
+                                rel="nofollow"
+                            >
+                                <div
+                                    class="filter__color-sample"
+                                    data-option-type="1"
+                                    data-option-id="<?= $block->escapeHtmlAttr($option) ?>"
+                                    data-option-label="<?= $block->escapeHtmlAttr($label['label']) ?>"
+                                    data-option-tooltip-value="<?= $block->escapeHtmlAttr($swatchData['swatches'][$option]['value']) ?>"
+                                ></div>
+                                <span class="filter__color-label">
+                                    <?= $block->escapeHtml($label['label']) ?>
+                                </span>
+                            </a>
+                            <?php
+                            $element = 'swatchImageOption' .$escaper->escapeJs($option);
+                            $backgroundValue = $escaper->escapeJs(
+                                str_replace('\'', '\\\'', $swatchData['swatches'][$option]['value'])
+                            );
+                            $script = 'var ' . $element
+                                . ' = document.querySelector(\'div[data-option-id="' . $escaper->escapeJs($option)
+                                . '"]\');' . PHP_EOL;
+                            $script .= $element . '.style.background = "' . $backgroundValue
+                                . ' no-repeat center";' . PHP_EOL;
+                            ?>
+                            <?= /* @noEscape*/ $secureRenderer->renderTag('script', [], $script, false); ?>
+                        </li>
+                    <?php
+                            break;
+                        case '0': //text swatch
+                        default:
+                    ?>
+                        <li
+                            class="
+                                filter__swatch-item
+                                <?= $block->escapeHtmlAttr($label['custom_style']) ?>
+                            "
+                        >
+                            <a
+                                href="<?= $block->escapeUrl($label['link']) ?>"
+                                class="filter__swatch-option"
+                                data-option-type="0"
+                                data-option-id="<?= $block->escapeHtmlAttr($option) ?>"
+                                data-option-label="<?= $block->escapeHtmlAttr($label['label']) ?>"
+                                rel="nofollow"
+                            >
+                                <?= $block->escapeHtml($swatchData['swatches'][$option]['value']) ?>
+                            </a>
+                        </li>
+                    <?php
+                            break;
+                    }
+                    ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+
+        <?php $scriptString = <<<script
+            require(["jquery", "Magento_Swatches/js/swatch-renderer"], function ($) {
+                $('.swatch-layered.{$block->escapeJs($swatchCodeScope)}')
+                    .find('[data-option-type="1"], [data-option-type="2"], [data-option-type="0"], [data-option-type="3"]')
+                    .SwatchRendererTooltip();
+            });
+        script;
+        ?>
+        <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+    </div>
+</li>

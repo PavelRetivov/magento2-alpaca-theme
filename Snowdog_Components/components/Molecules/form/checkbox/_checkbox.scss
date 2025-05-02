@@ -1,0 +1,147 @@
+@import 'checkbox-variables';
+
+.checkbox {
+    position: relative;
+
+    &--link {
+        display: block;
+        text-decoration: none;
+        color: $checkbox__color--link;
+
+        &:hover {
+            text-decoration: $checkbox__label-text-decoration-active--link;
+        }
+
+        &.focus-visible {
+            @include focus();
+            background-color: transparent;
+            text-decoration: $checkbox__label-text-decoration-active--link;
+        }
+    }
+
+    &--link-checked {
+        display: block;
+
+        .checkbox__label {
+            color: $checkbox__label-color--active;
+
+            &:after {
+                transform: $checkbox__before-transform-hover;
+            }
+        }
+
+        .checkbox__icon--checked {
+            opacity: 1;
+        }
+    }
+
+    &__label {
+        position: relative;
+        display: flex;
+        flex-flow: row nowrap;
+        height: auto;
+        width: 100%;
+        margin: $checkbox__label-margin;
+        padding: $checkbox__label-padding;
+        line-height: $checkbox__line-height;
+        color: $checkbox__label-color;
+        font-size: $checkbox__label-font-size;
+        cursor: pointer;
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: $checkbox__before-position-top;
+            left: $checkbox__before-position-left;
+            width: $checkbox__before-size;
+            height: $checkbox__before-size;
+            border-radius: $checkbox__before-border-radius;
+            background-color: $checkbox__before-background;
+            transform: $checkbox__before-transform;
+            transform-origin: $checkbox__before-transform-origin;
+            transition: $checkbox__transition;
+        }
+
+        &--no-icon {
+            padding-left: $checkbox__label-padding-left--no-icon;
+            text-decoration: $checkbox__label-text-decoration--no-icon;
+
+            &:after {
+                display: none;
+            }
+        }
+
+        a {
+            text-decoration: $checkbox__link-inner-text-decoration;
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        top: $checkbox__top;
+        left: $checkbox__left;
+        transform: $checkbox__transform;
+        width: $checkbox__icon-size;
+        height: $checkbox__icon-size;
+        opacity: 1;
+        transition: $checkbox__icon-transition;
+        fill: $checkbox__icon-fill;
+        cursor: pointer;
+
+        &--checked {
+            opacity: 0;
+            z-index: 1;
+        }
+    }
+
+    &__field {
+        position: absolute;
+        top: $checkbox__top;
+        left: $checkbox__left;
+        transform: $checkbox__transform;
+        width: $checkbox__icon-size;
+        height: $checkbox__icon-size;
+        z-index: $z-index-normal;
+        opacity: 0;
+        cursor: pointer;
+
+        &:checked {
+            &.checkbox__field--disabled {
+                & ~ .checkbox__label {
+                    &:after {
+                        background-color: $checkbox__field-background--disabled;
+                    }
+                }
+            }
+        }
+
+        &:checked ~ .checkbox__icon--checked {
+            opacity: 1;
+        }
+
+        &:checked ~ .checkbox__label {
+            color: $checkbox__label-color--active;
+            &:after {
+                transform: $checkbox__before-transform-hover;
+            }
+        }
+
+        &.focus-visible ~ .checkbox__label {
+            @include focus();
+        }
+    }
+
+    &__text {
+        width: $checkbox__text-width;
+    }
+
+    .mage-error {
+        position: absolute;
+        bottom: $checkbox__error-bottom;
+    }
+
+    &.amgdpr-checkbox {
+        margin-bottom: $spacer;
+    }
+}

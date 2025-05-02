@@ -1,0 +1,45 @@
+<?php if ($marketingBar = $this->getChildHtml('marketing-bar-block')): ?>
+    <aside
+        class="marketing-bar marketing-bar--closed"
+        aria-label="<?= __('Special Offer') ?>"
+        data-testid="marketing-bar-message"
+        data-id="marketing-bar"
+        data-mage-init='{ "marketingBar": {} }'
+    >
+        <div class="container marketing-bar__container">
+            <div class="marketing-bar__text">
+                <?= /* @noEscape */ $marketingBar ?>
+            </div>
+            <button
+                class="
+                    button
+                    button--icon
+                    button--rotate-icon
+                    marketing-bar__close
+                "
+                type="button"
+                aria-label="<?= $block->escapeHtmlAttr(__('Close marketing bar')) ?>"
+            >
+                <svg
+                    class="
+                        icon
+                        button__icon
+                        marketing-bar__close-icon
+                    "
+                    role="presentation"
+                    focusable="false"
+                >
+                    <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#close')) ?>"></use>
+                </svg>
+            </button>
+        </div>
+    </aside>
+
+    <script>
+        // Avoid jumping content
+        if (!localStorage.getItem('marketing-bar')) {
+            const element = document.querySelector('.marketing-bar')
+            element.classList.remove('marketing-bar--closed')
+        }
+    </script>
+<?php endif; ?>

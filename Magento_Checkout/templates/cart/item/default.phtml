@@ -1,0 +1,196 @@
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// phpcs:disable Magento2.Files.LineLength.MaxExceeded
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer */
+
+$_item = $block->getItem();
+$itemId = $block->escapeHtmlAttr($_item->getId());
+$product = $_item->getProduct();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper(Magento\Msrp\Helper\Data::class);
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+?>
+<div
+    class="cart-list-item"
+    role="row"
+>
+    <div
+        class="cart-list-item__left"
+        data-th="<?= $block->escapeHtmlAttr(__('Item:')); ?>"
+        role="gridcell"
+    >
+        <a
+            class="cart-list-item__image"
+            href="<?= $block->escapeUrl($block->getProductUrl()) ?>"
+        >
+            <?= $block->getImage($block->getProductForThumbnail(), 'cart_page_product_thumbnail')->toHtml() ?>
+        </a>
+
+        <div class="cart-list-item__content">
+            <?php if ($block->hasProductUrl()): ?>
+                <a
+                    href="<?= $block->escapeUrl($block->getProductUrl()) ?>"
+                    class="
+                        link
+                        cart-list-item__name
+                        heading
+                    "
+                >
+                    <?= $block->escapeHtml($block->getProductName()) ?>
+                </a>
+            <?php else: ?>
+                <h4 class="cart-list-item__name">
+                    <?= $block->escapeHtml($block->getProductName()) ?>
+                </h4>
+            <?php endif; ?>
+
+            <?php
+            $addInfoBlock = $block->getProductAdditionalInformationBlock();
+            $messages = $block->getMessages();
+            $_options = $block->getOptionList();
+            ?>
+
+            <?php if ($addInfoBlock || $messagesAvailable || $_options): ?>
+                <div class="cart-list-item__attributes margin-bottom-xs">
+                    <?php if ($messages): ?>
+                        <?php foreach ($messages as $message): ?>
+                            <span class="cart-list-item__attribute">
+                                <?= $block->escapeHtml($message['text']) ?>
+                            </span>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <?php if ($addInfoBlock): ?>
+                        <span class="cart-list-item__attribute">
+                            <?= $addInfoBlock->setItem($_item)->toHtml() ?>
+                        </span>
+                    <?php endif; ?>
+
+                    <?php if ($_options): ?>
+                        <div class="cart-list-item__attribute">
+                            <dl
+                                class="
+                                    list
+                                    list--description
+                                    cart-list-item__attributes-list
+                                "
+                            >
+                                <?php foreach ($_options as $_option): ?>
+                                    <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                                    <dt class="list__label">
+                                        <?= $block->escapeHtml($_option['label']) ?>
+                                    </dt>
+                                    <dd class="list__value">
+                                        <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                            <?= $block->escapeHtml($_formatedOptionValue['full_view'], ['span', 'a']) ?>
+                                        <?php else: ?>
+                                            <?= $block->escapeHtml($_formatedOptionValue['value'], ['span', 'a']) ?>
+                                        <?php endif; ?>
+                                    </dd>
+                                <?php endforeach; ?>
+                            </dl>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <div class="cart-list-item__right">
+        <div class="cart-list-item__details">
+            <div
+                class="cart-list-item__wrapper"
+                data-th="<?= $block->escapeHtmlAttr(__('Price:')); ?>"
+                role="gridcell"
+            >
+                <span class="cart-list-item__label margin-right-xs">
+                    <?= $block->escapeHtml(__('Price')) ?>:
+                </span>
+
+                <span class="cart-list-item__price">
+                    <?php if ($canApplyMsrp): ?>
+                        --
+                    <?php else: ?>
+                        <?= $block->getUnitPriceHtml($_item); ?>
+                    <?php endif; ?>
+                </span>
+            </div>
+
+            <div
+                class="
+                    input
+                    input--inline
+                    cart-list-item__qty
+                "
+                data-th="<?= $block->escapeHtmlAttr(__('Quantity:')); ?>"
+                role="gridcell"
+            >
+                <label
+                    class="
+                        label
+                        input__label
+                        cart-list-item__label
+                    "
+                    for="cart-<?= $block->escapeHtmlAttr($itemId) ?>-qty"
+                >
+                    <?= $block->escapeHtml(__('Qty')) ?>
+                </label>
+
+                <input
+                    id="cart-<?= $block->escapeHtmlAttr($itemId) ?>-qty"
+                    name="cart[<?= $block->escapeHtmlAttr($itemId) ?>][qty]"
+                    data-cart-item-id="<?= $block->escapeHtmlAttr($_item->getSku()) ?>"
+                    value="<?= $block->escapeHtmlAttr($block->getQty()) ?>"
+                    type="text"
+                    title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                    class="
+                        input__field
+                        cart-list-item__input
+                        text-center
+                    "
+                    maxlength="12"
+                    data-validate="{
+                        required: true,
+                        'validate-greater-than-zero': true
+                    }"
+                    data-role="cart-item-qty"
+                >
+                <p
+                    role="alert"
+                    aria-live="polite"
+                    class="cart-list-item__alert"
+                >
+                    <?= __('After changing quantity click update shopping cart button') ?>
+                </p>
+            </div>
+
+            <div
+                class="cart-list-item__wrapper"
+                data-th="<?= $block->escapeHtmlAttr(__('Subtotal:')); ?>"
+                role="gridcell"
+            >
+                <span class="cart-list-item__label margin-right-xs">
+                    <?= $block->escapeHtml(__('Subtotal')) ?>:
+                </span>
+
+                <span class="cart-list-item__total">
+                    <?php if ($canApplyMsrp): ?>
+                        --
+                    <?php else: ?>
+                        <?= $block->getRowTotalHtml($_item); ?>
+                    <?php endif; ?>
+                </span>
+            </div>
+        </div>
+
+        <div
+            class="cart-list-item__actions"
+            data-th="<?= $block->escapeHtmlAttr(__('Actions:')); ?>"
+            role="gridcell"
+        >
+            <?= /* @noEscape */ $block->getActions($_item) ?>
+        </div>
+    </div>
+</div>

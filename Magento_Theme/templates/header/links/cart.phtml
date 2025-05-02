@@ -1,0 +1,17 @@
+<a
+    class="
+        header-button
+        button
+        button--icon
+    "
+    href="<?= $block->escapeUrl($block->getUrl('checkout/cart')); ?>"
+    aria-label="<?= $block->escapeHtmlAttr(__('Shopping cart')) ?>"
+>
+    <svg
+        class="icon header-button__icon"
+        role="presentation"
+        focusable="false"
+    >
+        <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#shopping-cart')); ?>"></use>
+    </svg>
+</a>

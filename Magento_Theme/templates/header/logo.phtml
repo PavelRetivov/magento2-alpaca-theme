@@ -1,0 +1,13 @@
+<a
+    class="logo header__logo"
+    href="<?= $block->escapeUrl($block->getUrl('')); ?>"
+    aria-label="<?= $block->escapeHtml(__('Home page link')) ?>"
+>
+    <svg
+        class="logo__image"
+        role="presentation"
+        focusable="false"
+    >
+        <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#logo')); ?>"></use>
+    </svg>
+</a>

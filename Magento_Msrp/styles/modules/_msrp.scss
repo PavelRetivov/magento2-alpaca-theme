@@ -1,0 +1,42 @@
+.msrp {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &__tooltip-content {
+        white-space: normal;
+    }
+
+    &__tooltip-trigger-button {
+        &:hover,
+        &.focus-visible {
+            &:before {
+                display: none;
+            }
+
+            .icon {
+                fill: $color-primary;
+            }
+        }
+    }
+
+    &__modal {
+        .ui-dialog-buttonpane {
+            display: none;
+        }
+
+        .actual-price {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    }
+
+    &__modal-bottom {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+}

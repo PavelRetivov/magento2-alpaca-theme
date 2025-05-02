@@ -1,0 +1,60 @@
+<div
+    class="
+        data-grid-filters-wrap
+        dashboard-actions-toolbar
+        margin-bottom-m
+    "
+    data-part="filter-form"
+    css="_show: hasVisible()"
+>
+    <div
+        class="field"
+        outereach="getPlain()"
+        visible="false"
+        render=""
+    ></div>
+
+    <button
+        visible="showAllUsers() || !showActiveUsers()"
+        class="
+            button
+            button--secondary
+            dashboard-actions-toolbar__item
+            action
+            action-secondary
+        "
+        type="button"
+        data-action="grid-filter-apply"
+        click="setStatusActive"
+        translate="'Show Active Users'"
+    ></button>
+
+    <button
+        visible="showAllUsers() || showActiveUsers()"
+        class="
+            button
+            button--secondary
+            dashboard-actions-toolbar__item
+            action
+            action-secondary
+        "
+        type="button"
+        data-action="grid-filter-apply"
+        click="setStatusInactive"
+        translate="'Show Inactive Users'"
+    ></button>
+
+    <button
+        visible="!showAllUsers()"
+        class="
+            button
+            button--secondary
+            dashboard-actions-toolbar__item
+            action
+            action-clear
+        "
+        type="button"
+        click="clear"
+        translate="'Show All Users'"
+    ></button>
+</div>

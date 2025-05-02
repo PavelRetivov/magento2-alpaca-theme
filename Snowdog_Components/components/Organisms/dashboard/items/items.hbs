@@ -1,0 +1,35 @@
+<div class="dashboard-items {{ class }}">
+    {{#if title }}
+        {{#if link}}
+            <div class="dashboard-table__header">
+                {{ render '@heading' title }}
+                {{ render '@link' link }}
+            </div>
+        {{else}}
+            {{ render '@heading' title }}
+        {{/if}}
+    {{/if}}
+    {{#if informations }}
+        <div class="row {{ contentClass }}">
+            {{#each informations }}
+                <div class="dashboard-items__item {{ this.class }}">
+                    {{#if this.title }}
+                        {{ render '@heading' this.title }}
+                    {{/if}}
+                    {{#if contentComponent}}
+                        {{ render (component contentComponent) contentContext }}
+                    {{else}}
+                        {{#if this.information }}
+                            <div class="{{ this.addressClass }}">
+                                {{{ this.information }}}
+                            </div>
+                        {{/if}}
+                    {{/if}}
+                    {{#if actions }}
+                        {{ render '@actions-group' actions }}
+                    {{/if}}
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
+</div>

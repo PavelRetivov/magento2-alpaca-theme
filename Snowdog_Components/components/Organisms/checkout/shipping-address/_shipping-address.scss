@@ -1,0 +1,52 @@
+$shipping-address__padding                         : 0 0 $spacer--extra-large !default;
+$shipping-address__form-login-border-bottom        : $border-base !default;
+$shipping-address__form-login-padding              : 0 0 $spacer--extra-large !default;
+$shipping-address__form-shipping-padding           : $spacer--extra-large 0 0 !default;
+$shipping-address__btn-login-width                 : calc(55% - #{$spacer}) !default;
+$shipping-address__btn-login-margin                : 0 0 $spacer 0 !default;
+$shipping-address__btn-login-margin\@medium        : 0 $spacer 0 0 !default;
+$shipping-address__btn-remind-width                : 45% !default;
+
+.shipping-address {
+    padding: $shipping-address__padding;
+
+    &__label {
+        @include visually-hidden();
+    }
+
+    &__form-login {
+        border-bottom: $shipping-address__form-login-border-bottom;
+        padding: $shipping-address__form-login-padding;
+    }
+
+    &__form-shipping {
+        padding: $shipping-address__form-shipping-padding;
+    }
+
+    &__login-buttons {
+        display: flex;
+        flex-flow: column nowrap;
+        @include mq($screen-m) {
+            flex-direction: row;
+        }
+    }
+
+    &__btn-login {
+        margin: $shipping-address__btn-login-margin;
+        @include mq($screen-m) {
+            flex-basis: $shipping-address__btn-login-width;
+            max-width: $shipping-address__btn-login-width;
+            margin: $shipping-address__btn-login-margin\@medium;
+        }
+    }
+
+    &__btn-remind {
+        &.action.remind {
+            padding: 0 $spacer;
+            @include mq($screen-m) {
+                max-width: $shipping-address__btn-remind-width;
+                flex-basis: $shipping-address__btn-remind-width;
+            }
+        }
+    }
+}

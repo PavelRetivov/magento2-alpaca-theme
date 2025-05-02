@@ -1,0 +1,50 @@
+<?php
+/** @var \Magento\Review\Block\Product\ReviewRenderer $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+$urlForm = $block->getReviewsUrl() . '#review-form';
+?>
+<?php if ($block->isReviewEnabled() && $block->getReviewsCount()): ?>
+    <?php $rating = $block->escapeHtmlAttr($block->getRatingSummary()); ?>
+    <div class="product-reviews-summary short<?= !$rating ? ' no-rating' : '' ?>">
+        <?php if ($rating): ?>
+            <?php
+            $productName = $block->escapeHtmlAttr($this->getProduct()->getName());
+            ?>
+            <div
+                class="rating rating--secondary"
+                id="rating-result_<?= /* @noEscape */ $block->getProduct()->getId() ?>"
+                role="region"
+                aria-label="<?= $block->escapeHtmlAttr(__('Average rating for ')) . $productName ?>: <?= $block->escapeHtmlAttr($rating) ?>%"
+                title="<?= $block->escapeHtmlAttr(__('Average rating for ')) . $productName ?>: <?= $block->escapeHtmlAttr($rating) ?>%"
+                tabindex="0"
+            >
+                <div
+                    class="rating__star"
+                    role="presentation"
+                    style="width: <?= $block->escapeHtmlAttr($rating) ?>%"
+                >
+                    <span class="rating__indicator"></span>
+                </div>
+                <?= /* @noEscape */ $secureRenderer->renderStyleAsTag(
+                    'width:' . $rating . '%',
+                    '#rating-result_' . $block->getProduct()->getId() . ' .rating__star'
+                ) ?>
+            </div>
+        <?php endif;?>
+    </div>
+<?php elseif ($block->isReviewEnabled() && $block->getDisplayIfEmpty()): ?>
+    <div
+        class="
+            rating
+            rating--empty
+        "
+    >
+        <a
+            class="action add"
+            href="<?= $block->escapeHtmlAttr($urlForm) ?>"
+        >
+            <?= $block->escapeHtml(__('Be the first to review this product')) ?>
+        </a>
+    </div>
+<?php endif; ?>

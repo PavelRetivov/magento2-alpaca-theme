@@ -1,0 +1,39 @@
+<?php /** @var \Snowdog\Menu\Block\NodeType\CustomUrl $block */ ?>
+<?php
+    $attributes = [];
+    $class = $block->getMenuClass();
+    $classLink = $block->getIsRoot() ? $class . '__label' : 'link footer__link';
+    $title = $block->getTitle();
+    if ($block->getId()) {
+        $attributes[] = 'aria-controls="dropdown-' . $block->getId() . '"';
+    }
+
+    $attributes[] = 'class="' . $classLink . '"';
+
+    if ($block->getTarget()) {
+        $attributes[] = 'target="__blank" rel="noopener"';
+    }
+?>
+
+<?php if ($block->getIsRoot()): ?>
+    <button
+        type="button"
+        <?= /* @noEscape */ implode(' ', $attributes) ?>
+    >
+        <?= $block->escapeHtml($title) ?>
+        <svg
+            class="dropdown-list__icon"
+            role="presentation"
+            focusable="false"
+        >
+            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#angle-down')) ?>"></use>
+        </svg>
+    </button>
+<?php else: ?>
+    <a
+        href="<?= $block->escapeUrl($block->getContent()) ?>"
+        class="<?= $block->escapeHtmlAttr($classLink) ?>"
+    >
+        <?= $block->escapeHtml($title) ?>
+    </a>
+<?php endif; ?>

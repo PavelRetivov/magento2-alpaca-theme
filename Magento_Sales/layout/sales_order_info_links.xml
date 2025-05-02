@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<page
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+>
+    <body>
+        <referenceBlock name="page.main.title">
+            <arguments>
+                <argument name="css_class" xsi:type="string">dashboard__content-heading--with-status margin-bottom-xs</argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceContainer name="content">
+            <block
+                class="Magento\Sales\Block\Order\Info"
+                template="Magento_Sales::order/title.phtml"
+                name="sales.order.info.title"
+                before="sales.order.info.links"
+            />
+
+            <referenceBlock name="sales.order.info.links">
+                <arguments>
+                    <argument name="css_class" xsi:type="string">list margin-bottom-l</argument>
+                </arguments>
+                <referenceBlock name="sales.order.info.links.information"/>
+                <referenceBlock name="sales.order.info.links.invoice"/>
+                <referenceBlock name="sales.order.info.links.shipment"/>
+                <referenceBlock name="sales.order.info.links.creditmemo"/>
+            </referenceBlock>
+        </referenceContainer>
+    </body>
+</page>

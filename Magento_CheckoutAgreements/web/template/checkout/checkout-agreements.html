@@ -1,0 +1,87 @@
+<div data-role="checkout-agreements">
+    <div
+        class="checkout-agreements fieldset"
+        data-bind="visible: isVisible"
+    >
+        <!-- ko foreach: agreements -->
+            <!-- ko if: ($parent.isAgreementRequired($data)) -->
+            <div
+                class="
+                    checkout-agreement
+                    required
+                    checkbox
+                "
+            >
+                <input
+                    type="checkbox"
+                    class="required-entry checkbox__field"
+                    data-bind="attr: {
+                        'id': $parent.getCheckboxId($parentContext, agreementId),
+                        'name': 'agreement[' + agreementId + ']',
+                        'value': agreementId
+                    }"
+                    data-validate="{required:true}"
+                    required
+                />
+                <svg
+                    class="checkbox__icon checkbox__icon--checked"
+                    role="presentation"
+                    focusable="false"
+                >
+                    <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#checked') }" href=''></use>
+                </svg>
+
+                <svg
+                    class="checkbox__icon checkbox__icon--unchecked"
+                    role="presentation"
+                    focusable="false"
+                >
+                    <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#unchecked') }" href=''></use>
+                </svg>
+                <label
+                    class="label checkbox__label"
+                    data-bind="
+                        attr: {'for': $parent.getCheckboxId($parentContext, agreementId)}
+                    "
+                >
+                    <span>
+                        <span data-bind="i18n: 'I agree'"></span>
+                        <span
+                            class="link"
+                            data-bind="
+                                html: checkboxText,
+                                click: function(data, event) { return $parent.showContent(data, event) }
+                            "
+                        ></span>
+                    </span>
+                </label>
+            </div>
+            <!-- /ko -->
+            <!-- ko ifnot: ($parent.isAgreementRequired($data)) -->
+            <div class="checkout-agreement">
+                <button
+                    type="button"
+                    class="button button--secondary"
+                    data-bind="click: function(data, event) { return $parent.showContent(data, event) }"
+                >
+                    <span data-bind="html: checkboxText"></span>
+                </button>
+            </div>
+            <!-- /ko -->
+        <!-- /ko -->
+        <div
+            class="display-none"
+            data-bind="
+                afterRender: initModal,
+                attr: {
+                    id: 'checkout-agreements-modal-' + Date.now()
+                }
+            "
+        >
+            <div
+                class="checkout-agreements-item-content"
+                data-bind="html: modalContent"
+            ></div>
+        </div>
+    </div>
+</div>

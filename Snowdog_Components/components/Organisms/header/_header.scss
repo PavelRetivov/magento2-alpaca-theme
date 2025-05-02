@@ -1,0 +1,158 @@
+@import 'header-variables';
+@import 'button';
+@import 'search-form';
+
+.header {
+    position: relative;
+    border: $header__border;
+    border-width: $header__border-width;
+    background: $header__background;
+
+    @include mq($screen-l) {
+        border: none;
+    }
+
+    &--checkout {
+        position: static;
+
+        .header__wrapper {
+            padding: $header__wrapper-padding--checkout;
+
+            @include mq($screen-m) {
+                padding: $header__wrapper-padding--checkout\@medium;
+            }
+        }
+
+        .header__minicart {
+            border: none;
+        }
+
+        @include mq($screen-l) {
+            border: $header__border;
+            border-width: $header__border-width;
+        }
+    }
+
+    &--email {
+        background-color: $header__background--email;
+    }
+
+    &__wrapper {
+        position: relative;
+        justify-content: space-between;
+        display: flex;
+        flex-flow: row wrap;
+        padding: $header__wrapper-padding;
+
+        @include mq($screen-m) {
+            flex-wrap: nowrap;
+            padding: $header__wrapper-padding\@medium;
+        }
+
+        @include mq($screen-l) {
+            border: $header__border\@large;
+            border-width: $header__border-width\@large;
+            padding: $header__wrapper-padding\@large;
+        }
+    }
+
+    &__logo {
+        padding: $header__logo-padding;
+
+        @include mq($screen-m) {
+            order: $header__logo-order\@medium;
+            padding: $header__logo-padding\@medium;
+        }
+    }
+
+    &__search-wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        flex-grow: $header__search-wrapper-flex-grow;
+        flex-basis: $header__search-wrapper-flex-basis;
+        order: $header__search-wrapper-order;
+        justify-content: center;
+        padding: $header__search-wrapper-padding;
+        z-index: $header__search-wrapper-z-index;
+
+        @include mq($screen-m) {
+            order: $header__search-wrapper-order\@medium;
+            flex-direction: column;
+            justify-content: center;
+            padding: $header__search-wrapper-padding\@medium;
+        }
+
+        @include mq($screen-l) {
+            padding: $header__search-wrapper-padding\@large;
+            max-width: $header__search-wrapper-max-width\@large;
+        }
+
+        @include mq($screen-xl) {
+            padding: $header__search-wrapper-padding\@extra-large;
+            max-width: $header__search-wrapper-max-width\@extra-large;
+        }
+    }
+
+    &__minicart {
+        position: relative;
+        padding-left: $header__minicart-padding-left;
+
+        @include mq($screen-m) {
+            border: $header__minicart-border\@medium;
+            border-width: $header__minicart-border-width\@medium;
+            padding-left: $header__minicart-padding-left\@medium;
+        }
+    }
+
+    &__minicart-modal {
+        z-index: $header__minicart-modal-z-index; // to cover paypal button iframe
+    }
+
+    .button--icon-fill {
+        margin-right: $header__button-wishlist-margin-right;
+
+        @include mq($screen-m) {
+            margin-right: $header__button-wishlist-margin-right\@medium;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        flex: 1 $header__buttons-width;
+        max-width: $header__buttons-width;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: flex-end;
+
+        @include mq($screen-m) {
+            order: $header__buttons-order\@medium;
+            flex-wrap: nowrap;
+            flex: 1 $header__buttons-width\@medium;
+            max-width: $header__buttons-width\@medium;
+        }
+
+        @include mq($screen-xl) {
+            flex: 1 $header__buttons-width\@extra-large;
+            max-width: $header__buttons-width\@extra-large;
+        }
+    }
+
+    &__brief-info {
+        display: $header__brief-info-display;
+        align-items: center;
+        order: $header__brief-info-order;
+        min-width: $header__brief-info-min-width;
+
+        @include mq($screen-l) {
+            display: $header__brief-info-display\@large;
+        }
+
+        .brief-info__subtitle {
+            font-size: $header__brief-info-subtitle-font-size;
+        }
+    }
+
+    .side-menu {
+        order: $header__side-menu-order;
+    }
+}

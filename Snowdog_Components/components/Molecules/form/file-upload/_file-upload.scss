@@ -1,0 +1,96 @@
+@import 'file-upload-variables';
+
+.file-upload {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: $file-upload__margin;
+
+    &--native {
+        input {
+            @include visually-hidden();
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+        position: relative;
+    }
+
+    &__input {
+        @include visually-hidden();
+    }
+
+    &__label {
+        display: flex;
+        flex-basis: 100%;
+        margin-bottom: $spacer;
+        font-size: $file-upload__font-size;
+    }
+
+    &__name {
+        font-size: $file-upload__font-size;
+        margin-top: $file-upload__margin;
+
+        @include mq($screen-s) {
+            margin-left: $file-upload__margin;
+            margin-top: 0;
+        }
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+        padding: $file-upload__button-padding;
+        width: 100%;
+
+        @include mq($screen-s) {
+            width: auto;
+        }
+    }
+
+    &__attachments {
+        [data-role="attached-item"] {
+            display: flex;
+            align-items: center;
+
+            & > span {
+                margin: $file-upload__attachments-label-margin;
+            }
+        }
+
+        [data-role="delete-button"] {
+            padding: $file-upload__attachments-button-padding;
+            background: $file-upload__attachments-button-background;
+
+            &:after {
+                content: $file-upload__attachments-button-content;
+                left: $file-upload__attachments-button-icon-left;
+                top: $file-upload__attachments-button-icon-top;
+                width: $file-upload__attachments-button-icon-width;
+                height: $file-upload__attachments-button-icon-height;
+                padding: $file-upload__attachments-button-icon-padding;
+                opacity: $file-upload__attachments-button-icon-opacity;
+                transform: $file-upload__attachments-button-icon-transform;
+            }
+
+            &:hover {
+                &:before {
+                    display: none;
+                }
+
+                &:after {
+                    transform: $file-upload__attachments-button-icon-transform--hover;
+                }
+            }
+
+            span {
+                display: none;
+            }
+        }
+    }
+}

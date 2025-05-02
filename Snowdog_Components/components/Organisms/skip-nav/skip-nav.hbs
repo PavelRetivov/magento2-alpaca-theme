@@ -1,0 +1,10 @@
+<a
+    href="{{ anchor }}"
+    id="skip-nav-top"
+    class="skip-nav"
+>
+    {{ text }}
+</a>
+{{#if script}}
+    <script src="{{static 'skip-nav.js'}}" defer></script>
+{{/if}}

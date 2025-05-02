@@ -1,0 +1,16 @@
+<?php if ($block->getWishlist()->getItemsCount()): ?>
+    <button
+        type="submit"
+        name="do"
+        title="<?= $block->escapeHtmlAttr(__('Update Wish List')) ?>"
+        class="
+            button
+            actions-group__button
+            margin-bottom-m
+            action
+            update
+        "
+    >
+        <?= $block->escapeHtml(__('Update Wish List')); ?>
+    </button>
+<?php endif; ?>

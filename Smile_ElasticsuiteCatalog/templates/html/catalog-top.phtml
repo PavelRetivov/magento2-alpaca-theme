@@ -1,0 +1,120 @@
+<?php
+$pageTitle = $this->getChildHtml('page.main.title');
+$categoryImage = $this->getChildHtml('category.image');
+$categoryDescription = $this->getChildHtml('category.description');
+$categoryCms = $this->getChildHtml('category.cms');
+
+//temporary fix for 2 lines at the bottom of file:
+//magento/module-page-builder/view/frontend/templates/catalog/category/view/description.phtml
+$emptyTemplateNeedle = '<!--default-empty-->';
+$categoryDescription =
+    (strlen($categoryDescription) > 1) && (!strpos($categoryDescription, $emptyTemplateNeedle))
+    ? $categoryDescription
+    : false;
+?>
+<div
+    class="
+        banner
+        banner--category
+        catalog-list__banner
+        <?php if ($categoryImage): ?>
+            banner--category-image
+        <?php endif; ?>
+    "
+    <?php if ($categoryDescription): ?>
+        data-mage-init='{ "bannerCollapsible": {} }'
+    <?php endif; ?>
+>
+    <div class="banner__wrapper">
+        <div class="banner__image-wrapper">
+            <?php if ($categoryImage): ?>
+                <?= /* @noEscape */ $categoryImage ?>
+            <?php endif; ?>
+        </div>
+
+        <div class="banner__heading-wrapper">
+            <div class="banner__heading">
+                <?= /* @noEscape */ $pageTitle ?>
+            </div>
+            <?php if ($categoryDescription): ?>
+                <button
+                    class="
+                        button
+                        button--icon
+                        banner__button
+                        banner__button-collapse
+                    "
+                    type="button"
+                    aria-label="<?= $block->escapeHtmlAttr(__('check category description')) ?>"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="
+                            button__text
+                            banner__button-text
+                            banner__button-text--open
+                        "
+                    >
+                        <?= $block->escapeHtml(__('More information')) ?>
+                    </span>
+
+                    <span
+                        class="
+                            button__text
+                            banner__button-text
+                            banner__button-text--close
+                            display-none
+                        "
+                    >
+                        <?= $block->escapeHtml(__('Hide Details')) ?>
+                    </span>
+
+                    <svg
+                        class="icon banner__button-icon"
+                        role="presentation"
+                        focusable="false"
+                    >
+                        <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#angle-down')) ?>"></use>
+                    </svg>
+                </button>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php if ($categoryDescription): ?>
+        <div
+            class="banner__content--category"
+            tabindex="-1"
+            aria-hidden="true"
+        >
+            <?= /* @noEscape */ $categoryDescription ?>
+
+            <div class="banner__actions-wrapper">
+                <button
+                    class="
+                        button
+                        button--icon
+                        banner__button
+                        banner__button-close
+                        margin-vc-xs
+                    "
+                    type="button"
+                    aria-label="<?= $block->escapeHtmlAttr(__('hide details')) ?>"
+                >
+                    <span class="button__text banner__button-text">
+                        <?= $block->escapeHtml(__('Hide details')) ?>
+                    </span>
+
+                    <svg
+                        class="icon banner__button-icon"
+                        role="presentation"
+                        focusable="false"
+                    >
+                        <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#angle-up')) ?>"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?= /* @noEscape */ $categoryCms ?>

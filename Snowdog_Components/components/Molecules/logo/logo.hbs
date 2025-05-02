@@ -1,0 +1,15 @@
+<a
+    class="logo {{ class }}"
+    href="{{ href }}"
+    aria-label="{{ ariaLabel}}"
+>
+    <img
+        class="logo__image {{ imageClass }}"
+        {{#if imageSrcSet }}
+            srcset="{{ imageSrcSet }}"
+        {{/if}}
+        src="{{ imageSrc }}"
+        alt="{{ imageAlt }}"
+        {{{ imageAttributes }}}
+    >
+</a>

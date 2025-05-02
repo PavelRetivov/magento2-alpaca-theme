@@ -1,0 +1,65 @@
+<?php $_order = $block->getOrder() ?>
+<div class="dashboard-table">
+
+    <div class="dashboard-table__header">
+        <h2 class="heading dashboard-table__title">
+            <?= $block->escapeHtml(__('Invoice #')) ?>
+            <?= $block->escapeHtml($_order->getIncrementId()) ?>
+        </h2>
+
+        <?= $block->getChildHtml('order_actions') ?>
+
+    </div>
+
+    <?php foreach ($_order->getInvoiceCollection() as $_invoice): ?>
+        <div class="dashboard-table__content">
+            <table
+                class="table"
+                tabindex="0"
+                role="table"
+            >
+                <thead>
+                    <tr>
+                        <th>
+                            <?= $block->escapeHtml(__('Product Name')) ?>
+                        </th>
+
+                        <th>
+                            <?= $block->escapeHtml(__('SKU')) ?>
+                        </th>
+
+                        <th>
+                            <?= $block->escapeHtml(__('Price')) ?>
+                        </th>
+
+                        <th>
+                            <?= $block->escapeHtml(__('Qty Invoiced')) ?>
+                        </th>
+
+                        <th>
+                            <?= $block->escapeHtml(__('Subtotal')) ?>
+                        </th>
+                    </tr>
+                </thead>
+
+                <?php $_items = $_invoice->getAllItems(); ?>
+
+                <?php $_count = count($_items) ?>
+
+                <?php foreach ($_items as $_item): ?>
+                    <?php if ($_item->getOrderItem()->getParentItem()) continue; ?>
+
+                    <tbody>
+                        <?= $block->getItemHtml($_item) ?>
+                    </tbody>
+                <?php endforeach; ?>
+
+                <tfoot>
+                    <?= $block->getInvoiceTotalsHtml($_invoice) ?>
+                </tfoot>
+            </table>
+        </div>
+
+        <?= $block->getInvoiceCommentsHtml($_invoice) ?>
+    <?php endforeach; ?>
+</div>

@@ -1,0 +1,121 @@
+@import 'cookie-message-variables';
+
+.cookie-message {
+    display: none;
+    align-items: stretch;
+    width: $cookie-message__width;
+    padding: $cookie-message__padding;
+    background-color: $cookie-message__background-color;
+    font-size: $cookie-message__font-size;
+    font-family: $cookie-message__font-family;
+    line-height: $cookie-message__line-height;
+
+    &--open {
+        display: flex;
+    }
+
+    &--actions {
+        padding: $cookie-message__padding--actions;
+
+        .cookie-message__container {
+            flex-direction: column;
+
+            @include mq($screen-m) {
+                flex-direction: row;
+            }
+        }
+
+        .cookie-message__button {
+            padding: $cookie-message__button-padding--actions;
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: center;
+        width: $cookie-message__container-wdith;
+        max-width: $cookie-message__container-max-wdith;
+        margin: $cookie-message__container-margin;
+
+        @include mq($screen-m) {
+            justify-content: space-between;
+        }
+    }
+
+    &__text {
+        flex-basis: 100%;
+        padding: $cookie-message__text-padding;
+        margin: $cookie-message__text-margin;
+        color: $cookie-message__text-color;
+        text-align: justify;
+        font-size: inherit;
+        font-family: inherit;
+        letter-spacing: $cookie-message__text-letter-spacing;
+
+        @include mq($screen-m) {
+            text-align: left;
+        }
+    }
+
+    &__link {
+        &.focus-visible {
+            @include focus-inline();
+        }
+    }
+
+    &__button {
+        padding: $cookie-message__button-padding;
+        margin: $cookie-message__button-margin;
+        height: $cookie-message__button-height;
+        min-height: 0;
+        color: $cookie-message__button-color;
+        border: $cookie-message__button-border;
+        background: $cookie-message__button-background;
+        font-weight: $cookie-message__button-font-weight;
+        text-transform: $cookie-message__button-text-transform;
+
+        .button__text {
+            color: $cookie-message__text-color;
+        }
+
+        &:hover {
+            .button__text {
+                color: $cookie-message__text-color;
+            }
+        }
+    }
+
+    &__button-icon {
+        .button--icon & {
+            width: $cookie-message__button-icon-size;
+            height: $cookie-message__button-icon-size;
+            fill: $cookie-message__button-icon-fill;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: center;
+
+        @include mq($screen-m) {
+            flex-basis: auto;
+        }
+
+        .button {
+            white-space: nowrap;
+            width: 100%;
+        }
+    }
+
+    &__action {
+        width: 100%;
+    }
+}
+
+.cookie-message__text > a {
+    @extend .cookie-message__link;
+}

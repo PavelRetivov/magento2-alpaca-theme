@@ -1,0 +1,16 @@
+<div class="more-info">
+    {{ render '@button--icon' trigger }}
+    <div class="more-info__content-wrapper" aria-hidden="true">
+
+        <div class="more-info__content">
+            {{ render '@heading' heading }}
+
+            <div class="more-info__data">
+                {{ content }}
+            </div>
+            
+            {{ render '@button--icon' closeButton }}
+        </div>
+
+    </div>
+</div>

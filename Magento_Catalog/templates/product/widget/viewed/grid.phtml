@@ -1,0 +1,106 @@
+<?php
+// phpcs:disable Magento2.Security.LanguageConstruct.DirectOutput
+// phpcs:disable Magento2.PHP.ShortEchoSyntax.ShortEchoTag
+
+/** @var $block \Magento\Ui\Block\Wrapper */
+?>
+<section
+    class="
+        recently-viewed
+        recently-viewed--grid
+    "
+>
+    <div class="recently-viewed__block">
+        <div
+            class="
+                recently-viewed__heading
+                section__heading
+            "
+        >
+            <h2
+                class="
+                    recently-viewed__title
+                    heading--first-level
+                    margin-0
+                "
+            >
+                <?= $block->escapeHtml(__('Recently Viewed')) ?>
+            </h2>
+        </div>
+
+        <?php
+        $sliderSlidesToShow = $block->getSliderSlidesToShow();
+        $sliderSlidesToShow767 = $block->getSliderSlidesToShow767();
+        $sliderSlidesToShow1023 = $block->getSliderSlidesToShow1023();
+
+        //slider config
+        $sliderIsAjax           = true;
+        $sliderArrows           = true;
+        $sliderClass            = 'slider--products slider--nested';
+        $sliderInfinite         = 'no';
+        $sliderSlidesToShow     = $sliderSlidesToShow ? $sliderSlidesToShow : '2';
+        $sliderSlidesToShow767  = $sliderSlidesToShow767 ? $sliderSlidesToShow767 : '3';
+        $sliderSlidesToShow1023 = $sliderSlidesToShow1023 ? $sliderSlidesToShow1023 : '4';
+        $sliderSlidesToScroll   = '1';
+        $sliderResponsiveConfig = '[
+            {
+                "breakpoint": 767,
+                "settings": {
+                    "slidesToShow":' . $sliderSlidesToShow767 . ',
+                    "slidesToScroll": 1,
+                    "dots": false
+                }
+            },
+            {
+                "breakpoint": 1023,
+                "settings": {
+                    "slidesToShow":' . $sliderSlidesToShow1023 . ',
+                    "slidesToScroll": 1,
+                    "dots": false
+                }
+            }
+        ]';
+        ?>
+        <?php
+        $sliderBlockBefore = $this->getLayout()
+            ->createBlock("Magento\Framework\View\Element\Template")
+            ->setTemplate("Magento_Theme::html/slider.phtml");
+
+        $sliderBlockBefore->setData([
+            'is_ajax'           => $sliderIsAjax,
+            'arrows'            => $sliderArrows,
+            'slides_element'    => '.admin__data-grid-outer-wrap',
+            'slider_html'       => 'before-slides',
+            'slider_class'      => $sliderClass,
+            'infinite'          => $sliderInfinite,
+            'slides_to_show'    => $sliderSlidesToShow,
+            'slides_to_scroll'  => $sliderSlidesToScroll,
+            'responsive_config' => $sliderResponsiveConfig
+        ]);
+        ?>
+        <?= $sliderBlockBefore->toHtml(); ?>
+
+        <?= /* @noEscape */ $block->renderApp([
+            'widget_columns' => [
+                'displayMode' => 'grid',
+                'displayAs' => 'slider',
+                'itemWrapperClasses' => 'slider__item',
+                'itemClasses' => 'product-grid-item product-grid-item--slider-item'
+            ],
+            'image' => [
+                'imageCode' => 'recently_viewed_products_grid_content_widget'
+            ]
+        ]); ?>
+
+        <?php
+        $sliderBlockAfter = $this->getLayout()
+            ->createBlock("Magento\Framework\View\Element\Template")
+            ->setTemplate("Magento_Theme::html/slider.phtml");
+
+        $sliderBlockAfter->setData([
+            'slider_html'   => 'after-slides'
+        ]);
+        ?>
+        <?= $sliderBlockAfter->toHtml(); ?>
+    </div>
+</section>

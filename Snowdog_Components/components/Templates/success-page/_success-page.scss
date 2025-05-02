@@ -1,0 +1,21 @@
+$success-page__padding        : 60px 0 $spacer--extra-large !default;
+$success-page__button-margin  : $spacer--large auto !default;
+$success-page__button-width   : 100% !default;
+$success-page__button-width\@s: auto !default;
+
+.success-page {
+    padding: $success-page__padding;
+
+    &__order-confirmation {
+        padding: $spacer--large 0;
+    }
+
+    &__button {
+        width: $success-page__button-width;
+        margin: $success-page__button-margin;
+
+        @include mq($screen-s) {
+            width: $success-page__button-width\@s;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.actions-toolbar {
+    > .secondary {
+        text-align: center;
+        margin-bottom: $indent__s;
+
+        .action {
+            margin: $indent__s 0;
+
+            @include mq($screen__m) {
+                margin: 0;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

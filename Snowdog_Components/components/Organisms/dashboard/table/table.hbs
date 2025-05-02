@@ -1,0 +1,13 @@
+<div class="dashboard-table {{ class }}">
+    {{#if title }}
+        <div class="dashboard-table__header">
+            {{ render '@heading' title }}
+            {{#if link}}
+                {{ render '@link' link }}
+            {{/if}}
+        </div>
+    {{/if }}
+    <div class="dashboard-table__content">
+        {{ render '@table' table }}
+    </div>
+</div>

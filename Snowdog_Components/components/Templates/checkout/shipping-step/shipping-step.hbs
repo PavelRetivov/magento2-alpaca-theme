@@ -1,0 +1,33 @@
+<div class="page-wrapper">
+    {{ render '@header--checkout' }}
+
+    <main
+        class="page-main container"
+        id="maincontent"
+    >
+
+        <div
+            class="checkout-container"
+            id="checkout"
+        >
+
+            {{ render '@authentication' }}
+            {{ render '@progress-bar' }}
+            {{ render '@estimated-section' }}
+
+            <div class="opc-wrapper">
+                <ol
+                    class="opc"
+                    id="checkout-steps"
+                >
+                    {{ render '@shipping-address' }}
+                    {{ render '@shipping-methods' }}
+                </ol>
+            </div>
+
+            {{ render '@sidebar-checkout' }}
+        </div>
+    </main>
+</div>
+
+{{ render '@footer--checkout' }}

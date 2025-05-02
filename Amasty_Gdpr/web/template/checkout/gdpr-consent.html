@@ -1,0 +1,67 @@
+<!-- ko foreach: { data: items, afterRender: initModal } -->
+<div data-role="amasty-gdpr-consent">
+    <div
+        class="
+            amasty-gdpr-consent
+            checkbox
+        "
+        data-bind="
+            visible: $data.visible,
+            attr: {
+                class: $data.required ? 'amasty-gdpr-consent checkbox required' : 'amasty-gdpr-consent checkbox'
+            }
+        "
+    >
+        <!-- data-checkbox-code as fallback to previous gdpr versions -->
+        <input
+            type="checkbox"
+            value="1"
+            data-bind="
+                attr: {
+                    'title': title,
+                    'name': name,
+                    'id': checkbox_code + $parent.getUniqId(),
+                    'data-checkbox-code': checkbox_code,
+                    'data-gdpr-checkbox-code': checkbox_code,
+                    'data-consent-id': consent_id,
+                    'data-validate': $data.required ? '{required:true}' : null,
+                    class: $data.required ? 'checkbox__field required-entry' : 'checkbox__field'
+            }"
+        />
+
+        <svg
+            class="checkbox__icon checkbox__icon--checked"
+            role="presentation"
+            focusable="false"
+        >
+            <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#checked') }" href=''></use>
+        </svg>
+
+        <svg
+            class="checkbox__icon checkbox__icon--unchecked"
+            role="presentation"
+            focusable="false"
+        >
+            <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#unchecked') }" href=''></use>
+        </svg>
+
+        <label
+            class="checkbox__label"
+            data-bind="attr: {'for': checkbox_code + $parent.getUniqId()}"
+        >
+            <span
+                lass="action"
+                data-bind="html: checkbox_text"
+            ></span>
+        </label>
+    </div>
+</div>
+<!-- /ko -->
+
+<!-- ko if: metaInfo -->
+    <input
+        hidden
+        name="am-gdpr-checkboxes-from"
+        data-bind="attr: {'value': metaInfo.where}"
+    />
+<!-- /ko -->

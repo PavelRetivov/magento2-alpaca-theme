@@ -1,0 +1,40 @@
+<?php
+    /** @var Snowdog\AlpacaGeneral\ViewModel\ProductMetadata $productMetadata */
+
+    $productMetadata = $block->getProductMetadata();
+    $additionalClass = $block->getAdditionalClass();
+?>
+
+<?php if ($block->getWishlistHelper()->isAllow()): ?>
+    <?php $productId = $block->getProduct()->getId(); ?>
+    <button
+        class="
+            button
+            button--icon
+            button--wishlist
+            add-to-wishlist
+            <?php if ($productMetadata->getEdition() == 'B2B'): ?>
+                <?= $block->escapeHtmlAttr($additionalClass) ?>
+            <?php endif; ?>
+        "
+        type="button"
+        title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>"
+        aria-label="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>"
+        data-testid="add-to-wishlist-button"
+        data-multiplewishlist='<?= /* @noEscape */ $block->getAddToWishlistParams($block->getProduct()) ?>'
+        data-mage-init='{
+            "wishlistItem": {
+                "class": "button--icon-filled",
+                "addToParams": <?= /* @noEscape */ $block->getAddToWishlistParams($block->getProduct()) ?>
+            }
+        }'
+    >
+        <svg
+            class="icon button__icon"
+            role="presentation"
+            focusable="false"
+        >
+            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#heart')) ?>"></use>
+        </svg>
+    </button>
+<?php endif; ?>

@@ -1,0 +1,29 @@
+<button
+    if="isAllowed()"
+    class="
+        action
+        button
+        button--icon
+        add-to-wishlist
+        towishlist
+    "
+    data-bind="
+        attr: {
+            title: getLabel()
+        },
+        mageInit: {
+            'wishlistItem': {
+                'class': 'button--icon-filled',
+                'addToParams':  JSON.parse(getDataPost($row()))
+            }
+        }
+    "
+>
+    <svg
+        class="icon button__icon"
+        role="presentation"
+        focusable="false"
+    >
+        <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#heart') }" href=''></use>
+    </svg>
+</button>

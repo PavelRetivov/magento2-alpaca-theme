@@ -1,0 +1,197 @@
+<?php
+// phpcs:disable Generic.Files.LineLength.TooLong
+
+/** @var \Magento\Customer\Block\Form\Login $block */
+?>
+<div class="container auth">
+    <div class="auth__links">
+        <button
+            class="
+                button
+                button--link
+                auth__link
+                auth__link--active
+            "
+        >
+            <?= $block->escapeHtml(__('Login')) ?>
+            <svg
+                class="icon auth__icon"
+                aria-hidden="true"
+            >
+                <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#expand-down')) ?>"></use>
+            </svg>
+        </button>
+        <a
+            href="<?= $block->escapeUrl($block->getUrl('customer/account/create')); ?>"
+            class="
+                button
+                button--link
+                auth__link
+                auth__link--registration
+            "
+        >
+            <?= $block->escapeHtml(__('Create account')) ?>
+            <svg
+                class="icon auth__icon"
+                aria-hidden="true"
+            >
+                <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#expand-down')); ?>"></use>
+            </svg>
+        </a>
+    </div>
+    <div class="account-form">
+        <p class="account-form__info">
+            <?= $block->escapeHtml(__('If you have an account, sign in with your email address.')) ?>
+        </p>
+        <form
+            class="account-form__form"
+            action="<?= $block->escapeUrl($block->getPostActionUrl()); ?>"
+            method="post"
+            data-mage-init='{"validation":{}}'
+        >
+            <?= $block->getBlockHtml('formkey'); ?>
+            <fieldset class="fieldset account-form__fieldset">
+                <legend
+                    class="
+                        fieldset__legend
+                        fieldset__legend--hidden
+                    "
+                >
+                    <?= __('Create') ?>
+                </legend>
+                <div
+                    class="
+                        input
+                        account-form__input
+                        required
+                    "
+                >
+                    <label
+                        class="label"
+                        for="email"
+                    >
+                        <?= $block->escapeHtml(__('Email')) ?>
+                    </label>
+                    <input
+                        name="login[username]"
+                        value="<?= $block->escapeHtmlAttr($block->getUsername()); ?>"
+                        <?= ($block->isAutocompleteDisabled()) ? 'autocomplete="off"': ''; ?>
+                        id="email"
+                        type="email"
+                        class="input__field"
+                        title="<?= $block->escapeHtmlAttr(__('Email')); ?>"
+                        data-validate="{required:true, 'validate-email':true}"
+                        data-mage-init='{"mage/trim-input":{}}'
+                        aria-required="true"
+                    >
+                </div>
+                <div
+                    class="
+                        input
+                        input--password
+                        account-form__input
+                        required
+                    "
+                >
+                    <label
+                        class="label"
+                        for="password"
+                    >
+                        <?= $block->escapeHtml(__('Password')) ?>
+                    </label>
+                    <input
+                        name="login[password]"
+                        type="password"
+                        <?= ($block->isAutocompleteDisabled()) ?  'autocomplete="off"': '' ?>
+                        class="input__field"
+                        id="password"
+                        title="<?= $block->escapeHtmlAttr(__('Password')); ?>"
+                        data-validate="{required:true}"
+                        aria-required="true"
+                    />
+                    <button
+                        type="button"
+                        class="
+                            button
+                            button--icon
+                            input__button-pass
+                        "
+                        aria-label="<?= $block->escapeHtmlAttr(__('Show/hide password')) ?>"
+                        data-mage-init='{"passwordTrigger": {}}'
+                    >
+                        <svg
+                            class="
+                                icon
+                                icon--secondary
+                                input__button-pass-icon-view
+                            "
+                            role="presentation"
+                            focusable="false"
+                        >
+                            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#visibility-off')); ?>"></use>
+                        </svg>
+
+                        <svg
+                            class="
+                                icon
+                                icon--secondary
+                                input__button-pass-icon-hide
+                            "
+                            role="presentation"
+                            focusable="false"
+                        >
+                            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#visibility')); ?>"></use>
+                        </svg>
+                    </button>
+                </div>
+                <?= $block->getChildHtml('form_additional_info'); ?>
+            </fieldset>
+            <div class="account-form__actions">
+                <button
+                    type="submit"
+                    class="button account-form__button"
+                >
+                    <?= $block->escapeHtml(__('Sign In')) ?>
+                </button>
+
+                <a
+                    href="<?=  $block->escapeUrl($block->getForgotPasswordUrl()); ?>"
+                    class="account-form__forgot-password"
+                >
+                    <?= $block->escapeHtml(__('Forgot your password?')) ?>
+                </a>
+            </div>
+            <div class="account-form__validation-tips">
+                * <?= $block->escapeHtml(__('Required Fields')) ?>
+            </div>
+        </form>
+    </div>
+    <div class="auth__links ">
+        <a
+            href="<?= $block->escapeUrl($block->getUrl('customer/account/create')); ?>"
+            class="
+                button
+                button--link
+                auth__link
+                auth__link--registration-mobile
+            "
+        >
+            <?= $block->escapeHtml(__('Create account')) ?>
+            <svg
+                class="icon auth__icon"
+                aria-hidden="true"
+            >
+                <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#expand-down')); ?>"></use>
+            </svg>
+        </a>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "login-form"
+            }
+        }
+    }
+</script>

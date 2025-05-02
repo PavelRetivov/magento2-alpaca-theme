@@ -1,0 +1,87 @@
+$header__border                               : $border-base !default;
+$header__border-width                         : 0 0 $border-width-base 0 !default;
+$header__border\@large                        : 0 !default;
+$header__border-width\@large                  : 0 !default;
+$header__background                           : none !default;
+$header__background--email                    : $white !default;
+
+$header__wrapper-padding                      : 0 0 $spacer !default;
+$header__wrapper-padding\@medium              : $spacer--medium 0 !default;
+$header__wrapper-padding\@large               : $spacer--medium 0 !default;
+
+$header__logo-padding                         : $spacer--small 0 $spacer--small $spacer !default;
+$header__logo-padding\@medium                 : 0 !default;
+$header__logo-order\@medium                   : 2 !default;
+
+$header__buttons-width                        : calc(100% - #{$logo__max-width}) !default;
+$header__buttons-width\@medium                : calc(2 * 48px + 1 * #{$spacer}) !default;
+$header__buttons-order\@medium                : 3 !default;
+$header__buttons-width\@extra-large           : calc(2 * 48px + 1 * #{$spacer--medium}) !default;
+
+$header__search-wrapper-z-index               : $z-index-high + 1 !default;
+$header__search-wrapper-padding               : 0 0 0 $spacer !default;
+$header__search-wrapper-padding\@medium       : 0 24px !default;
+$header__search-wrapper-padding\@large        : 0 $spacer--medium !default;
+$header__search-wrapper-padding\@extra-large  : 0 $spacer--large !default;
+$header__search-wrapper-flex-grow             : 1 !default;
+$header__search-wrapper-flex-basis            : 50% !default;
+$header__search-wrapper-order                 : 3 !default;
+$header__search-wrapper-order\@medium         : 2 !default;
+$header__search-wrapper-max-width\@large      : 350px !default;
+$header__search-wrapper-max-width\@extra-large: 600px !default;
+
+$header__minicart-border\@medium              : $border-base !default;
+$header__minicart-border-width\@medium        : 0 0 0 1px !default;
+$header__minicart-padding-left                : 0 !default;
+$header__minicart-padding-left\@medium        : $spacer !default;
+$header__minicart-modal-z-index               : 101 !default;
+
+$header__button-wishlist-margin-right         : 0 !default;
+$header__button-wishlist-margin-right\@medium : $spacer !default;
+
+$header__brief-info-display                   : none !default;
+$header__brief-info-display\@large            : flex !default;
+$header__brief-info-min-width                 : 220px !default;
+$header__brief-info-order                     : 3 !default;
+$header__brief-info-subtitle-font-size        : $font-size-small !default;
+
+$header__side-menu-order                      : 1 !default;
+
+// Buttons
+$header-button__counter-top                   : 10px !default;
+$header-button__counter-right                 : 10px !default;
+$header-button__counter-font-size             : $font-size-small !default;
+$header-button__counter-background            : $white !default;
+$header-button__counter-color                 : $white !default;
+$header-button__counter-size                  : 10px !default;
+$header-button__counter-border                : none !default;
+$header-button__counter-z-index               : $z-index-low !default;
+
+$header-button__counter-dot-size              : $spacer !default;
+$header-button__counter-dot-bg-color          : $color-error !default;
+
+// Search
+$search-form__position                        : static !default;
+$search-form__position\@medium                : static !default;
+$search-form__width                           : 100% !default;
+$search-form__alignment                       : flex-end !default;
+$search-form__margin                          : 0 !default;
+
+$search-form__button-margin                   : 0 !default;
+$search-form__button-top                      : 1px !default;
+$search-form__button-right                    : 0 !default;
+$search-form__button-border                   : $border-base !default;
+$search-form__button-border-width             : 0 1px !default;
+$search-form__button-border--focus            : $color-focus-inline !default;
+$search-form__button-height                   : 46px !default;
+$search-form__button-background--disabled     : none !default;
+$search-form__button-icon-fill--disabled      : $color-primary !default;
+$search-form__button-transition               : none !default;
+
+$search-form__input-border                    : $border-base !default;
+$search-form__input-wrapper-margin            : 0 !default;
+
+// Checkout variant
+$header__wrapper-padding--checkout            : 0 !default;
+$header__wrapper-padding--checkout\@medium    : $spacer--medium 0 !default;
+

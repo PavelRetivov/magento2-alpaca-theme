@@ -1,0 +1,140 @@
+@import 'minicart-content-variables';
+
+.minicart-content {
+    height: $minicart-content__height;
+    font-size: $minicart-content__font-size;
+    padding: $minicart-content__padding;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+
+    &__top {
+        padding: $minicart-content__top-padding;
+        margin: $minicart-content__top-margin;
+        border: $minicart-content__top-border;
+        border-width: $minicart-content__top-border-width;
+    }
+
+    &__middle {
+        padding: $minicart-content__middle-padding;
+        margin: $minicart-content__middle-margin;
+        border: $minicart-content__middle-border;
+        border-width: $minicart-content__middle-border-width;
+        overflow-y: auto;
+        height: auto !important; // sass-lint:disable-line no-important
+
+        @include hide-scrollbar();
+
+        @include mq($screen-m) {
+            margin: $minicart-content__middle-margin\@medium;
+
+            @include hide-scrollbar(false);
+        }
+    }
+
+    &__bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: $minicart-content__bottom-width;
+        padding: $minicart-content__bottom-padding;
+        margin: $minicart-content__bottom-margin;
+        background: $minicart-content__bottom-background;
+        border: $minicart-content__bottom-border;
+        border-width: $minicart-content__bottom-border-width;
+        box-shadow: $minicart-content__bottom-box-shadow;
+
+        @include mq($screen-m) {
+            position: relative;
+            padding: $minicart-content__bottom-padding\@medium;
+            box-shadow: $minicart-content__bottom-box-shadow\@medium;
+        }
+    }
+
+    &__heading {
+        font-size: $minicart-content__heading-font-size;
+        font-weight: $minicart-content__heading-font-weight;
+        margin: $minicart-content__heading-margin;
+
+        @include font-padding(
+            $minicart-content__heading-font-size,
+            $minicart-content__heading-height,
+            $minicart-content__heading-padding-right,
+            $minicart-content__heading-padding-left
+        );
+
+        @include mq($screen-m) {
+            font-size: $minicart-content__heading-font-size\@medium;
+
+            @include font-padding(
+                $minicart-content__heading-font-size\@medium,
+                $minicart-content__heading-height,
+                $minicart-content__heading-padding-right,
+                $minicart-content__heading-padding-left
+            );
+        }
+    }
+
+    &__counter {
+        font-size: $minicart-content__counter-font-size;
+        font-weight: $minicart-content__counter-font-weight;
+        margin: $minicart-content__counter-margin;
+
+        @include font-padding(
+            $minicart-content__counter-font-size,
+            $minicart-content__counter-height,
+            $minicart-content__counter-padding-right,
+            $minicart-content__counter-padding-left
+        );
+    }
+
+    &__summary {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        margin: $minicart-content__summary-margin;
+        font-size: $minicart-content__summary-font-size;
+
+        @include mq($screen-m) {
+            padding: $minicart-content__summary-margin\@medium;
+        }
+    }
+
+    &__summary-label {
+        color: $minicart-content__summary-label-color;
+        font-weight: $minicart-content__summary-label-font-weight;
+        text-transform: $minicart-content__summary-label-text-transform;
+    }
+
+    &__summary-value {
+        color: $minicart-content__summary-value-color;
+        font-weight: $minicart-content__summary-value-font-weight;
+    }
+
+    &__actions {
+        display: flex;
+        flex-flow: $minicart-content__action-flex-flow;
+        justify-content: $minicart-content__action-justify;
+        padding: $minicart-content__actions-padding;
+    }
+
+    &__extra-actions {
+        flex: $minicart-content__extra-actions-flex;
+
+        & > div {
+            display: flex;
+            padding: $minicart-content__extra-actions-padding;
+        }
+    }
+
+    &__action-button {
+        width: $minicart-content__action-button-width;
+        padding: $minicart-content__action-button-padding;
+    }
+
+    &__products-list {
+        margin: $minicart-content__products-list-margin;
+        padding: $minicart-content__products-list-padding;
+    }
+}

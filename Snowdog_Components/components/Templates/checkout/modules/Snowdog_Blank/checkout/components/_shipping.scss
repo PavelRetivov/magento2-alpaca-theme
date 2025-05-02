@@ -1,0 +1,213 @@
+//
+//  Variables
+//  _____________________________________________
+
+$checkout-shipping-item__border                 : 2px solid transparent !default;
+$checkout-shipping-item__line-height            : 30px !default;
+$checkout-shipping-item__margin                 : 0 0 $indent__base !default;
+$checkout-shipping-item__padding                : $indent__base ($indent__l + 5px) $indent__base $indent__base !default;
+$checkout-shipping-item__transition             : 0.3s border-color !default;
+$checkout-shipping-item__width                  : 50% !default;
+$checkout-shipping-item__min-height             : 300px !default;
+$checkout-shipping-item-tablet__width           : 50% !default;
+$checkout-shipping-item__active__border-color   : $color-orange-red1 !default;
+
+$checkout-shipping-item-mobile__padding         : 0 0 15px !default;
+
+$checkout-shipping-item__text-font-size         : $font-size-base !default;
+$checkout-shipping-item__text-margin            : 0 0 $spacer !default;
+
+$checkout-shipping-item__border--search         : $border-base !default;
+$checkout-shipping-item__border-width--search   : 1px 0 0 0 !default;
+
+$checkout-shipping-method__border               : $checkout-step-title__border !default;
+$checkout-shipping-method__padding              : 0 !default;
+$checkout-shipping-method__toolbar-align\@medium: center !default;
+$checkout-shipping-method__toolbar-align\@large : flex-end !default;
+$checkout-shipping-method__next-width           : 100% !default;
+$checkout-shipping-method__next-width\@medium   : 224px !default;
+$checkout-shipping-method__next-align\@medium   : flex-end !default;
+
+//
+//  Common
+//  _____________________________________________
+
+.opc-wrapper {
+    .shipping-address-items {
+        font-size: 0;
+    }
+
+    .shipping-address-item {
+        @extend .abs-add-box-sizing;
+        border: $checkout-shipping-item__border;
+        line-height: $checkout-shipping-item__line-height;
+        margin: $checkout-shipping-item__margin;
+        padding: $checkout-shipping-item__padding;
+        transition: $checkout-shipping-item__transition;
+        width: $checkout-shipping-item-tablet__width;
+        min-height: $checkout-shipping-item__min-height;
+        display: inline-block;
+        font-size: $font-size__base;
+        position: relative;
+        vertical-align: top;
+        word-wrap: break-word;
+
+        &.selected-item,
+        &.selected {
+            border-color: $checkout-shipping-item__active__border-color;
+        }
+
+        &__icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            fill: $green;
+        }
+
+        &__edit-button {
+            margin-bottom: 10px;
+        }
+
+        &__text {
+            font-size: $checkout-shipping-item__text-font-size;
+            margin: $checkout-shipping-item__text-margin;
+        }
+    }
+
+    .field {
+        &.addresses {
+            @extend .abs-add-clearfix;
+        }
+    }
+
+    .action-show-popup {
+        margin: 0 0 $indent__base;
+
+        > span {
+            &:before {
+                content: '+';
+                padding-right: $indent__xs;
+            }
+        }
+    }
+}
+
+.action-menu-item {
+    border: $checkout-shipping-item__border--search;
+    border-width: $checkout-shipping-item__border-width--search;
+}
+
+//
+//  Shipping Methods
+//  _____________________________________________
+
+.checkout-shipping-method {
+    .no-quotes-block {
+        margin: $indent__base 0;
+    }
+    @include mq($screen-m) {
+        .actions-toolbar {
+            justify-content: $checkout-shipping-method__toolbar-align\@medium;
+        }
+    }
+    @include mq($screen-l) {
+        .actions-toolbar {
+            justify-content: $checkout-shipping-method__toolbar-align\@large;
+        }
+    }
+    &__next {
+        min-width: $checkout-shipping-method__next-width;
+        @include mq($screen-m) {
+            min-width: $checkout-shipping-method__next-width\@medium;
+            &.primary {
+                justify-content: $checkout-shipping-method__next-align\@medium;
+            }
+        }
+    }
+}
+
+.table-checkout-shipping-method {
+    thead {
+        th {
+            display: none;
+        }
+    }
+
+    tbody {
+        td {
+            border-top: $checkout-shipping-method__border;
+            padding: $spacer--semi-medium $spacer--small;
+
+            &:first-child {
+                width: 20px;
+            }
+        }
+
+        tr {
+            &:first-child {
+                td {
+                    border-top: none;
+                }
+            }
+        }
+
+        .row-error {
+            td {
+                border-top: none;
+                padding-bottom: $indent__s;
+                padding-top: 0;
+            }
+        }
+
+        .radio,
+        .radio__label {
+            margin: 0;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@include mq($screen__s) {
+    .opc-wrapper {
+        .shipping-address-item {
+            width: 100%;
+
+            &.selected-item {
+                border-bottom-width: 2px;
+            }
+        }
+
+        .action-select-shipping-item,
+        .change-address-popup .action-additional {
+            float: none;
+            margin-top: $indent__s;
+            width: 100%;
+        }
+
+        .action-show-popup {
+            width: 100%;
+        }
+
+        .edit-address-link {
+            margin: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+@include mq($screen__l) {
+    .opc-wrapper {
+        .shipping-address-item {
+            width: $checkout-shipping-item__width;
+        }
+    }
+}

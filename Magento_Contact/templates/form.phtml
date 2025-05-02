@@ -1,0 +1,134 @@
+<?php
+/** @var \Magento\Contact\Block\ContactForm $block */
+/** @var \Magento\Contact\ViewModel\UserDataProvider $viewModel */
+
+$viewModel = $block->getViewModel();
+?>
+<div class="row center-xs">
+    <div
+        class="
+            col-xs-12
+            col-md-8
+            col-lg-6
+            start-xs
+        "
+    >
+        <form
+            class="form contact-us"
+            action="<?= $block->escapeUrl($block->getFormAction()) ?>"
+            id="contact-form"
+            method="post"
+            data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+            data-mage-init='{"validation":{}}'
+        >
+            <fieldset class="fieldset">
+                <legend class="fieldset__legend fieldset__legend--hidden">
+                    <?= $block->escapeHtml(__('Write Us')) ?>
+                </legend>
+                <div class="contact-us__description text-center">
+                    <?= $block->getLayout()
+                        ->createBlock('Magento\Cms\Block\Block')
+                        ->setBlockId('contact-form-description')
+                        ->toHtml();
+                    ?>
+                </div>
+                <div class="input required">
+                    <label
+                        class="label input__label"
+                        for="name"
+                    >
+                        <?= $block->escapeHtml(__('Name')) ?>
+                    </label>
+                    <input
+                        name="name"
+                        id="name"
+                        title="<?= $block->escapeHtmlAttr(__('Name')) ?>"
+                        value="<?= $block->escapeHtmlAttr($viewModel->getUserName()) ?>"
+                        class="input__field"
+                        type="text"
+                        data-validate="{required:true}"
+                    />
+                </div>
+                <div class="input required">
+                    <label
+                        class="label input__label"
+                        for="email"
+                    >
+                        <?= $block->escapeHtml(__('Email')) ?>
+                    </label>
+                    <input
+                        name="email"
+                        id="email"
+                        title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                        value="<?= $block->escapeHtmlAttr($viewModel->getUserEmail()) ?>"
+                        class="input__field"
+                        type="email"
+                        data-validate="{required:true, 'validate-email':true}"
+                        data-mage-init='{"mage/trim-input":{}}'
+                    />
+                </div>
+                <div class="input">
+                    <label
+                        class="label input__label"
+                        for="telephone"
+                    >
+                        <?= $block->escapeHtml(__('Phone')) ?>
+                    </label>
+                    <input
+                        name="telephone"
+                        id="telephone"
+                        title="<?= $block->escapeHtmlAttr(__('Phone')) ?>"
+                        value="<?= $block->escapeHtmlAttr($viewModel->getUserTelephone()) ?>"
+                        class="input__field"
+                        type="tel"
+                    />
+                </div>
+                <div class="input required">
+                    <label
+                        class="label input__label"
+                        for="comment"
+                    >
+                        <?= $block->escapeHtml(__('Comments/Questions')) ?>
+                    </label>
+                    <textarea
+                        name="comment"
+                        id="comment"
+                        title="<?= $block->escapeHtmlAttr(__('Comments/Questions')) ?>"
+                        class="input__field input__field--textarea"
+                        rows="3"
+                        data-validate="{required:true}"
+                    ><?= $block->escapeHtml($viewModel->getUserComment()) ?></textarea>
+                </div>
+                <?= $block->getChildHtml('form.additional.info') ?>
+            </fieldset>
+            <div class="actions-group">
+                <div class="actions-group__handler">
+                    <input type="hidden" name="hideit" id="hideit" value="" />
+                    <button
+                        type="submit"
+                        title="<?= $block->escapeHtmlAttr(__('Submit')) ?>"
+                        class="
+                            actions-group__button
+                            button
+                            contact-us__button
+                        "
+                    >
+                    <?= $block->escapeHtml(__('Submit Message')) ?>
+                    </button>
+                </div>
+            </div>
+            <p class="contact-us__tips">
+                <?= $block->escapeHtml(__('Fields marked * are mandatory')) ?>
+            </p>
+        </form>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "contact-form"
+            }
+        }
+    }
+</script>

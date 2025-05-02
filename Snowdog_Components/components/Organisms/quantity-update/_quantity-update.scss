@@ -1,0 +1,117 @@
+@import 'quantity-update-variables';
+
+.quantity-update {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: $quantity-update__max-width;
+    width: $quantity-update__width;
+    transition: $quantity-update__transition;
+
+    @include mq($screen-m) {
+        max-width: $quantity-update__max-width\@medium;
+    }
+
+    &--active {
+        .quantity-update__input {
+            border: $quantity-update__border--active;
+        }
+    }
+
+    &--no-buttons-m {
+        @include mq($screen-m) {
+            .quantity-update {
+                &__button {
+                    display: none;
+                }
+
+                &__input {
+                    border-width: $border-width-base;
+                }
+            }
+        }
+
+        @include mq($screen-xxl) {
+            .quantity-update {
+                &__button {
+                    display: flex;
+                }
+
+                &__input {
+                    border-width: $quantity-update__input-border-width;
+                }
+            }
+        }
+    }
+
+    &__input {
+        flex-grow: 1;
+        order: 2;
+        border-style: $quantity-update__input-border-style;
+        border-color: $quantity-update__input-border-color;
+        border-width: $quantity-update__input-border-width;
+        border-radius: $quantity-update__input-border-radius;
+        width: $quantity-update__input-width;
+        height: $quantity-update__input-height;
+        color: $quantity-update__input-color;
+        font-size: $quantity-update__input-font-size;
+        text-align: center;
+        appearance: none;
+
+        @include mq($screen-m) {
+            flex-grow: initial;
+        }
+
+        &.focus-visible {
+            outline: none;
+        }
+
+        &.mage-error {
+            border-width: $quantity-update__input-border-width--error;
+        }
+    }
+
+    & &__button {
+        width: $quantity-update__button-size;
+        height: $quantity-update__button-size;
+        margin: $quantity-update__button-margin;
+        border-style: $quantity-update__button-border-style;
+        border-color: $quantity-update__button-border-color;
+        border-width: $quantity-update__button-border-width;
+
+        &:focus {
+            border-color: $quantity-update__button-border-color;
+        }
+
+        &--plus {
+            border-left: 0;
+            order: 3;
+        }
+
+        &--minus {
+            border-right: 0;
+            order: 1;
+        }
+    }
+
+    &__alert {
+        @include visually-hidden();
+    }
+
+    // Disable spin buttons in number input type
+    input[type="number"]::-webkit-outer-spin-button, // sass-lint:disable-line no-vendor-prefixes
+    input[type="number"]::-webkit-inner-spin-button { // sass-lint:disable-line no-vendor-prefixes
+        -webkit-appearance: none; // sass-lint:disable-line no-vendor-prefixes
+        margin: 0;
+    }
+
+    input[type="number"] { // sass-lint:disable-line no-vendor-prefixes
+        -moz-appearance: textfield; // sass-lint:disable-line no-vendor-prefixes
+    }
+
+    div.mage-error {
+        bottom: $quantity-update__mage-error-bottom;
+        width: $quantity-update__mage-error-width;
+        order: 4;
+    }
+}

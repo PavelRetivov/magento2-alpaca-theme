@@ -1,0 +1,163 @@
+@import 'contact-bar-variables';
+
+.contact-bar {
+    display: none;
+    min-height: $contact-bar__height;
+    margin: $contact-bar__margin;
+    background: $contact-bar__background;
+    padding: $contact-bar__padding;
+
+    @include mq($contact-bar__display-from) {
+        display: flex;
+    }
+
+    &--vertical {
+        display: block;
+        background: $contact-bar__bg--vertical;
+
+        .contact-bar {
+            &__container {
+                flex-direction: column;
+                min-width: initial;
+                width: $contact-bar__container-width--vertical;
+            }
+
+            &__list {
+                align-items: $contact-bar__list-align-items--vertical;
+                flex-flow: column nowrap;
+
+                &--icons {
+                    align-items: $contact-bar__list-icons-align-items--vertical;
+                    border: $contact-bar__list-icons-border--vertical;
+                    border-width: $contact-bar__list-icons-border-width--vertical;
+                    margin: $contact-bar__list-icons-margin--vertical;
+
+                    .contact-bar__link {
+                        font-size: $contact-bar__list-icons-link-font-size--vertical;
+                    }
+                }
+            }
+
+            &__item {
+                margin: $contact-bar__item-margin--vertical;
+            }
+
+            &__link {
+                color: $contact-bar__link-color--vertical;
+                font-size: $contact-bar__link-font-size--vertical;
+                color: $contact-bar__link-color--vertical;
+                padding: $contact-bar__link-padding--vertical;
+                background: $contact-bar__link-bg--vertical;
+                text-transform: $contact-bar__link-text-transform--vertical;
+
+                &:before {
+                    display: $contact-bar__link-before-display--vertical;
+                }
+
+                &:hover {
+                    color: $contact-bar__link-color-hover--vertical;
+                }
+            }
+
+            &__icon {
+                .icon {
+                    fill: $contact-bar__icon-fill--vertical;
+                }
+            }
+
+            &__icon {
+                fill: $contact-bar__icon-fill--vertical;
+            }
+        }
+    }
+
+    &__wrapper {
+        width: 100%;
+    }
+
+    &__container {
+        display: flex;
+        justify-content: $contact-bar__container-justify;
+        flex-direction: $contact-bar__container-direction;
+
+        @include mq($contact-bar__container-threshold) {
+            width: $contact-bar__container-width;
+        }
+    }
+
+    &__list {
+        display: flex;
+
+        &--icons {
+            .contact-bar__link {
+                font-size: $contact-bar__link-font-size--icons;
+                font-weight: $contact-bar__link-font-weight--icons;
+                text-transform: $contact-bar__link-text-transform--icons;
+            }
+        }
+    }
+
+    &__item {
+        display: flex;
+        margin: $contact-bar__item-margin;
+        padding: $contact-bar__item-padding;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: $contact-bar__link-align-items;
+        padding: $contact-bar__link-padding;
+        line-height: $contact-bar__link-line-height;
+        font-size: $contact-bar__link-font-size;
+        font-weight: $contact-bar__link-font-weight;
+        color: $contact-bar__link-color;
+        background-color: $contact-bar__link-bg;
+        text-decoration: $contact-bar__link-text-decoration;
+        text-transform: $contact-bar__link-text-transform;
+        min-height: $contact-bar__link-min-height;
+
+        &:before {
+            background-color: $contact-bar__link-before-bg;
+        }
+
+        &.focus-visible {
+            @include focus-inline();
+        }
+
+        &:hover {
+            text-decoration: $contact-bar__link-hover-text-decoration;
+            color: $contact-bar__link-color--hover;
+            background: $contact-bar__link-hover-background-hover;
+
+            .contact-bar__text {
+                color: $contact-bar__link-color--hover;
+            }
+
+            .contact-bar__icon {
+                .icon {
+                    fill: $contact-bar__icon-fill-hover;
+                }
+            }
+        }
+    }
+
+    &__text {
+        transition: $contact-bar__transition;
+    }
+
+    &__icon {
+        margin: $contact-bar__icon-margin;
+
+        .icon {
+            fill: $contact-bar__icon-fill;
+        }
+    }
+}

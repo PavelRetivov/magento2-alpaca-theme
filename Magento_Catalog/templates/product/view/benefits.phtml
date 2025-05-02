@@ -1,0 +1,42 @@
+<?php
+    $buttonCmsId1 = $block->getButtonCmsId1();
+    $buttonCmsId2 = $block->getButtonCmsId2();
+?>
+<div class="product-view__brief">
+    <div class="brief-info">
+        <ul class="list brief-info__items-container">
+            <li class="list__item brief-info__list-item">
+                <button
+                    class="brief-info__item modal-trigger"
+                    type="button"
+                    data-modal-trigger="popup-product-benefit-1"
+                    data-mage-init='{"modal" : {}}'
+                >
+                    <?= $block
+                            ->getLayout()
+                            ->createBlock('Magento\Cms\Block\Block')
+                            ->setBlockId($buttonCmsId1)
+                            ->toHtml();
+                    ?>
+                </button>
+            </li>
+            <li class="list__item brief-info__list-item">
+                <button
+                    class="brief-info__item modal-trigger"
+                    type="button"
+                    data-modal-trigger="popup-product-benefit-2"
+                    data-mage-init='{"modal" : {}}'
+                >
+                    <?= $block
+                            ->getLayout()
+                            ->createBlock('Magento\Cms\Block\Block')
+                            ->setBlockId($buttonCmsId2)
+                            ->toHtml();
+                    ?>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+<?= $block->getChildHtml('popup.product.benefit1'); ?>
+<?= $block->getChildHtml('popup.product.benefit2'); ?>

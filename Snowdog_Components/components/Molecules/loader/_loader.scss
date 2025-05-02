@@ -1,0 +1,40 @@
+$loader__size            : 100% !default;
+$loader__icon-size       : 56px !default;
+$loader__background      : rgba(255, 255, 255, 0.5) !default;
+$loader__z-index         : $z-index-high !default;
+$loader__border          : 8px solid $black !default;
+$loader__border-top-color: transparent !default;
+$loader__border-radius   : 50% !default;
+$loader__animation       : spin 1s linear infinite !default;
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    width: $loader__size;
+    height: $loader__size;
+    background-color: $loader__background;
+    z-index: $loader__z-index;
+
+    &--visible {
+        display: block;
+    }
+
+    &__icon {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: $loader__icon-size;
+        height: $loader__icon-size;
+        margin: auto;
+        background: transparent;
+        border: $loader__border;
+        border-top-color: $loader__border-top-color;
+        border-radius: $loader__border-radius;
+        animation: $loader__animation;
+    }
+}

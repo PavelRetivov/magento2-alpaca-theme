@@ -1,0 +1,216 @@
+@import 'select-variables';
+
+.select {
+    margin-bottom: $select__margin-bottom;
+
+    &:focus-within {
+        .label {
+            color: $select__label-color-focus;
+        }
+    }
+
+    &--native {
+        select {
+            position: relative;
+            width: 100%;
+            min-width: $select__min-width;
+            height: $select__height;
+            padding: $select__padding;
+            border: $select__border;
+            border-radius: $select__border-radius;
+            appearance: none;
+            transition: $select__transition;
+            font-family: $select__font-family;
+            line-height: $select__line-height;
+            font-size: $select__field-font-size;
+            background: $select__field-background;
+            background-image: $select__field-bg-image--native;
+            background-repeat: $select__field-bg-repeat--native;
+            background-position: $select__field-bg-position--native;
+            cursor: pointer;
+
+            &:disabled {
+                background-color: $select__background-disabled;
+                cursor: not-allowed;
+            }
+
+            &.focus-visible {
+                @include focus-input();
+            }
+
+            &.mage-error {
+                border-color: $input__error-color;
+            }
+        }
+    }
+
+
+    &--multi {
+        .select__field {
+            width: 100%;
+            height: auto;
+        }
+        option {
+            display: flex;
+            align-items: center;
+            height: $select__height;
+            line-height: $select__line-height;
+            font-size: $select__field-font-size;
+
+            &:hover,
+            &:focus {
+                background-color: $select__option-bg-color--highlighted;
+                color: $select__option-color--highlighted;
+            }
+        }
+    }
+
+    &--inline {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+    }
+
+    &--with-button {
+        @include mq($screen-m) {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &--inline,
+    &--with-button {
+        .label {
+            margin: $select__label-margin--inline;
+            white-space: $select__white-space--inline;
+        }
+    }
+
+    &__button {
+        flex-shrink: 0;
+        margin: $spacer--medium 0 0;
+
+        @include mq($screen-m) {
+            margin: 0 0 0 $spacer--medium;
+        }
+    }
+
+    &__field {
+        position: relative;
+        height: $select__height;
+        padding: $select__padding;
+        line-height: $select__line-height;
+        font-size: $select__field-font-size;
+        cursor: pointer;
+        border: $select__border;
+        border-radius: $select__border-radius;
+        background: $select__field-background;
+        appearance: none;
+
+        &:disabled {
+            background-color: $select__background-disabled;
+            cursor: not-allowed;
+        }
+
+        &.focus-visible {
+            @include focus-input();
+        }
+    }
+
+    &__field-list {
+        &--single {
+            height: $select__height;
+            padding: 0;
+            border: $select__border;
+            border-radius: $select__border-radius;
+            line-height: $select__line-height;
+        }
+    }
+
+    &__field-input {
+        transition: $select__transition;
+
+        &:focus {
+            outline: $outline-base;
+        }
+    }
+}
+
+// select2 overwrite styles
+.select2 {
+    width: 100%;
+}
+.select2-container {
+    .select2-selection--single {
+        height: $select__height;
+        width: 100%;
+        border: $select__border;
+        border-radius: $select__border-radius;
+
+        .select2-selection__rendered {
+            width: 100%;
+            padding: $select__field-padding;
+            line-height: $select__height;
+            color: $select__field-color;
+        }
+
+        .select2-selection__arrow {
+            height: $select__height;
+            top: $select__arrow-position-top;
+            right: $select__arrow-position-right;
+            b {
+                padding: $select__arrow-padding;
+                border-color: $select__arrow-bg-color;
+                border-width: $select__arrow-border-width;
+                margin-top: $select__arrow-margin-top;
+                pointer-events: none;
+                transform: $select__arrow-transform;
+                transition: $select__arrow-transition;
+            }
+        }
+    }
+    &.select2-container--open {
+        .select2-selection--single {
+            @include focus-input();
+            .select2-selection__arrow b {
+                border-color: $select__arrow-bg-color;
+                border-width: $select__arrow-border-width;
+                transform: $select__arrow-transform--open;
+                margin-top: 0;
+            }
+        }
+    }
+
+    .select2-results {
+        &__options {
+            max-height: 300px;
+        }
+
+        &__option {
+            position: relative;
+            height: $select__height;
+            line-height: $select__height;
+            padding: $select__option-padding;
+            font-size: $select__option-font-size;
+            overflow: $select__option-overflow;
+            text-overflow: $select__option-text-overflow;
+            white-space: $select__option-white-space;
+
+            &[aria-selected=true] {
+                background-color: $select__option-selected-bg;
+            }
+
+            &--highlighted[aria-selected] {
+                background-color: $select__option-bg-color--highlighted;
+                color: $select__option-color--highlighted;
+            }
+        }
+    }
+
+    .select2-dropdown {
+        border: $select__border;
+        border-radius: $select__border-radius;
+        border-width: $select__dropdown-border-width;
+        box-shadow: $select__option-list-shadow;
+    }
+}

@@ -1,0 +1,33 @@
+<?php
+/** @var \Amasty\GdprCookie\Block\Widget\Settings $block */
+
+if (!$block->isNeedToShow()) {
+    return;
+}
+?>
+<div
+    data-role="gdpr-cookie-widget-container"
+    class="amgdprcookie-main-wrapper"
+    data-bind="scope: 'gdpr-cookie-settings-widget'"
+>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- ko if: $data.elems().length -->
+        <!-- ko foreach: $data.elems() -->
+            <!--ko template: getTemplate()--><!-- /ko -->
+        <!-- /ko -->
+    <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "[data-role=gdpr-cookie-widget-container]": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "gdpr-cookie-settings-widget": {
+                        "component": "Amasty_GdprCookie/js/settings"
+                    }
+                }
+            }
+        }
+    }
+</script>

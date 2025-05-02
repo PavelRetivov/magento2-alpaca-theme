@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+>
+    <head>
+        <remove src="mage/calendar.css"/>
+    </head>
+    <body>
+        <referenceContainer name="after.body.start">
+            <block
+                class="Magento\Framework\View\Element\Js\Components"
+                name="head.theme.libs"
+                as="themejs"
+                template="Magento_Theme::js/theme-libs.phtml"
+                before="-"
+            />
+            <!--
+                see: https://github.com/magento/devdocs/issues/9095
+             -->
+            <referenceBlock name="cookie-status-check" remove="true"/>
+        </referenceContainer>
+    </body>
+</page>

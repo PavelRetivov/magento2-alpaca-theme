@@ -1,0 +1,13 @@
+<a
+    href="<?= $block->escapeUrl($block->getUrl('customer/account/logout')) ?>"
+    class="
+        button
+        button--secondary
+        dashboard-nav__button
+        dashboard-nav__logout-button
+        <?= $block->escapeHtmlAttr($block->getCssClass()) ?>
+    "
+    title="<?= $block->escapeHtmlAttr(__('Sign out')) ?>"
+>
+    <?= $block->escapeHtml(__('Sign out')) ?>
+</a>

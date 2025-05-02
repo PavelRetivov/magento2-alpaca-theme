@@ -1,0 +1,34 @@
+//
+//  Sections variables
+//  _____________________________________________
+
+//
+//  Tabs
+//  ---------------------------------------------
+
+//  Tabs controls
+
+$tab-control__font-family: inherit !default;
+$tab-control__font-style: inherit !default;
+$tab-control__height: $indent__base !default;
+
+$tab-control__padding-top: $indent__xs !default;
+$tab-control__padding-bottom: $indent__xs !default;
+$tab-control__padding-right: $indent__base !default;
+$tab-control__border-color: $border-color__base !default;
+$tab-control__border-width: $border-width__base !default;
+
+//  Current tab
+$tab-control__background-color: $gray-lighter !default;
+$tab-control__color: $text__color__muted !default;
+$tab-control__hover__color: $tab-control__color !default;
+$tab-control__text-decoration: none !default;
+$tab-control__active__background-color: lighten($tab-control__background-color, 15%) !default;
+
+$tab-content__border: $tab-control__border-width solid $tab-control__border-color !default;
+$tab-content__margin-top: $tab-control__height + $tab-control__border-width + $tab-control__padding-top + $tab-control__padding-bottom !default;
+
+$tab-content__padding-top: $indent__base !default;
+$tab-content__padding-right: $indent__base !default;
+$tab-content__padding-bottom: $indent__base !default;
+$tab-content__padding-left: $indent__base !default;

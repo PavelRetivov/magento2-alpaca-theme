@@ -1,0 +1,32 @@
+<?php /** @var \Snowdog\Menu\Block\NodeType\CustomUrl $block */ ?>
+<?php
+    $attributes = [];
+    $class = $block->getMenuClass();
+    $classLink = $block->getIsRoot() ? $class . '__link' : $class . '__inner-link';
+    $title = $block->getTitle();
+    $imageUrl = $block->getImageUrl();
+    $imageAltText = $block->getImageAltText();
+    if ($block->getId()) {
+        $attributes[] = 'data-menu="menu-' . $block->getId() . '"';
+    }
+
+    $attributes[] = 'class="' . $classLink . '"';
+
+    if ($block->getTarget()) {
+        $attributes[] = 'target="__blank" rel="noopener"';
+    }
+?>
+<a
+    href="<?= $block->escapeUrl($block->getContent()) ?>"
+    <?= /* @noEscape */ implode(' ', $attributes) ?>
+>
+    <?= $block->escapeHtml($title) ?>
+</a>
+<?php if ($imageUrl): ?>
+    <img
+        src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAABCAQAAABN/Pf1AAAAC0lEQVR42mNkwAIAACoAAgu1Hc4AAAAASUVORK5CYII="
+        data-src="<?= $block->escapeUrl($imageUrl); ?>"
+        alt="<?= $block->escapeHtmlAttr($imageAltText); ?>"
+        class="image lazyload"
+    />
+<?php endif; ?>

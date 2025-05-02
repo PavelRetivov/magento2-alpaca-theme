@@ -1,0 +1,50 @@
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+// phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+// phpcs:disable Magento2.Security.LanguageConstruct.DirectOutput
+?>
+<?php
+    /** @var \Snowdog\CategoryAttributes\ViewModel\ImageSize $categoryImageViewModel */
+    $categoryImageViewModel = $block->getCategoryImageViewModel();
+    $_category = $block->getCurrentCategory();
+    $_imgHtml = '';
+    $_imgUrl = $block->getImage()? $block->getImage()->getUrl($_category): null;
+?>
+<?php if ($_imgUrl): ?>
+    <?php
+        $imgSize = $categoryImageViewModel->get($_category);
+        $imgWidth = $imgSize['width'];
+        $imgHeight = $imgSize['height'];
+        $aspectRatio = $imgHeight && $imgWidth ? ($imgHeight / $imgWidth) * 100 : 0;
+        $aspectRatioClass = $aspectRatio > 0 ? 'ratio-container' : '';
+
+        $_imgHtml = '
+            <div
+                class="
+                    category-image
+                    '. $aspectRatioClass .'
+                "
+                style="padding-bottom:' . $aspectRatio . '%"
+            >
+                <img
+                    src="' . $block->escapeUrl($_imgUrl) . '"
+                    alt="' . $block->escapeHtmlAttr($_category->getName()) . '"
+                    title="' . $block->escapeHtmlAttr($_category->getName()) . '"
+                    class="
+                        image
+                        ratio-image
+                        banner__image
+                    "
+                />
+            </div>
+        ';
+        $_imgHtml = $block->getOutput()->categoryAttribute($_category, $_imgHtml, 'image');
+    ?>
+    <?= /* @noEscape */ $_imgHtml; ?>
+<?php endif; ?>

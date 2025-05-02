@@ -1,0 +1,11 @@
+.recently-viewed {
+    position: relative;
+    max-width: $max-content-width;
+    margin: 0 auto;
+
+    &--sidebar {
+        .slider__slides {
+            flex-wrap: wrap;
+        }
+    }
+}

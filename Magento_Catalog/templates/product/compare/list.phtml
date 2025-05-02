@@ -1,0 +1,207 @@
+<?php
+/* @var $block \Magento\Catalog\Block\Product\Compare\ListCompare */
+
+$total = $block->getItems()->getSize();
+$compareHelper = $this->helper(Magento\Catalog\Helper\Product\Compare::class);
+?>
+<?php if ($total): ?>
+    <h2
+        class="
+            heading--third-level
+            heading--font-secondary
+            text-center
+            margin-bottom-xl
+        "
+    >
+        <?= $block->escapeHtml(__('Product')) . ' (' . $block->escapeHtml($total) . ')' ?>
+    </h2>
+    <div class="row compare">
+        <div class="compare__inner">
+            <table
+                class="compare__table"
+                id="product-comparison"
+                data-mage-init='{
+                    "compareList":{
+                        "windowPrintSelector":".action.print",
+                        "productsInRow":"5",
+                        "selectors":{
+                            "productAddToCartSelector":"button.action.tocart"
+                        }
+                    }
+                }'
+            >
+                <caption class="compare__caption">
+                    <?= $block->escapeHtml(__('Compare Products')) ?>
+                </caption>
+                <tbody>
+                    <tr class="compare__row">
+                        <?php
+                            $helper = $this->helper(Magento\Catalog\Helper\Output::class);
+                            $index = 0;
+                        ?>
+                        <?php /** @var $item \Magento\Catalog\Model\Product */ ?>
+                        <?php foreach ($block->getItems() as $item): ?>
+                            <?php if ($index++ == 0): ?>
+                                <th
+                                    scope="row"
+                                    class="compare__label"
+                                >
+                                    <?= $block->escapeHtml(__('Product')) ?>
+                                </th>
+                            <?php endif; ?>
+                            <td
+                                data-th="<?= $block->escapeHtmlAttr(__('Product')) ?>"
+                                class="compare__cell"
+                            >
+                                <div class="compare__product">
+                                    <a
+                                        class="compare__link compare__link--image"
+                                        href="<?= $block->escapeUrl($block->getProductUrl($item)) ?>"
+                                        title="<?= $block->escapeHtmlAttr($block->stripTags($item->getName(), null, true)) ?>"
+                                    >
+                                        <?= $block->getImage($item, 'product_comparison_list')->toHtml() ?>
+                                    </a>
+                                    <div class="compare__rating">
+                                        <?= $block->getReviewsSummaryHtml($item, 'short') ?>
+                                    </div>
+                                    <a
+                                        class="compare__link"
+                                        href="<?= $block->escapeUrl($block->getProductUrl($item)) ?>"
+                                        title="<?= $block->escapeHtmlAttr($block->stripTags($item->getName(), null, true)) ?>"
+                                    >
+                                        <?= /* @noEscape */ $helper->productAttribute($item, $item->getName(), 'name') ?>
+                                    </a>
+                                    <?= /* @noEscape */ $block->getProductPrice($item, '-compare-list-top') ?>
+                                    <div class="compare__buttons-container hidden-print">
+                                        <?php if ($this->helper(Magento\Wishlist\Helper\Data::class)->isAllow()): ?>
+                                            <div
+                                                class="compare__secondary-buttons"
+                                                data-role="add-to-links"
+                                            >
+                                                <button
+                                                    class="
+                                                        button
+                                                        button--icon
+                                                    "
+                                                    type="submit"
+                                                    title="<?= $block->escapeHtmlAttr(__('Remove Product')) ?>"
+                                                    aria-label="<?= $block->escapeHtmlAttr(__('Remove Product')) ?>"
+                                                    data-post='<?= /* @noEscape */ $compareHelper->getPostDataRemove($item) ?>'
+                                                >
+                                                    <svg
+                                                        class="icon button__icon"
+                                                        role="presentation"
+                                                        focusable="false"
+                                                    >
+                                                        <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#remove')) ?>"></use>
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    class="
+                                                        button
+                                                        button--icon
+                                                    "
+                                                    type="submit"
+                                                    title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>"
+                                                    aria-label="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>"
+                                                    data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($item) ?>'
+                                                    data-action="add-to-wishlist"
+                                                >
+                                                    <svg
+                                                        class="icon button__icon"
+                                                        role="presentation"
+                                                        focusable="false"
+                                                    >
+                                                        <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#heart')) ?>"></use>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="compare__form">
+                                            <?php if ($item->isSaleable()): ?>
+                                                <form
+                                                    data-role="tocart-form"
+                                                    action="<?= $block->escapeUrl($this->helper(Magento\Catalog\Helper\Product\Compare::class)->getAddToCartUrl($item)) ?>"
+                                                    method="post"
+                                                >
+                                                    <?= $block->getBlockHtml('formkey') ?>
+                                                    <button
+                                                        type="submit"
+                                                        class="button compare__cart"
+                                                    >
+                                                        <?= $block->escapeHtml(__('Add to Cart')) ?>
+                                                    </button>
+                                                </form>
+                                            <?php else: ?>
+                                                <?php if ($item->isAvailable()): ?>
+                                                    <div class="stock available">
+                                                        <?= $block->escapeHtml(__('In stock')) ?>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <div class="stock unavailable">
+                                                        <?= $block->escapeHtml(__('Out of stock')) ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <?php foreach ($block->getAttributes() as $attribute): ?>
+                        <?php $index = 0; ?>
+                        <?php if ($block->hasAttributeValueForProducts($attribute)): ?>
+                            <tr class="compare__row">
+                                <?php foreach ($block->getItems() as $item): ?>
+                                    <?php if ($index++ == 0): ?>
+                                        <th
+                                            scope="row"
+                                            class="compare__label"
+                                        >
+                                            <?= $block->escapeHtml($attribute->getStoreLabel() ? $attribute->getStoreLabel() : __($attribute->getFrontendLabel())) ?>
+                                        </th>
+                                    <?php endif; ?>
+                                    <td class="compare__cell">
+                                        <div class="attribute value">
+                                            <?php switch ($attribute->getAttributeCode()) {
+                                                case "price": ?>
+                                                    <?= /* @noEscape */ $block->getProductPrice(
+                                                        $item,
+                                                        '-compare-list-' . $attribute->getCode()
+                                                    ) ?>
+                                                    <?php break;
+                                                case "small_image": ?>
+                                                    <?php $block->getImage($item, 'product_small_image')->toHtml(); ?>
+                                                <?php break;
+                                                default: ?>
+                                                    <?php if (is_string($block->getProductAttributeValue($item, $attribute))): ?>
+                                                        <?= /* @noEscape */ $helper->productAttribute($item, $block->getProductAttributeValue($item, $attribute), $attribute->getAttributeCode()) ?>
+                                                    <?php else: ?>
+                                                        <?= $block->escapeHtml($helper->productAttribute($item, $block->getProductAttributeValue($item, $attribute), $attribute->getAttributeCode())) ?>
+                                                    <?php endif; ?>
+                                                    <?php break;
+                                                }
+                                            ?>
+                                        </div>
+                                    </td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form]": {
+                "catalogAddToCart": {}
+            }
+        }
+    </script>
+<?php else: ?>
+    <div class="message">
+        <?= $block->escapeHtml(__('You have no items to compare.')) ?>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,206 @@
+<div
+    class="block-authentication display-none"
+    data-bind="
+        afterRender: setModalElement,
+        blockLoader: isLoading
+    "
+>
+    <h2
+        class="
+            heading
+            heading--page
+            heading--page-full-width
+        "
+        data-bind="i18n: 'Login to your account'"
+    ></h2>
+
+    <div class="login-container">
+        <div class="container auth">
+            <!-- ko foreach: getRegion('messages') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+            <!-- ko foreach: getRegion('before') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
+
+            <div class="auth__links">
+                <button
+                    class="
+                        button
+                        button--link
+                        auth__link
+                        auth__link--active
+                    "
+                    data-bind="i18n: 'Login'"
+                >
+                    <svg
+                        class="
+                            icon
+                            auth__icon
+                        "
+                        aria-hidden="true"
+                        role="img"
+                    >
+                        <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#angle-down') }" href=''></use>
+                    </svg>
+                </button>
+                <a
+                    class="
+                        button
+                        button--link
+                        auth__link
+                        auth__link--registration
+                    "
+                    data-bind="
+                        attr: {href: registerUrl},
+                        i18n: 'Create account'
+                    "
+                >
+                    <svg
+                        class="
+                            icon
+                            auth__icon
+                        "
+                        aria-hidden="true"
+                        role="img"
+                    >
+                        <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#angle-down') }" href=''></use>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="account-form">
+                <p
+                    class="account-form__info"
+                    data-bind="i18n: 'If you have an account, sign in with your email address.'"
+                ></p>
+                <form
+                    novalidate="novalidate"
+                    class="account-form__form"
+                    method="post"
+                    data-bind="event: { submit: login }"
+                    id="login-form"
+                >
+                    <fieldset
+                        class="
+                            fieldset
+                            account-form__fieldset
+                        "
+                        data-bind="attr: { 'data-hasrequired': $t('* Required Fields') }"
+                    >
+                        <legend
+                            class="
+                                fieldset__legend
+                                fieldset__legend--hidden
+                            "
+                            data-bind="i18n: 'Login'"
+                        ></legend>
+                        <div
+                            class="
+                                input
+                                account-form__input
+                                required
+                            "
+                        >
+                            <label
+                                class="label"
+                                for="popup-customer-email"
+                                data-bind="i18n: 'Email'"
+                            ></label>
+                            <input
+                                class="input__field"
+                                id="popup-customer-email"
+                                name="username"
+                                type="email"
+                                data-mage-init='{ "mage/trim-input":{} }'
+                                data-bind="attr: { autocomplete: autocomplete }"
+                                data-validate="{
+                                    required: true,
+                                    'validate-email': true
+                                }"
+                            >
+                        </div>
+                        <div
+                            class="
+                                input
+                                input--password
+                                account-form__input
+                                required
+                            "
+                        >
+                            <label
+                                class="label"
+                                for="password"
+                                data-bind="i18n: 'Password'"
+                            ></label>
+                            <input
+                                class="input__field"
+                                id="password"
+                                aria-required="true"
+                                name="password"
+                                type="password"
+                                id="pass"
+                                data-bind="attr: { autocomplete: autocomplete }"
+                                autocomplete="off"
+                                data-validate="{ required:true }"
+                            >
+                        </div>
+                    </fieldset>
+
+                    <!-- ko foreach: getRegion('additional-login-form-fields') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!-- /ko -->
+
+                    <div class="account-form__actions">
+                        <button
+                            type="submit"
+                            class="button account-form__button"
+                            data-bind="i18n: 'Sign In'"
+                            name="send"
+                            id="send2"
+                        ></button>
+
+                        <a
+                            data-bind="
+                                attr: { href: forgotPasswordUrl },
+                                i18n: 'Forgot Your Password?'
+                            "
+                            class="account-form__forgot-password"
+                        ></a>
+                    </div>
+                    <div
+                        class="account-form__validation-tips"
+                        data-bind="i18n: '* Required Fields'"
+                    >
+                    </div>
+                </form>
+            </div>
+
+            <div class="auth__links ">
+                <a
+                    class="
+                        button
+                        button--link
+                        auth__link
+                        auth__link--registration-mobile
+                    "
+                    data-bind="
+                        attr: {href: registerUrl},
+                        i18n: 'Create account'
+                    "
+                >
+                    <svg
+                        class="
+                            icon
+                            auth__icon
+                        "
+                        aria-hidden="true"
+                        role="img"
+                    >
+                        <use data-bind="attr: { 'href': require.toUrl('images/icons-sprite.svg#angle-down') }" href=''></use>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<input
+    class="input__field"
+    type="text"
+    data-bind="
+        value: value,
+        valueUpdate: 'keyup',
+        hasFocus: focused,
+        attr: {
+            name: inputName,
+            placeholder: placeholder,
+            'aria-describedby': notice() ? noticeId : false,
+            id: uid,
+            disabled: disabled,
+            'aria-required': required
+        }
+    "
+>

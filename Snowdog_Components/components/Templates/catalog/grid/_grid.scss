@@ -1,0 +1,23 @@
+@import 'grid-variables';
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: $catalog-grid__template-columns;
+    grid-gap: $catalog-grid__gap;
+    margin: $catalog-grid__margin;
+    padding: $catalog-grid__padding;
+    list-style: none;
+
+    @include mq($screen-s) {
+        grid-template-columns: $catalog-grid__template-columns\@small;
+    }
+
+    @include mq($screen-m) {
+        grid-template-columns: $catalog-grid__template-columns\@medium;
+    }
+
+    @include isIE() {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

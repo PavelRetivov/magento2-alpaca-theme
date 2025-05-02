@@ -1,0 +1,17 @@
+<?php
+$customClass = $block->getData('custom-class');
+?>
+<?php if ($contactBar = $this->getChildHtml('contact-bar-block')): ?>
+    <aside
+        class="contact-bar"
+        aria-label="<?= $block->escapeHtmlAttr(__('Contact information')) ?>"
+    >
+        <div
+            class="
+                <?= $customClass ? $block->escapeHtmlAttr($customClass) : 'contact-bar__container' ?>
+            "
+        >
+            <?= /* @noEscape */ $contactBar ?>
+        </div>
+    </aside>
+<?php endif; ?>

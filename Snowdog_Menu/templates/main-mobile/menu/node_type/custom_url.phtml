@@ -1,0 +1,47 @@
+<?php /** @var \Snowdog\Menu\Block\NodeType\CustomUrl $block */ ?>
+<?php
+    $attributes = [];
+    $class = $block->getMenuClass();
+    $isViewAllLink = $block->getIsViewAllLink();
+    $isContent = $block->getIsParent();
+    
+    if ($isViewAllLink) {
+        $title = __('View All');
+        $classLink = $class . '__label link--invert';
+    } else {
+        $classLink = $block->getIsRoot() ? $class . '__label link--invert' : $class . '__label';
+        $title = $block->getTitle();
+
+        if ($block->getId() && $isContent) {
+            $attributes[] = 'aria-controls="dropdown-' . $block->getId() . '"';
+        }
+    }
+    $attributes[] = 'class="' . $classLink . '"';
+
+    if ($block->getTarget()) {
+        $attributes[] = 'target="__blank" rel="noopener"';
+    }
+?>
+<a
+    href="<?= $block->escapeUrl($block->getContent()) ?>"
+    <?= /* @noEscape */ implode(' ', $attributes) ?>
+    <?php if (!$isViewAllLink && $isContent): ?>
+        role="button"
+        aria-expanded="false"
+    <?php endif; ?>
+>
+    <?= $block->escapeHtml($title) ?>
+    <?php if (!$isViewAllLink && $isContent): ?>
+        <svg
+            class="
+                icon
+                <?= $block->escapeHtmlAttr($class) ?>__icon
+                <?= ($block->getLevel() > 0) ? $block->escapeHtmlAttr($class) . '__icon--inner' : '' ?>
+            "
+            role="presentation"
+            focusable="false"
+        >
+            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#angle-down')) ?>"></use>
+        </svg>
+    <?php endif ?>
+</a>

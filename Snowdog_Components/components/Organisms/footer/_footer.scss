@@ -1,0 +1,415 @@
+@import 'footer-variables';
+
+.footer {
+    flex-shrink: $footer__flex-shrink;
+    border: $footer__border;
+    border-width: $footer__border-width;
+    background-color: $footer__background-color;
+
+    &--checkout {
+        border: $footer__border--checkout;
+        border-width: $footer__border-width--checkout;
+        background-color: $footer__background-color--checkout;
+
+        .footer__bottom-bar-handler {
+            padding: $footer__bottom-bar-handler-padding--checkout;
+
+            @include mq($screen-m) {
+                padding: $footer__bottom-bar-handler-padding--checkout\@medium;
+            }
+
+            @include mq($screen-l) {
+                padding: $footer__bottom-bar-handler-padding--checkout\@large;
+            }
+
+            @include mq($screen-xl) {
+                padding: $footer__bottom-bar-handler-padding--checkout\@extra-large;
+            }
+        }
+    }
+
+    &--email {
+        background-color: $footer__background-color--email;
+    }
+
+    &__handler {
+        position: $footer__handler-position;
+        display: $footer__handler-display;
+        flex-direction: $footer__handler-flex-direction;
+        padding: $footer__handler-padding;
+
+        @include mq($screen-m) {
+            padding: $footer__handler-padding\@medium;
+        }
+
+        @include mq($screen-l) {
+            flex-flow: $footer__handler-flex-flow\@large;
+            padding: $footer__handler-padding\@large;
+        }
+    }
+
+    &__newsletter {
+        border: $footer__newsletter-border;
+        border-width: $footer__newsletter-border-width;
+
+        @include mq($screen-l) {
+            width: $footer__newsletter-width\@large;
+            padding: $footer__newsletter-padding\@large;
+            margin: $footer__newsletter-margin\@large;
+        }
+    }
+
+    &__links {
+        width: $footer__links-width;
+        padding: $footer__links-padding;
+
+        @include mq($screen-l) {
+            padding: $footer__links-padding\@large;
+        }
+
+        .dropdown-list {
+            background-color: $footer__links-dropdown-background;
+
+            @include mq($screen-m) {
+                padding: $footer__links-dropdown-padding\@medium;
+            }
+
+            &__label {
+                background-color: $footer__links-label-background;
+                color: $footer__links-label-color;
+
+                &:hover,
+                &.focus-visible {
+                    & > .dropdown-list__icon {
+                        fill: $footer__links-dropdown-icon-color-hover;
+                    }
+                }
+
+                &[aria-expanded="true"] {
+                    & > .dropdown-list__icon {
+                        fill: $footer__links-dropdown-icon-color-open;
+                    }
+                }
+            }
+
+            &__content {
+                margin: $footer__links-content-margin;
+            }
+
+            &__list {
+                margin: $footer__links-dropdown-list-margin;
+                border: $footer__links-dropdown-list-border;
+                border-width: $footer__links-dropdown-list-border-width;
+
+                @include mq($screen-m) {
+                    padding: $footer__links-dropdown-list-padding\@medium;
+                }
+
+                @include mq($screen-l) {
+                    padding: $footer__links-dropdown-list-padding\@large;
+                    border-width: $footer__links-dropdown-list-border-width\@large;
+                }
+
+                @include mq($screen-xl) {
+                    padding: $footer__links-dropdown-list-padding\@extra-large;
+                }
+            }
+
+            &__item {
+                width: $footer__links-dropdown-list-item-width;
+                border-bottom: $footer__links-dropdown-list-item-border;
+
+                @include mq($screen-m) {
+                    border: $footer__links-dropdown-list-item-border\@medium;
+                }
+
+                &:first-child {
+                    @include mq($screen-m) {
+                        width: $footer__links-dropdown-list-item-width-first-child\@medium;
+                    }
+                }
+
+                &:last-child {
+                    border: $footer__links-dropdown-list-item-border-last-child;
+                }
+            }
+
+            &__icon {
+                fill: $footer__links-dropdown-icon-color;
+            }
+        }
+
+        .list__item {
+            @include mq($screen-m) {
+                min-width: $footer__links-list-item-min-width\@medium;
+            }
+        }
+    }
+
+    &__links-list {
+        padding: $footer__links-list-padding;
+    }
+
+    &__link {
+        display: $footer__link-display;
+        margin: $footer__link-margin;
+        font-size: $footer__link-font-size;
+        font-weight: $footer__link-font-weight;
+        color: $footer__link-color;
+        text-decoration: $footer__link-text-decoration;
+
+        @include mq($screen-m) {
+            margin: $footer__link-margin\@medium;
+        }
+
+        &:hover {
+            color: $footer__link-color-hover;
+        }
+    }
+
+    &__social {
+        order: $footer__social-order;
+
+        @include mq($screen-l) {
+            order: $footer__social-order\@large;
+        }
+    }
+
+    &__social-handler {
+        display: $footer__social-handler-display;
+        flex-direction: $footer__social-handler-flex-direction;
+        align-items: $footer__social-handler-align-items;
+        margin: $footer__social-handler-margin;
+
+        @include mq($screen-m) {
+            align-items: $footer__social-handler-align-items\@medium;
+            flex-direction: $footer__social-handler-flex-direction\@medium;
+        }
+
+        @include mq($screen-l) {
+            flex-direction: $footer__social-handler-flex-direction\@large;
+            flex: $footer__social-handler-flex\@large;
+            margin: $footer__social-handler-margin\@large;
+            padding: $footer__social-handler-padding\@large;
+            border-bottom: $footer__newsletter-border;
+            position: $footer__social-handler-position\@large;
+
+            &:before {
+                content: '';
+                position: $footer__social-handler-before-position\@large;
+                left: $footer__social-handler-before-left\@large;
+                top: $footer__social-handler-before-top\@large;
+                width: $footer__social-handler-before-width\@large;
+                height: $footer__social-handler-before-height\@large;
+                background: $footer__social-handler-before-background\@large;
+            }
+        }
+    }
+
+    &__social-list {
+        @include mq($screen-l) {
+            align-self: $footer__social-list-align-self\@large;
+            justify-content: $footer__social-list-justify-content\@large;
+            flex-wrap: $footer__social-list-flex-wrap\@large;
+        }
+
+        .list__item {
+            padding: $footer__social-list__item-padding;
+            margin: $footer__social-list__item-margin;
+
+            &:last-child {
+                margin: $footer__social-list__item-margin-last-child;
+            }
+        }
+
+        .list__icon-link {
+            width: $footer__social-list__icon-link-size;
+            height: $footer__social-list__icon-link-size;
+            padding: $footer__social-list__icon-link-padding;
+
+            @include mq($screen-l) {
+                margin: $footer__social-list__icon-link-margin\@large;
+            }
+        }
+    }
+
+    &__social-list-title {
+        display: $footer__social-list-title-display;
+        align-items: $footer__social-list-title-align-items;
+        color: $footer__social-list-title-color;
+        font-family: $footer__social-list-title-font-family;
+        font-size: $footer__social-list-title-font-size;
+        font-weight: $footer__social-list-title-font-weight;
+        margin: $footer__social-list-title-margin;
+
+        @include mq($screen-m) {
+            margin: $footer__social-list-title-margin\@medium;
+        }
+
+        @include mq($screen-l) {
+            align-self: $footer__social-list-title-align-self\@large;
+            margin: $footer__social-list-title-margin\@large;
+        }
+    }
+
+    &__bottom-bar {
+        color: $footer__bottom-bar-color;
+        background-color: $footer__bottom-bar-background;
+    }
+
+    &__bottom-bar-handler {
+        display: $footer__bottom-display;
+        align-items: $footer__bottom-align;
+        flex-direction: $footer__bottom-flex-direction;
+        min-height: $footer__bottom-min-height;
+
+        @include mq($screen-m) {
+            justify-content: $footer__bottom-justify-content\@medium;
+            flex-direction: $footer__bottom-flex-direction\@medium;
+            flex-wrap: $footer__bottom-flex-wrap\@medium;
+        }
+
+        @include mq($screen-l) {
+            padding: $footer__bottom-padding\@large;
+        }
+
+        @include mq($screen-xl) {
+            padding: $footer__bottom-padding\@xl;
+        }
+    }
+
+    &__copyright {
+        display: $footer__copywrite-display;
+        order: $footer__copywrite-order;
+        padding: $footer__copywrite-padding;
+        text-align: $footer__copywrite-text-align;
+        color: $footer__copywrite-color;
+
+        @include mq($screen-m) {
+            order: $footer__copywrite-order\@medium;
+            padding: $footer__copywrite-padding\@medium;
+        }
+
+        small {
+            font-size: $footer__copywrite-font-size;
+        }
+    }
+
+    &__payments-list {
+        justify-content: $footer__payments-list-justify-content;
+        margin: $footer__payments-list-margin;
+
+        @include mq($screen-m) {
+            flex-flow: $footer__payments-list-flex-flow\@medium;
+            margin: $footer__payments-list-margin\@medium;
+            order: $footer__payments-list-order\@medium;
+        }
+    }
+
+    &__payments-list-icon {
+        width: $footer__payments-list-icon-width;
+        height: $footer__payments-list-icon-height;
+        fill: $footer__payments-list-icon-fill;
+
+        &--visa {
+            width: $footer__payments-list-icon-width--visa;
+        }
+
+        &--paypal {
+            width: $footer__payments-list-icon-width--paypal;
+        }
+    }
+
+    &__scroll-top {
+        position: $footer__scroll-top-position;
+        right: $footer__scroll-top-right;
+        top: $footer__scroll-top-top;
+        background-color: $footer__scroll-top-bg;
+
+        &:before {
+            transform: $footer__scroll-top-before-transform;
+            background: $footer__scroll-top-before-background;
+        }
+
+        &:hover,
+        &:focus,
+        &.focus-visible {
+            background-color: $footer__scroll-top-bg-hover;
+        }
+
+        .icon {
+            fill: $footer__scroll-top-icon-fill;
+        }
+    }
+
+    &__switchers {
+        display: $footer__switchers-display;
+        align-items: $footer__switchers-align-items;
+        flex-direction: $footer__switchers-flex-direction;
+        padding: $footer__switchers-padding;
+        order: $footer__switchers-order;
+
+        @include mq($screen-s) {
+            flex-direction: $footer__switchers-flex-direction\@small;
+            justify-content: $footer__switchers-justify-content\@small;
+            width: $footer__switchers-width\@small;
+        }
+
+        @include mq($screen-xl) {
+            width: $footer__switchers-width\@xl;
+        }
+    }
+
+    &__dropdown-switcher {
+        width: $footer__switcher-width;
+        background-color: $footer__switcher-background-color;
+
+        .dropdown-list__label {
+            background-color: $footer__switcher-label-background-color;
+            padding: $footer__switcher-label-padding;
+            color: $footer__switcher-label-color;
+            white-space: $footer__switcher-label-white-space;
+
+            &[aria-expanded=true] {
+                background-color: $footer__switcher-label-color;
+                color: $footer__switcher-label-background-color;
+
+                &:hover {
+                    .dropdown-list__icon {
+                        fill: $footer__switcher-label-background-color;
+                    }
+                }
+            }
+
+            &:hover {
+                .dropdown-list__icon {
+                    fill: $footer__switcher-label-color;
+                }
+            }
+        }
+
+        .dropdown-list__content  {
+            position: $footer__switcher-content-position;
+            bottom: $footer__switcher-content-bottom;
+            width: $footer__switcher-content-width;
+            padding: $footer__switcher-content-padding;
+            background-color: $footer__switcher-label-color;
+
+            .button {
+                font-weight: $footer__switcher-button-font-weight;
+                min-height: $footer__switcher-button-min-height;
+                text-decoration: $footer__switcher-button-text-decoration;
+
+                &:hover,
+                &:focus,
+                &.focus-visible {
+                    text-decoration: $footer__switcher-button-hover-text-decoration;
+                }
+            }
+        }
+
+        .dropdown-list__icon {
+            fill: $footer__switcher-label-color;
+        }
+    }
+}

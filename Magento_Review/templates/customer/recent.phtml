@@ -1,0 +1,51 @@
+<?php
+/** @var $block \Magento\Review\Block\Customer\Recent */
+?>
+
+<?php if ($block->getReviews() && count($block->getReviews())): ?>
+    <div class="dashboard-items">
+        <div class="dashboard-table__header">
+            <h3 class="dashboard-table__title">
+                <?=  $block->escapeHtml(__('My Recent Reviews')) ?>
+            </h3>
+
+            <a class="link dashboard-table__link"
+               href="<?= $block->escapeHtmlAttr($block->getAllReviewsUrl()) ?>"
+            >
+               <?=  $block->escapeHtml(__('View All')) ?>
+            </a>
+        </div>
+
+        <div class="row dashboard-items__content">
+            <?php foreach ($block->getReviews() as $_review): ?>
+                <div class="col-sm-3 dashboard-items__item">
+                    <h4>
+                        <a href="<?= $block->escapeUrl($block->getReviewUrl($_review->getReviewId())) ?>">
+                            <?= $block->escapeHtml($_review->getName()) ?>
+                        </a>
+                    </h4>
+
+                    <?php if ($_review->getSum()): ?>
+                        <?php $rating = $_review->getSum() / $_review->getCount() ?>
+
+                        <span class="review__description">
+                            <?=  $block->escapeHtml(__('Rating')) ?>:
+                        </span>
+
+                        <div
+                            class="rating__summary"
+                            title="<?= $block->escapeHtmlAttr($rating); ?>%"
+                        >
+                            <span
+                                class="rating__fill"
+                                style="width:<?= $block->escapeHtmlAttr($rating); ?>%"
+                            >
+                                <?= $block->escapeHtml($rating); ?>%
+                            </span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,56 @@
+.fotorama {
+    min-width: 1px;
+    &--fullscreen {
+        @extend .fotorama-gpu;
+        // sass-lint:disable no-important
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: $z-index-10 !important;
+        // sass-lint:enable no-important
+
+        .fotorama__nav-wrap .fotorama__nav--thumbs {
+            overflow-y: auto;
+            @include mq($screen-m) {
+                padding: $fotorama__thumbs-padding--fullscreen\@medium;
+            }
+            @include mq($screen-l) {
+                padding: $fotorama__thumbs-padding--fullscreen\@large;
+                margin: $fotorama__thumbs-margin--fullscreen\@large;
+            }
+        }
+
+        .fotorama__stage {
+            left: 0 !important; // sass-lint:disable-line no-important
+            width: 100% !important; // sass-lint:disable-line no-important
+            margin: 0;
+            padding: 0;
+        }
+
+        .fotorama__stage__shaft {
+            width: 100% !important; // sass-lint:disable-line no-important
+            max-width: 100% !important; // sass-lint:disable-line no-important
+        }
+
+        .fotorama__stage__frame {
+            width: 100%;
+        }
+
+        .fotorama__wrap  {
+            padding: 0;
+        }
+    }
+
+    &__fullscreen-icon {
+        right: 0 !important; // sass-lint:disable-line no-important
+    }
+
+    &--hidden {
+        @extend .fotorama-hidden;
+    }
+}

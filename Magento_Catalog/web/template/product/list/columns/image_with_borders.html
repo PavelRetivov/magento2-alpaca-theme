@@ -1,0 +1,37 @@
+<if args="isAllowed()">
+    <a
+        if="imageExists($row())"
+        class="product-grid-item__link"
+        attr="href: $row().url"
+    >
+        <div class="product-grid-item__image-wrapper">
+            <div
+                class="
+                    lazyload-wrapper
+                    ratio-container
+                "
+                data-bind="
+                    style: {
+                        'padding-bottom': getHeight($row()) / getWidth($row()) * 100 + '%'
+                    }
+                "
+            >
+                <img
+                    class="
+                        image
+                        product-image-photo
+                        lazyload
+                        ratio-image
+                    "
+                    data-bind="
+                        attr: {
+                            'data-src': getImageUrl($row()),
+                            alt: getLabel($row()),
+                            'aria-label': getLabel($row())
+                        }
+                    "
+                />
+            </div>
+        </div>
+    </a>
+</if>

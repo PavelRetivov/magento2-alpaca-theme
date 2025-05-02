@@ -1,0 +1,43 @@
+@import 'price-variables';
+
+.price {
+    &__value {
+        font-size: $price__font-size;
+        font-weight: $price__font-weight;
+
+        @include mq($screen-m) {
+            font-size: $price__font-size\@medium;
+        }
+
+        &--old {
+            margin-right: $price__spacing;
+            color: $price__color--old;
+            font-size: $price__font-size--old;
+            font-weight: $price__font-weight--old;
+            text-decoration: line-through;
+
+            @include mq($screen-m) {
+                font-size: $price__font-size--old\@medium;
+            }
+        }
+
+        &--special {
+            color: $price__color--special;
+            font-weight: $price__font-weight--special;
+
+            & > ins {
+                text-decoration: none;
+            }
+        }
+    }
+
+    &__text {
+        color: $price__text-color;
+        font-size: $price__text-font-size;
+        font-weight: $price__font-weight--old;
+
+        @include mq($screen-m) {
+            font-size: $price__text-font-size\@medium;
+        }
+    }
+}

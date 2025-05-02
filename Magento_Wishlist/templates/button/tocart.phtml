@@ -1,0 +1,17 @@
+<?php if ($block->getWishlist()->getItemsCount() && $block->getWishlist()->isSalable()): ?>
+    <button
+        type="button"
+        data-role="all-tocart"
+        title="<?= $block->escapeHtmlAttr(__('Add All to Cart')) ?>"
+        class="
+            button
+            button--secondary
+            actions-group__button
+            margin-bottom-m
+            action
+            tocart
+        "
+    >
+        <?= $block->escapeHtml(__('Add All to Cart')); ?>
+    </button>
+<?php endif;?>

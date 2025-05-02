@@ -1,0 +1,55 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist $block */
+$hasText = $block->getHasText();
+$buttonText = $block->getText();
+$additionalClass = $block->getAdditionalClass();
+$productId = $block->getProduct()->getId();
+?>
+
+<?php if ($block->isWishListAllowed()) : ?>
+    <button
+        class="
+            button
+            button--icon
+            action
+            towishlist
+            <?= $block->escapeHtmlAttr($additionalClass) ?>
+        "
+        type="button"
+        data-testid="add-to-wishlist-button"
+        aria-label="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>"
+        title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>"
+        data-multiplewishlist='<?= /* @noEscape */ $block->getWishlistParams() ?>'
+        data-mage-init='{
+            "wishlistItem": {
+                "class": "button--icon-filled",
+                "addToParams": <?= $block->getAddToWishlistParams($block->getProduct()) ?>
+            }
+        }'
+    >
+        <svg
+            class="icon button__icon"
+            role="presentation"
+            focusable="false"
+        >
+            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#heart')); ?>"></use>
+        </svg>
+        <?php if($hasText): ?>
+            <span class="button__text">
+                <?= $block->escapeHtml($buttonText) ?>
+            </span>
+        <?php endif; ?>
+    </button>
+<?php endif; ?>
+
+
+
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "addToWishlist": <?= $block->getWishlistOptionsJson() ?>
+        }
+    }
+</script>

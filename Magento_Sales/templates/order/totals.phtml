@@ -1,0 +1,24 @@
+
+<?php foreach ($block->getTotals() as $_code => $_total): ?>
+    <?php if ($_total->getBlockName()): ?>
+        <?= $block->getChildHtml($_total->getBlockName(), false) ?>
+    <?php else: ?>
+        <tr class="<?= $block->escapeHtmlAttr($_code) ?>">
+            <td <?= /* @noEscape */ $block->getLabelProperties() ?> colspan="4">
+                <?php if ($_total->getStrong()):?>
+                    <?= $block->escapeHtml($_total->getLabel()) ?>
+                <?php else:?>
+                    <?= $block->escapeHtml($_total->getLabel()) ?>
+                <?php endif?>
+            </th>
+
+            <td <?= /* @noEscape */ $block->getValueProperties() ?>>
+                <?php if ($_total->getStrong()):?>
+                    <?= /* @noEscape */ $block->formatValue($_total) ?>
+                <?php else:?>
+                    <?= /* @noEscape */ $block->formatValue($_total) ?>
+                <?php endif?>
+            </td>
+        </tr>
+    <?php endif; ?>
+<?php endforeach; ?>

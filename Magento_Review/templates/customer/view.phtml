@@ -1,0 +1,143 @@
+<?php
+    $product = $block->getProductData();
+?>
+<?php if ($product->getId()): ?>
+    <?php
+        $productName = $product->getName();
+        $productUrl = $product->getProductUrl();
+    ?>
+
+    <a
+        class="product-reviews__image"
+        href="<?= $block->escapeUrl($productUrl) ?>"
+        title="<?= $block->escapeHtmlAttr($productName) ?>"
+    >
+        <?= /* @escapeNotVerified */
+            $block->getImage(
+                $block->getProductData(),
+                'customer_account_product_review_page'
+            )->toHtml()
+        ?>
+    </a>
+
+    <div
+        class="
+            product-reviews__details
+            margin-bottom-l
+        "
+    >
+        <a
+            href="<?= $block->escapeUrl($productUrl) ?>"
+            title="<?= $block->escapeHtmlAttr($productName) ?>"
+        >
+            <h2 class="product-reviews__name">
+                <?= $block->escapeHtml($productName) ?>
+            </h2>
+        </a>
+
+        <?php if ($block->getRating() && $block->getRating()->getSize()): ?>
+            <?= $block->getReviewsSummaryHtml($product) ?>
+        <?php endif; ?>
+    </div>
+
+    <h2
+        class="
+            heading--fourth-level
+            dashboard__title
+        "
+    >
+        <?= $block->escapeHtml(__('Your Review')); ?>
+    </h2>
+
+    <div
+        class="review margin-bottom-xl"
+        itemscope
+        itemprop="review"
+        itemtype="http://schema.org/Review"
+    >
+        <?php if ($block->getRating() && $block->getRating()->getSize()): ?>
+            <div class="review__details">
+                <?php foreach ($block->getRating() as $_rating): ?>
+                    <?php if ($_rating->getPercent()): ?>
+                        <?php $rating = ceil($_rating->getPercent()) ?>
+                        <div
+                            class="
+                                rating
+                                review__rating
+                            "
+                            itemprop="reviewRating"
+                            itemscope
+                            itemtype="http://schema.org/Rating"
+                            aria-label="<?= $block->escapeHtmlAttr(__('Rating') . $rating); ?>%"
+                            tabindex="0"
+                        >
+                            <span class="label rating__label">
+                                <?= $block->escapeHtml($_rating->getRatingCode()) ?>
+                            </span>
+
+                            <meta itemprop="worstRating" content="1"/>
+
+                            <meta itemprop="bestRating" content="100"/>
+
+                            <div
+                                id="rating-div-<?= $escaper->escapeHtml($_rating->getRatingId()) ?>"
+                                class="rating"
+                                aria-label="<?= $block->escapeHtmlAttr(__('Your rating')) . ': ' . $block->escapeHtmlAttr($rating) . '%' ?>"
+                                title="<?= $block->escapeHtmlAttr(__('Your rating')) . ': ' . $block->escapeHtmlAttr($rating) . '%' ?>"
+                                tabindex="0"
+                            >
+                                <div
+                                    class="rating__star"
+                                    style="width:<?= $block->escapeHtmlAttr($rating); ?>%"
+                                    data-testid="product-rating-star"
+                                >
+                                    <span class="rating__indicator"></span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+        <div
+            class="review__details"
+            itemprop="description"
+        >
+            <h4
+                class="review__title"
+                itemprop="name"
+            >
+                <?= $block->escapeHtml($block->getReviewData()->getTitle()) ?>
+            </h4>
+
+            <p class="product-view__review-content-text">
+                <?= /* @noEscape */ nl2br($block->escapeHtml($block->getReviewData()->getDetail())) ?>
+            </p>
+
+            <div class="review__divider review__date">
+                <?= $block->escapeHtml(__('Submitted on: ')) ?>
+                <time
+                    itemprop="datePublished"
+                    datetime="<?= $block->escapeHtmlAttr($block->dateFormat($block->getReviewData()->getCreatedAt())); ?>"
+                >
+                    <?= $block->escapeHtml($block->dateFormat($block->getReviewData()->getCreatedAt())); ?>
+                </time>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions-group">
+        <div class="actions-group__handler">
+            <a
+                class="
+                    link
+                    actions-group__link
+                    back
+                "
+                href="<?= $block->escapeUrl($block->getBackUrl()) ?>"
+            >
+                <?=  $block->escapeHtml(__('Back to My Reviews')) ?>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

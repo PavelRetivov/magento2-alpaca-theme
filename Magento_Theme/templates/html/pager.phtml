@@ -1,0 +1,234 @@
+<?php if ($block->getCollection()->getSize()): ?>
+    <?php
+        $lastPageNumber = $block->getLastPageNum();
+    ?>
+    <?php if ($block->getUseContainer()): ?>
+        <div class="toolbar toolbar--secondary">
+    <?php endif; ?>
+
+        <?php if ($block->getShowAmounts()): ?>
+            <div class="toolbar__amount">
+                <span class="toolbar__amount-content">
+                    <?php if ($lastPageNumber > 1): ?>
+                        <?= $block->escapeHtml(
+                            __('Items %1 to %2 of %3 total', $block->getFirstNum(), $block->getLastNum(), $block->getTotalNum())
+                        ) ?>
+                    <?php elseif ($block->getTotalNum() == 1): ?>
+                        <?= $block->escapeHtml(__('%1 Item', $block->getTotalNum())) ?>
+                    <?php else: ?>
+                        <?= $block->escapeHtml(__('%1 Item(s)', $block->getTotalNum())) ?>
+                    <?php endif; ?>
+                </span>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($block->isShowPerPage()): ?>
+            <div
+                class="
+                    select
+                    toolbar__limiter
+                    margin-0
+                "
+            >
+                <label
+                    class="
+                        label
+                        select__label
+                        toolbar__limiter-label
+                        margin-right-s
+                        margin-bottom-0
+                    "
+                    for="limiter"
+                >
+                    <?= $block->escapeHtml(__('Show')) ?>
+                </label>
+
+                <select
+                    id="limiter"
+                    data-mage-init='
+                        {
+                            "redirectUrl": {
+                                "event":"change"
+                            },
+                            "select": {}
+                        }
+                    '
+                    class="select__field"
+                    aria=label="<?= $block->escapeHtmlAttr(__('Show products on page')) ?>"
+                >
+                    <?php foreach ($block->getAvailableLimit() as $_key => $_limit): ?>
+                        <option
+                            value="<?= $block->escapeUrl($block->getLimitUrl($_key)) ?>"
+                            <?php if ($block->isLimitCurrent($_key)): ?>
+                                selected
+                            <?php endif; ?>
+                        >
+                            <?= $block->escapeHtml($_limit) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($lastPageNumber > 1): ?>
+            <div class="pager toolbar__pager margin-vc-xl">
+                <ul
+                    class="pager__list"
+                    aria-label="<?= $block->escapeHtmlAttr(__('Pager')); ?>"
+                >
+                    <?php if (!$block->isFirstPage()): ?>
+                        <li class="pager__item">
+                            <?php $text = $block->getAnchorTextForPrevious() ? $block->getAnchorTextForPrevious() : '';?>
+                            <a
+                                class="
+                                    <?= $text ? 'link ' : 'action '?>
+                                    pager__link
+                                    pager__link--prev
+                                    button
+                                    button--icon
+                                    previous
+                                "
+                                href="<?= $block->escapeUrl($block->getPreviousPageUrl()) ?>"
+                                title="<?= $text ? $block->escapeHtmlAttr($text) : $block->escapeHtmlAttr(__('Previous page')) ?>"
+                                aria-label="<?= $text ? $block->escapeHtmlAttr($text) : $block->escapeHtmlAttr(__('Previous page')) ?>"
+                            >
+                                <svg
+                                    class="icon pager__icon"
+                                    role="presentation"
+                                    focusable="false"
+                                >
+                                    <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#arrow-left')); ?>"></use>
+                                </svg>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if ($block->canShowFirst()): ?>
+                        <li class="pager__item">
+                            <a
+                                class="
+                                    pager__link
+                                    link
+                                "
+                                href="<?= $block->escapeUrl($block->getFirstPageUrl()) ?>"
+                                aria-label="<?= $block->escapeHtmlAttr(__('Page 1')) ?>"
+                            >
+                                1
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if ($block->canShowPreviousJump()): ?>
+                        <li class="pager__item">
+                            <a
+                                class="
+                                    pager__link
+                                    link
+                                "
+                                href="<?= $block->escapeUrl($block->getPreviousJumpUrl()) ?>"
+                                aria-label="
+                                    <?= $escaper->escapeHtmlAttr(__(
+                                        'Skip to page %1',
+                                        $block->getPreviousJumpPage()
+                                    )) ?>
+                                "
+                            >
+                                <span>...</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php foreach ($block->getFramePages() as $_page): ?>
+                        <?php if ($block->isPageCurrent($_page)): ?>
+                            <li
+                                class="pager__item pager__item--current"
+                                aria-current="page"
+                                aria-label="<?= $block->escapeHtmlAttr(__('Page ') . $_page . __(', current page')) ?>"
+                            >
+                                <?= $block->escapeHtml($_page) ?>
+                            </li>
+                        <?php else: ?>
+                            <li class="pager__item">
+                                <a
+                                    class="
+                                        pager__link
+                                        link
+                                    "
+                                    href="<?= $block->escapeUrl($block->getPageUrl($_page)) ?>"
+                                    aria-label="<?= $block->escapeHtmlAttr(__('Page ') . $_page) ?>"
+                                >
+                                    <?= $block->escapeHtml($_page) ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+                    <?php if ($block->canShowNextJump()): ?>
+                        <li class="pager__item">
+                            <a
+                                class="
+                                    pager__link
+                                    link
+                                "
+                                href="<?= $block->escapeUrl($block->getNextJumpUrl()) ?>"
+                                aria-label="
+                                    <?= $escaper->escapeHtmlAttr(__(
+                                        'Skip to page %1',
+                                        $block->getNextJumpPage()
+                                    )) ?>
+                                "
+                            >
+                                <span>...</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if ($block->canShowLast()): ?>
+                        <li class="pager__item">
+                            <a
+                                class="
+                                    pager__link
+                                    link
+                                "
+                                href="<?= $block->escapeUrl($block->getLastPageUrl()) ?>"
+                                aria-label="<?= $block->escapeHtmlAttr(__('Page ') . $lastPageNumber) ?>"
+                            >
+                                <?= $block->escapeHtml($lastPageNumber) ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (!$block->isLastPage()): ?>
+                        <li class="pager__item">
+                            <?php $text = $block->getAnchorTextForNext() ? $block->getAnchorTextForNext() : '';?>
+                            <a
+                                class="
+                                    <?= $text ? 'link ' : 'action '?>
+                                    pager__link
+                                    pager__link--next
+                                    button
+                                    button--icon
+                                    next
+                                "
+                                href="<?= $block->escapeUrl($block->getNextPageUrl()) ?>"
+                                title="<?= $text ? $block->escapeHtmlAttr($text) : $block->escapeHtmlAttr(__('Next page')) ?>"
+                                aria-label="<?= $text ? $block->escapeHtmlAttr($text) : $block->escapeHtmlAttr(__('Next page')) ?>"
+                            >
+                                <svg
+                                    class="icon pager__icon"
+                                    role="presentation"
+                                    focusable="false"
+                                >
+                                    <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#arrow-right')); ?>"></use>
+                                </svg>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
+    <?php if ($block->getUseContainer()): ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

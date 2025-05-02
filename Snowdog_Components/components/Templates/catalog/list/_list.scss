@@ -1,0 +1,90 @@
+$catalog-list__margin                         : 0 0 $spacer--extra-large !default;
+
+$catalog-list__banner-padding                 : $spacer--large 0 !default;
+$catalog-list__banner-padding\@medium         : $spacer--medium 0 !default;
+$catalog-list__banner-padding\@large          : 0 !default;
+$catalog-list__banner-margin\@large           : 0 0 $spacer--medium 0;
+$catalog-list__banner-border                  : $border-base !default;
+$catalog-list__banner-border-width            : 0 0 1px 0 !default;
+$catalog-list__banner-border-width\@large     : 0 !default;
+
+$catalog-list__sidebar-width                  : 250px !default;
+$catalog-list__sidebar-width\@xl              : 310px !default;
+$catalog-list__sidebar-margin\@large          : 0 $spacer--medium 0 0 !default;
+$catalog-list__sidebar-additionl-margin\@large: $spacer--medium $spacer--medium 0 0 !default;
+
+.catalog-list {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: $catalog-list__margin;
+
+    @include mq($screen-l) {
+        display: grid;
+        grid-template-columns: $catalog-list__sidebar-width 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+        'sidebar products products'
+        'sidebar2 products products';
+        }
+
+    @include mq($screen-xl) {
+        grid-template-columns: $catalog-list__sidebar-width\@xl 1fr 1fr;
+    }
+
+    &__title {
+        width: 100%;
+    }
+
+    &__banner {
+        padding: $catalog-list__banner-padding;
+        border: $catalog-list__banner-border;
+        border-width: $catalog-list__banner-border-width;
+        @include mq($screen-m) {
+            padding: $catalog-list__banner-padding\@medium;
+        }
+        @include mq($screen-l) {
+            padding: $catalog-list__banner-padding\@large;
+            margin: $catalog-list__banner-margin\@large;
+            border-width: $catalog-list__banner-border-width\@large;
+        }
+    }
+
+    &__products {
+        position: relative;
+        order: 2;
+
+        @include mq($screen-l) {
+            grid-area: products;
+        }
+    }
+
+    &__sidebar {
+        position: relative;
+        order: 1;
+
+        @include mq($screen-l) {
+            grid-area: sidebar;
+            margin: $catalog-list__sidebar-margin\@large;
+            // necessary for tooltip proper visibility
+            z-index: $z-index-normal;
+        }
+    }
+
+    &__category-description {
+        padding: $spacer--extra-large 0 $spacer--medium 0;
+
+        p {
+            line-height: 2;
+        }
+    }
+
+    &__sidebar-additional {
+        order: 3;
+
+        @include mq($screen-l) {
+            grid-area: sidebar2;
+            align-self: start;
+            margin: $catalog-list__sidebar-additionl-margin\@large;
+        }
+    }
+}

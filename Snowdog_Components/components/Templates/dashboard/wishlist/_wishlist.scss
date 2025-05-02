@@ -1,0 +1,241 @@
+@import 'wishlist-variables';
+
+.wishlist {
+    &__grid {
+        justify-content: flex-start;
+        padding: $wishlist__grid-padding;
+    }
+
+    &__item {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+
+        .price-box {
+            padding: $wishlist__price-padding;
+            font-weight: $wishlist__price-font-weight;
+
+            @include mq($screen-m) {
+                padding: $wishlist__price-padding\@medium;
+            }
+        }
+    }
+
+    &__item-content {
+        position: relative;
+    }
+
+    &__item-name {
+        display: block;
+        margin: $wishlist__name-margin;
+        height: $wishlist__name-height;
+        display: -webkit-box; // sass-lint:disable-line no-vendor-prefixes
+        -webkit-line-clamp: $wishlist__name-line-clamp; //sass-lint:disable-line no-vendor-prefixes
+        -webkit-box-orient: vertical; // sass-lint:disable-line no-vendor-prefixes
+        overflow: hidden;
+        text-transform: none;
+
+        @include mq($screen-l) {
+            margin: $wishlist__name-margin\@large;
+        }
+    }
+
+    &__item-name-link {
+        display: block;
+        color: $wishlist__name-link-color;
+        font-size: $wishlist__name-link-font-size;
+        font-weight: $wishlist__name-link-font-weight;
+        line-height: $wishlist__name-link-line-height;
+
+        @include mq($screen-m) {
+            font-size: $wishlist__name-link-font-size\@medium;
+            line-height: $wishlist__name-link-line-height\@medium;
+        }
+    }
+
+    &__item-inner {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding: $wishlist__inner-padding;
+        border: $wishlist__item-inner-border;
+        border-width: $wishlist__item-inner-border-width;
+
+        @include mq($screen-m) {
+            padding: $wishlist__inner-padding\@medium;
+        }
+    }
+
+    &__comment {
+        width: $wishlist__comment-width;
+    }
+
+    &__item-actions {
+        display: flex;
+        justify-content: space-evenly;
+        order: $wishlist__item-actions-order;
+        margin: $wishlist__item-actions-margin;
+
+        @include mq($screen-m) {
+            margin: $wishlist__item-actions-margin\@medium;
+        }
+
+        &--to-cart {
+            width: $wishlist__item-actions-width--to-cart;
+            order: $wishlist__item-actions-order--to-cart;
+            margin: $wishlist__to-cart-margin;
+
+            @include mq($screen-m) {
+                margin: $wishlist__item-actions-margin;
+            }
+        }
+
+        .button {
+            &:hover,
+            &:active {
+                .icon {
+                    fill: $wishlist__buttons-icon-fill--active;
+                }
+            }
+            .icon {
+                fill: $wishlist__buttons-icon-fill;
+            }
+        }
+    }
+
+    &__item-stock-info {
+        width: $wishlist__item-stock-info-width;
+        order: $wishlist__item-stock-info-order;
+    }
+
+    &__link {
+        display: block;
+    }
+
+    &__label {
+        margin: $wishlist__label-margin;
+        padding: $wishlist__label-padding;
+    }
+
+    &__qty {
+        display: flex;
+        margin: $wishlist__qty-margin;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: $wishlist__field-qty-max-width;
+
+        @include mq($screen-m) {
+            margin: $wishlist__qty-margin\@medium;
+        }
+
+        @include mq($screen-xl) {
+            max-width: $wishlist__field-qty-max-width\@xl;
+        }
+
+        .quantity-update {
+            border: 0;
+
+            &__button {
+                width: $wishlist__quantity-button-width;
+                height: $wishlist__quantity-button-height;
+                display: none;
+
+                @include mq($max-content-width) {
+                    display: flex;
+                }
+
+                &:hover {
+                    .icon {
+                        fill: $wishlist__quantity-button-icon-fill--active;
+                    }
+                }
+
+                .icon {
+                    fill: $wishlist__quantity-button-icon-fill;
+                }
+            }
+
+            &__input {
+                height: $wishlist__quantity-button-height;
+                border-width: 1px;
+                color: $wishlist__quantity-input-color;
+            }
+        }
+    }
+
+    &__field-qty {
+        text-align: $wishlist__field-qty-text-align;
+        min-width: 0;
+    }
+
+    &__button {
+        width: $wishlist__button-width;
+    }
+
+    &__actions {
+        padding: $wishlist__actions-padding;
+
+        @include mq($screen-m) {
+            align-items: flex-start;
+        }
+
+        .button {
+            padding: $wishlist__actions-button-padding;
+
+            @include mq($screen-m) {
+                padding: $wishlist__actions-button-padding\@xl;
+            }
+        }
+
+        .link {
+            text-decoration: underline;
+            font-size: $wishlist__buttons-link-font-size;
+            line-height: $wishlist__buttons-link-line-height;
+            letter-spacing: $wishlist__buttons-link-letter-spacing;
+        }
+    }
+
+    &__rating-wrapper {
+        min-height: $wishlist__rating-wrapper-min-height;
+    }
+
+    .wishlist-management {
+        &__group {
+            @include mq($screen-m) {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+
+        &__list {
+            @include mq($screen-m) {
+                flex: $wishlist-management__list-flex\@medium;
+            }
+        }
+
+        &__item {
+            font-size: $wishlist-management__item-font-size;
+            cursor: pointer;
+
+            &--active {
+                a {
+                    font-weight: $wishlist-management__item-font-weight--active;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    // Disable spin buttons in number input type
+    input[type="number"]::-webkit-outer-spin-button, // sass-lint:disable-line no-vendor-prefixes
+    input[type="number"]::-webkit-inner-spin-button { // sass-lint:disable-line no-vendor-prefixes
+        -webkit-appearance: none; // sass-lint:disable-line no-vendor-prefixes
+        margin: 0;
+    }
+
+    input[type="number"] { // sass-lint:disable-line no-vendor-prefixes
+        -moz-appearance: textfield; // sass-lint:disable-line no-vendor-prefixes
+    }
+}

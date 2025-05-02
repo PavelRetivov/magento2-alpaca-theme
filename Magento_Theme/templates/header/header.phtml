@@ -1,0 +1,67 @@
+<?php
+    $headerClass = $block->getClass();
+    $skipToContent = $block->getChildHtml('skip-to-content');
+    $marketingBar = $block->getChildHtml('marketing-bar');
+    $contactBar = $block->getChildHtml('contact-bar');
+    $menuMainMobile = $block->getChildHtml('menu-main-mobile');
+    $briefInfo = $block->getChildHtml('brief-info');
+    $wishListLink = $block->getChildHtml('wish-list-menu');
+    $cartLink = $block->getChildHtml('cart-link');
+    $minicart = $block->getChildHtml('minicart');
+    $search = $block->getChildHtml('search');
+    $menuMainDesktop = $block->getChildHtml('menu-main-desktop');
+?>
+
+<?php if ($skipToContent): ?>
+    <?= /* @noEscape */ $skipToContent ?>
+<?php endif; ?>
+
+<?php if ($marketingBar): ?>
+    <?= /* @noEscape */ $marketingBar ?>
+<?php endif; ?>
+
+<?php if ($contactBar): ?>
+    <?= /* @noEscape */ $contactBar ?>
+<?php endif; ?>
+
+<header class="header <?= $block->escapeHtmlAttr($headerClass) ?>">
+    <div class="container">
+        <div class="header__wrapper">
+            <?= $block->getChildHtml('logo') ?>
+
+            <?php if ($menuMainMobile): ?>
+                <?= /* @noEscape */ $menuMainMobile ?>
+            <?php endif; ?>
+
+            <?php if ($briefInfo): ?>
+                <?= /* @noEscape */ $briefInfo ?>
+            <?php endif; ?>
+
+            <?php if ($wishListLink || $minicart || $cartLink): ?>
+                <div class="header__buttons">
+                    <?php if ($wishListLink): ?>
+                        <?= /* @noEscape */ $wishListLink ?>
+                    <?php endif; ?>
+
+                    <?php if ($cartLink): ?>
+                        <?= /* @noEscape */ $cartLink ?>
+                    <?php endif; ?>
+
+                    <?php if ($minicart): ?>
+                        <?= /* @noEscape */ $minicart ?>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($search): ?>
+                <div class="header__search-wrapper">
+                    <?= /* @noEscape */ $search ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</header>
+
+<?php if ($menuMainDesktop): ?>
+    <?= /* @noEscape */ $menuMainDesktop ?>
+<?php endif; ?>

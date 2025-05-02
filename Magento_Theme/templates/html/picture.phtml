@@ -1,0 +1,184 @@
+<?php
+    $img480 = $block->getImg480();
+    $img768 = $block->getImg768();
+    $img960 = $block->getImg960();
+    $img1024 = $block->getImg1024();
+    $img1328 = $block->getImg1328();
+
+    $img480x2 = $block->getImg4802x();
+    $img768x2 = $block->getImg7682x();
+    $img960x2 = $block->getImg9602x();
+    $img1024x2 = $block->getImg10242x();
+    $img1328x2 = $block->getImg13282x();
+
+    $imgDefault = $block->getImgDefault() ? $block->getImgDefault() : $img480;
+
+    $imgFull = $block->getImgFull() ? $block->getImgFull() : $imgDefault;
+    $imgFullx2 = $block->getImgFull2x() ? $block->getImgFull2x() : false;
+
+    $pictureClass = $block->getPictureClass();
+    $imgClass = $block->getImgClass();
+    $pictureAlt = $block->getPictureAlt();
+    $pictureFullUrl = $block->getPictureFullUrl();
+    $mediaUrl = $this->helper('Magento\Cms\Helper\Wysiwyg\Images')->getBaseUrl();
+    $pictureId = $block->getId();
+    $lazy = $block->getLazy() ?? true;
+    $pictureSrcAttr = $lazy ? 'data-srcset' : 'srcset';
+
+    if ($pictureFullUrl) {
+        $mediaUrl = false;
+    }
+
+    $aspectRatioWidth = $block->getImgRatioWidth();
+    $aspectRatioHeight = $block->getImgRatioHeight();
+
+    $aspectRatioMq = [
+        'w480' => $block->getImgRatioWidth480(),
+        'h480' => $block->getImgRatioHeight480(),
+        'w768' => $block->getImgRatioWidth768(),
+        'h768' => $block->getImgRatioHeight768(),
+        'w1024' => $block->getImgRatioWidth1024(),
+        'h1024' => $block->getImgRatioHeight1024(),
+        'w1328' => $block->getImgRatioWidth1328(),
+        'h1328' => $block->getImgRatioHeight1328()
+    ];
+
+    $pictureAspectRatio = false;
+    if ($aspectRatioHeight && $aspectRatioWidth) {
+        $pictureAspectRatio = ($aspectRatioHeight / $aspectRatioWidth) * 100;
+        $pictureClass .= ' ratio-container';
+        $imgClass .= ' ratio-image';
+    }
+
+    $isAspectratioMq = !empty(array_filter(array_values($aspectRatioMq)));
+?>
+<?php if ($pictureClass): ?>
+    <picture
+        class="
+            image
+            <?= ($pictureId) ? 'picture-' . $pictureId : ''; ?>
+            <?= $block->escapeHtmlAttr($pictureClass) ?>
+        "
+        <?php if ($pictureAspectRatio && !$isAspectratioMq): ?>
+            style="padding-bottom: <?= $block->escapeHtmlAttr($pictureAspectRatio) . '%'; ?>"
+        <?php endif; ?>
+    >
+        <?php if ($img480): ?>
+            <source
+                <?= $pictureSrcAttr ?>="
+                    <?= $block->escapeUrl($mediaUrl . $img480) ?>
+                    <?php if ($img480x2): ?>
+                        <?= ' 1x, ' . $block->escapeUrl($mediaUrl . $img480x2) . ' 2x' ?>
+                    <?php endif; ?>
+                "
+                media="(max-width: 479px)"
+            />
+        <?php endif ?>
+        <?php if ($img768): ?>
+            <source
+                 <?= $pictureSrcAttr ?>="
+                    <?= $block->escapeUrl($mediaUrl . $img768) ?>
+                    <?php if ($img768x2): ?>
+                        <?= ' 1x, ' . $block->escapeUrl($mediaUrl . $img768x2) . ' 2x' ?>
+                    <?php endif; ?>
+                "
+                media="(max-width: 767px)"
+            />
+        <?php endif ?>
+        <?php if ($img960): ?>
+            <source
+                 <?= $pictureSrcAttr ?>="
+                    <?= $block->escapeUrl($mediaUrl . $img960) ?>
+                    <?php if ($img960x2): ?>
+                        <?= ' 1x, ' . $block->escapeUrl($mediaUrl . $img960x2) . ' 2x' ?>
+                    <?php endif; ?>
+                "
+                media="(max-width: 959px)"
+            />
+        <?php endif ?>
+        <?php if ($img1024): ?>
+            <source
+                 <?= $pictureSrcAttr ?>="
+                    <?= $block->escapeUrl($mediaUrl . $img1024) ?>
+                    <?php if ($img1024x2): ?>
+                        <?= ' 1x, ' . $block->escapeUrl($mediaUrl . $img1024x2) . ' 2x' ?>
+                    <?php endif; ?>
+                "
+                media="(max-width: 1023px)"
+            />
+        <?php endif ?>
+        <?php if ($img1328): ?>
+            <source
+                 <?= $pictureSrcAttr ?>="
+                    <?= $block->escapeUrl($mediaUrl . $img1328) ?>
+                    <?php if ($img1328x2): ?>
+                        <?= ' 1x, ' . $block->escapeUrl($mediaUrl . $img1328x2) . ' 2x' ?>
+                    <?php endif; ?>
+                "
+                media="(max-width: 1327px)"
+            />
+        <?php endif ?>
+        <?php if ($imgFull): ?>
+            <source
+                 <?= $pictureSrcAttr ?>="
+                    <?= $block->escapeUrl($mediaUrl . $imgFull) ?>
+                    <?php if ($imgFullx2): ?>
+                        <?= ' 1x, ' . $block->escapeUrl($mediaUrl . $imgFullx2) . ' 2x' ?>
+                    <?php endif; ?>
+                "
+                media=""
+            />
+        <?php endif ?>
+        <img
+            class="
+                <?= $lazy ? 'lazyload' : '' ?>
+                <?= $block->escapeHtmlAttr($imgClass) ?>
+            "
+            alt="<?= $block->escapeHtmlAttr($pictureAlt) ?>"
+            <?php if ($lazy): ?>
+                data-src="<?= $block->escapeUrl($mediaUrl . $imgDefault) ?>"
+                src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAABCAQAAABN/Pf1AAAAC0lEQVR42mNkwAIAACoAAgu1Hc4AAAAASUVORK5CYII="
+            <?php else: ?>
+                src="<?= $block->escapeUrl($mediaUrl . $imgDefault) ?>"
+            <?php endif ?>
+        />
+    </picture>
+    <?php
+    // styles are rendered only if values for image ratio for mq are provided. Content Type (picture.phtml) id is required
+    ?>
+    <?php if ($pictureAspectRatio && $isAspectratioMq && $pictureId): ?>
+        <style>
+            .picture-<?= $pictureId ?> {
+                padding-bottom: <?= $block->escapeHtml($pictureAspectRatio) . '%'; ?>;
+            }
+            <?php if (!empty($aspectRatioMq['w480']) && !empty($aspectRatioMq['h480'])): ?>
+                @media all and (max-width: 479px) {
+                    .picture-<?= $pictureId ?> {
+                        padding-bottom: <?= $block->escapeHtml(($aspectRatioMq['h480'] / $aspectRatioMq['w480']) * 100) . '%'; ?>;
+                    }
+                }
+            <?php endif; ?>
+            <?php if (!empty($aspectRatioMq['w768']) && !empty($aspectRatioMq['h768'])): ?>
+                @media all and (min-width: 480px) and (max-width: 767px) {
+                    .picture-<?= $pictureId ?> {
+                        padding-bottom: <?= $block->escapeHtml(($aspectRatioMq['h768'] / $aspectRatioMq['w768']) * 100) . '%'; ?>;
+                    }
+                }
+            <?php endif; ?>
+            <?php if (!empty($aspectRatioMq['w1024']) && !empty($aspectRatioMq['h1024'])): ?>
+                @media all and (min-width: 768px) and (max-width: 1023px) {
+                    .picture-<?= $pictureId ?> {
+                        padding-bottom: <?= $block->escapeHtml(($aspectRatioMq['h1024'] / $aspectRatioMq['w1024']) * 100) . '%'; ?>;
+                    }
+                }
+            <?php endif; ?>
+            <?php if (!empty($aspectRatioMq['w1328']) && !empty($aspectRatioMq['h1328'])): ?>
+                @media all and (min-width: 1024px) and (max-width: 1327px) {
+                    .picture-<?= $pictureId ?> {
+                        padding-bottom: <?= $block->escapeHtml(($aspectRatioMq['h1328'] / $aspectRatioMq['w1328']) * 100) . '%'; ?>;
+                    }
+                }
+            <?php endif; ?>
+        </style>
+    <?php endif; ?>
+<?php endif ?>

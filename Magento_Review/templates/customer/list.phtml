@@ -1,0 +1,135 @@
+<?php
+/**
+ * @var \Magento\Review\Block\Customer\ListCustomer $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+/** @var \Magento\Review\Helper\Data $reviewHelper */
+$reviewHelper = $block->getData('reviewHelper');
+?>
+<?php if ($block->getReviews() && count($block->getReviews())): ?>
+    <div class="dashboard-table">
+        <div class="dashboard-table__header">
+            <h3 class="dashboard-table__title">
+                <?= $escaper->escapeHtml(__('Product Reviews')) ?>
+            </h3>
+        </div>
+
+        <div class="dashboard-table__content">
+            <table
+                class="table dashboard-table__table"
+                id="my-reviews-table"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col" class="col date">
+                            <?= $escaper->escapeHtml(__('Created')) ?>
+                        </th>
+
+                        <th scope="col" class="col item">
+                            <?= $escaper->escapeHtml(__('Product Name')) ?>
+                        </th>
+
+                        <th scope="col" class="col summary">
+                            <?= $escaper->escapeHtml(__('Rating')) ?>
+                        </th>
+
+                        <th scope="col" class="col description">
+                            <?= $escaper->escapeHtml(__('Review')) ?>
+                        </th>
+
+                        <th scope="col" class="col actions">
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($block->getReviews() as $_review): ?>
+                        <tr>
+                            <td
+                                data-th="<?= $escaper->escapeHtmlAttr(__('Created')) ?>"
+                                class="col date"
+                            >
+                                <?= $escaper->escapeHtml($block->dateFormat($_review->getReviewCreatedAt())) ?>
+                            </td>
+                            <td
+                                data-th="<?= $escaper->escapeHtmlAttr(__('Product Name')) ?>"
+                                class="col item"
+                            >
+                                <strong class="product-name">
+                                    <a
+                                        href="<?= $escaper->escapeUrl($block->getProductUrl($_review)) ?>"
+                                        class="link"
+                                    >
+                                        <?= $escaper->escapeHtml($_review->getName()) ?>
+                                    </a>
+                                </strong>
+                            </td>
+                            <td
+                                data-th="<?= $escaper->escapeHtmlAttr(__('Rating')) ?>"
+                                class="col summary"
+                            >
+                                <?php if ($_review->getSum()): ?>
+                                    <?php $getPercentRating = ((int) $_review->getSum() / (int) $_review->getCount()) . '%'; ?>
+
+                                    <div class="rating__summary">
+                                        <span
+                                            class="rating__fill"
+                                            style="width:<?= $escaper->escapeHtmlAttr($getPercentRating); ?>;"
+                                        >
+                                            <span>
+                                                <?= $escaper->escapeHtml($getPercentRating); ?>
+                                            </span>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+                            <td
+                                data-th="<?= $escaper->escapeHtmlAttr(__('Review')) ?>"
+                                class="col description"
+                            >
+                                <?= $reviewHelper->getDetailHtml($_review->getDetail()) ?>
+                            </td>
+                            <td
+                                data-th="<?= $escaper->escapeHtmlAttr(__('Actions')) ?>"
+                                class="col actions"
+                            >
+                                <a
+                                    href="<?= $escaper->escapeUrl($block->getReviewUrl($_review)) ?>"
+                                    class="
+                                        link
+                                        dashboard-table__link
+                                        action
+                                        more
+                                    "
+                                >
+                                    <?= $escaper->escapeHtml(__('See Details')) ?>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <?php if ($block->getToolbarHtml()): ?>
+        <?= /* @escapeNotVerified */$block->getToolbarHtml() ?>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="message info empty">
+        <?= $escaper->escapeHtml(__('You have submitted no reviews.')) ?>
+    </div>
+<?php endif; ?>
+
+<div class="actions-group margin-top-sm">
+    <div class="actions-group__handler">
+        <a
+            class="link actions-group__link"
+            href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>"
+        >
+            <?= $escaper->escapeHtml(__('Back')) ?>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<?php if ($block->isProductVisibleInSiteVisibility()): ?>
+    <a
+        class="
+            button
+            button--icon
+            cart-list-item__action
+        "
+        href="<?= $block->escapeUrl($block->getConfigureUrl()); ?>"
+        title="<?= $block->escapeHtmlAttr(__('Edit item parameters')); ?>"
+    >
+        <svg
+            role="presentation"
+            focusable="false"
+            class="
+                icon
+                button__icon
+                cart-list-item__action-icon
+            "
+        >
+            <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#edit')) ?>"></use>
+        </svg>
+   </a>
+<?php endif ?>

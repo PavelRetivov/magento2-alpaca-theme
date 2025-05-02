@@ -1,0 +1,7 @@
+$shipping-methods__label-margin: 0 !default;
+
+.shipping-methods {
+    &__label {
+        margin: $shipping-methods__label-margin;
+    }
+}

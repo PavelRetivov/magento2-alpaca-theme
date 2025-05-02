@@ -1,0 +1,68 @@
+<div
+    class="
+        amcard-field-container
+        -code
+        dashboard-items
+        margin-vc-m
+    "
+>
+    <div
+        class="
+            dashboard-items__title
+            margin-bottom-sm
+        "
+        data-bind="i18n: 'Apply Gift Card Code'"
+    ></div>
+    <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+    <label
+        class="
+            amcard-title
+            label
+            label--hidden
+        "
+        for="gift-code-fake"
+        data-bind="i18n: 'Apply Gift Card Code'"
+    ></label>
+    <div
+        class="
+            amcard-field-block
+            -code
+            input
+            input--inline
+            discount-code__input
+        "
+    >
+        <input
+            type="text"
+            class="
+                amcard-field-block
+                input__field
+            "
+            id="gift-code-fake"
+            data-bind="
+                attr: {
+                    placeholder: $t('Enter gift card code')
+                },
+                value: cardCode
+            "
+        />
+        <button
+            type="button"
+            class="
+                action
+                primary
+                button
+                cart-discount__content-button
+                amgift-card__content-button
+            "
+            data-bind="click: addGiftCode.bind($data, event)"
+        >
+            <span translate="'Add'"></span>
+        </button>
+        <!-- ko foreach: getRegion('after-action-button') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+    </div>
+</div>

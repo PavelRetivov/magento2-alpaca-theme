@@ -1,0 +1,16 @@
+@import 'gift-registry-variables';
+
+.giftregistry {
+    &__item {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    &__image {
+        width: $giftregistry__image-width;
+    }
+
+    &__qty-field {
+        min-width: $giftregistry__qty-field-min-width;
+    }
+}

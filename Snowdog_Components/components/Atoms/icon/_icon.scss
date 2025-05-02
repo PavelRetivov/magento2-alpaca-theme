@@ -1,0 +1,10 @@
+$icon__transition: $transition-base !default;
+
+.icon {
+    display: block;
+    width: $icon-size;
+    height: $icon-size;
+    padding: $icon-padding ;
+    transition: $icon__transition;
+    pointer-events: none;
+}

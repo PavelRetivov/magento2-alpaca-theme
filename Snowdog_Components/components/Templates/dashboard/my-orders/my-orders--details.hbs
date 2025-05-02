@@ -1,0 +1,65 @@
+<div class="page-wrapper">
+    {{ render '@header' }}
+
+    <main
+        id="maincontent"
+        class="
+            dashboard
+            container
+            {{ class }}
+        "
+    >
+        {{ render '@breadcrumbs' breadcrumbs }}
+        <div class="row">
+            <div
+                class="
+                    col-xs-12
+                    col-lg-3
+                    {{ sidebarClass }}
+                "
+            >
+                {{ render '@dashboard-nav' }}
+            </div>
+            <div
+                class="
+                    col-xs-12
+                    col-lg-9
+                    {{ contentClass }}
+                "
+            >
+                {{ render '@heading' heading }}
+
+                <span class="dashboard__status {{ orderStatusClass }}">
+                    {{ orderStatus }}
+                </span>
+
+                <div class="dashboard__order-date {{ orderDateClass }}">
+                    <span>
+                        {{ orderDateTitle }}
+                    </span>
+                    <date>
+                        {{ orderDate }}
+                    </date>
+                </div>
+
+                {{ render '@actions-group' orderActions }}
+
+                {{ render '@dashboard-table' itemsOrdered }}
+
+                {{ render '@dashboard-table' invoice }}
+
+                {{ render '@dashboard-table' orderShipment }}
+
+                {{ render '@heading' orderInfoTitle }}
+
+                <div class="row">
+                    {{ render '@information' orderInfo }}
+                </div>
+
+                {{ render '@actions-group' action }}
+            </div>
+        </div>
+    </main>
+</div>
+
+{{ render '@footer' }}

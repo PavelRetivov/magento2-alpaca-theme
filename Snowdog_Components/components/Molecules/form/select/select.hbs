@@ -1,0 +1,32 @@
+<div class="select {{ class }}" {{{ attributes }}}>
+    <label
+        class="
+            label
+            {{ label.class }}
+        "
+        for="{{ field.id }}"
+        {{{ label.attributes }}}
+    >
+        {{ label.text }}
+    </label>
+    <select
+        id="{{ field.id }}"
+        class="select__field {{ field.class }}"
+        name="{{ field.name }}"
+        {{{ field.attributes }}}
+    >
+        {{#each options}}
+            <option
+                class="{{ class }}"
+                value="{{ value }}"
+                {{{ attributes }}}
+            >
+                {{text}}
+            </option>
+        {{/each}}
+    </select>
+</div>
+
+{{#if script}}
+    <script src="{{ static 'select.js' }}"></script>
+{{/if}}

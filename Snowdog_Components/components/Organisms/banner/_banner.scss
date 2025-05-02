@@ -1,0 +1,239 @@
+@import 'banner-variables';
+
+.banner {
+    position: relative;
+    display: block;
+    width: $banner__width;
+    text-decoration: $banner__text-decoration;
+    @include darken-layout-hover('.ratio-container');
+
+    &:hover,
+    &.focus-visible {
+        text-decoration: $banner__text-decoration;
+
+        .banner__content {
+            &:after {
+                width: $banner__content-after-width-hover;
+            }
+        }
+    }
+
+    &__image {
+        width: $banner__image-width;
+    }
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $banner__content-padding;
+        border-bottom: $banner__content-border;
+        background: $banner__content-background;
+
+        @include mq($screen-m) {
+            padding: $banner__content-padding\@medium;
+        }
+
+        &--category {
+            display: none;
+            padding: $banner__content-padding--category;
+
+            @include mq($screen-m) {
+                padding: $banner__content-padding--category\@medium;
+            }
+
+            @include mq($screen-l) {
+                padding: $banner__content-padding--category\@large;
+            }
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: $banner__content-after-left;
+            bottom: 0;
+            width: 0;
+            min-width: $banner__content-after-min-width;
+            height: $banner__content-after-height;
+            background: $banner__content-after-background;
+            transition: $banner__content-after-transition;
+        }
+    }
+
+    &__text {
+        margin: $banner__text-margin;
+        color: $banner__text-color;
+        font-size: $banner__text-font-size;
+        font-weight: $banner__text-font-weight;
+        text-transform: $banner__text-text-transform;
+
+        @include mq($screen-m) {
+            font-size: $banner__text-font-size\@medium;
+        }
+    }
+
+    &__icon {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: $banner__icon-size;
+        height: $banner__icon-size;
+
+        @include mq($screen-m) {
+            display: flex;
+        }
+    }
+
+    &__image-wrapper {
+        position: relative;
+    }
+
+    &__actions-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: $banner__actions-wrapper-padding;
+
+        @include mq($screen-l) {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+    }
+
+    &--category {
+        position: static;
+
+        .banner__image-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .banner__button {
+            padding: $banner__button-padding--category;
+
+            &:hover {
+                &:before,
+                &:after {
+                    display: none;
+                }
+
+                .banner__button-text {
+                    color: $banner__button-text-color-hover--category;
+                }
+
+                .banner__button-icon {
+                    fill: $banner__button-icon-fill-hover--category;
+                }
+            }
+        }
+
+        .banner__button-text {
+            text-decoration: $banner__button-text-decoration--category;
+        }
+
+        .banner__button-collapse {
+            @include mq($screen-l) {
+                position: $banner__button-collapse-position--category\@large;
+                right: $banner__button-collapse-right--category\@large;
+            }
+        }
+
+        .banner__button-close {
+            &:hover {
+                &:before,
+                &:after {
+                    display: none;
+                }
+            }
+
+            @include mq($screen-l) {
+                justify-content: flex-end;
+            }
+        }
+
+        .banner__wrapper {
+            position: relative;
+        }
+
+        .banner__heading-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .banner__heading {
+            .heading {
+                margin: $banner__heading-margin--category;
+            }
+        }
+    }
+
+    &--category-image {
+        .banner__heading-wrapper {
+            padding: $banner__heading-wrapper-padding--category-image;
+
+            @include mq($screen-m) {
+                position: $banner__heading-wrapper-position--category-image\@medium;
+                bottom: $banner__heading-wrapper-bottom--category-image\@medium;
+                left: $banner__heading-wrapper-left--category-image\@medium;
+                background-color:  $banner__heading-wrapper-background--category-image\@medium;
+                width: $banner__heading-wrapper-width--category-image\@medium;
+                max-width: $banner__heading-wrapper-max-width--category-image\@medium;
+                padding: $banner__heading-wrapper-padding--category-image\@medium;
+            }
+
+            @include mq($screen-l) {
+                bottom: $banner__heading-wrapper-bottom--category-image\@large;
+                left: $banner__heading-wrapper-left--category-image\@large;
+            }
+
+            @include mq($screen-xl) {
+                bottom: $banner__heading-wrapper-bottom--category-image\@xl;
+                left: $banner__heading-wrapper-left--category-image\@xl;
+            }
+        }
+
+        .banner__heading {
+            margin: $banner__heading-margin--category-image;
+
+            @include mq($screen-m) {
+                margin: $banner__heading-margin--category-image\@medium;
+            }
+
+            .heading {
+                // Overwrite WebForms text-center class
+                text-align: left !important;  // sass-lint:disable-line no-important
+            }
+        }
+
+        .banner__actions-wrapper {
+            @include mq($screen-l) {
+                flex-direction: row;
+            }
+        }
+
+        .banner__button {
+            justify-content: flex-start;
+        }
+
+        .banner__button-collapse {
+            @include mq($screen-l) {
+                position: $banner__button-collapse-position--category-image\@large;
+            }
+        }
+
+        .banner__button-text {
+            margin: $banner__button-text-margin--category-image;
+        }
+    }
+
+    &--is-open {
+        .banner__content--category {
+            display: block;
+        }
+
+        .banner__button-collapse {
+            .icon {
+                transform: $banner__button-collapse-transform;
+            }
+        }
+    }
+}

@@ -1,0 +1,112 @@
+<?php /** @var \Magento\Catalog\Block\Product\View\Details $block */ ?>
+<?php if ($detailedInfoGroup = $block->getGroupSortedChildNames('detailed_info', 'getChildHtml')): ?>
+    <!--
+        it's temporary fix to not show tabs container when no tab content available
+        Backend help needed here
+    -->
+    <?php
+        $layout = $block->getLayout();
+        $tabId = 1;
+        $tabContent = [];
+        foreach ($detailedInfoGroup as $item) {
+            if (trim($layout->renderElement($item))) {
+                array_push($tabContent, $item);
+            }
+        }
+    ?>
+    <?php if ($tabContent): ?>
+        <div
+            class="product-view__tabs-sticky-wrap"
+            data-aos="fade-down"
+            data-aos-anchor="#tab-title-<?= /* @noEscape */ $tabId; ?>"
+            data-aos-anchor-placement="bottom-top"
+        >
+            <div class="product-view__tabs-sticky">
+                <?php foreach ($detailedInfoGroup as $name):?>
+                    <?php
+                    if (!trim($layout->renderElement($name))) {
+                        continue;
+                    }
+                    $alias = $layout->getElementAlias($name);
+                    $label = $block->getChildData($alias, 'title');
+                    $class = $block->getChildData($alias, 'class');
+                    ?>
+                    <a
+                        href="#tab-title-<?= /* @noEscape */ $tabId ?>"
+                        data-tab="tab-<?= /* @noEscape */ $tabId; ?>"
+                        class="
+                            tab__title
+                            <?= /* @noEscape */ ($tabId == 1) ? 'tab__title--active' : ''; ?>
+                            tab__title--sticky
+                            <?= /* @noEscape */ ($class) ? 'tab__title--' . $class : ''; ?>
+                        "
+                    >
+                        <?= /* @noEscape */ $label ?>
+                    </a>
+                    <?php $tabId++; ?>
+                <?php endforeach; ?>
+                <?php $tabId = 1; ?>
+            </div>
+        </div>
+
+        <div
+            id="product-tabs"
+            class="tab product-view__tab"
+            role="tablist"
+            data-mage-init='{ "tab" : {} }'
+        >
+            <?php foreach ($detailedInfoGroup as $name):?>
+                <?php
+                    $html = $layout->renderElement($name);
+                    if (!trim($html)) {
+                        continue;
+                    }
+                    $alias = $layout->getElementAlias($name);
+                    $label = $block->getChildData($alias, 'title');
+                    $class = $block->getChildData($alias, 'class');
+                ?>
+
+                <button
+                    id="tab-title-<?= /* @noEscape */ $tabId; ?>"
+                    class="
+                        tab__title
+                        <?= /* @noEscape */ ($tabId == 1) ? 'tab__title--active' : ''; ?>
+                        <?= /* @noEscape */ ($class) ? 'tab__title--' . $class : ''; ?>
+                    "
+                    data-tab="tab-<?= /* @noEscape */ $tabId; ?>"
+                    aria-controls="tab-<?=  /* @noEscape */$tabId; ?>"
+                    data-testid="product-tab__title"
+                    aria-selected="<?= /* @noEscape */ ($tabId == 1) ? 'true' : 'false'; ?>"
+                    aria-expanded="<?= /* @noEscape */ ($tabId == 1) ? 'true' : 'false'; ?>"
+                    role="tab"
+                >
+                    <?=  /* @noEscape */ $label; ?>
+
+                    <svg
+                        class="icon tab__icon"
+                        role="presentation"
+                        focusable="false"
+                    >
+                        <use href="<?= $block->escapeUrl($block->getViewFileUrl('images/icons-sprite.svg#angle-down')); ?>"></use>
+                    </svg>
+                </button>
+
+                <div
+                    id="tab-<?= /* @noEscape */ $tabId; ?>"
+                    class="
+                        tab__content
+                        <?= /* @noEscape */ ($tabId == 1) ? 'tab__content--active' : ''; ?>
+                        <?= /* @noEscape */ ($class) ? 'tab__content--' . $class : ''; ?>
+                    "
+                    data-content="tab-<?= /* @noEscape */ $tabId; ?>"
+                    aria-labelledby="tab-title-<?= /* @noEscape */ $tabId; ?>"
+                    aria-hidden="<?= /* @noEscape */ ($tabId == 1) ? 'false' : 'true'; ?>"
+                    role="tabpanel"
+                >
+                    <?= /* @noEscape */ $html; ?>
+                </div>
+                <?php $tabId++; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

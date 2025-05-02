@@ -1,0 +1,336 @@
+@import "slider-variables";
+
+.slider {
+    display: block;
+    position: relative;
+    width: $slider__width;
+    height: auto;
+    min-height: $slider__min-height;
+    margin: $slider__margin;
+
+    &__heading {
+        display: flex;
+        justify-content: $slider__heading-justify-content;
+        align-items: center;
+        min-height: $slider__heading-min-height;
+        margin: $slider__heading-margin;
+    }
+
+    &--loading {
+        .slider__navigation,
+        .slider__dots {
+            display: none;
+        }
+    }
+
+    &--products,
+    &--brands {
+        .slider__slides {
+            display: flex;
+
+            &.slick-initialized {
+                display: block;
+            }
+        }
+
+        .slider__item {
+            flex-grow: 1;
+            flex-basis: 0;
+        }
+    }
+
+    &--products {
+        .slider__heading {
+            margin: $slider__heading-margin--products;
+        }
+
+        .slider__item {
+            padding: $slider__item-padding--products;
+
+            &:nth-child(n + 2) {
+                display: flex;
+            }
+
+            &:nth-child(n + #{$slider__hidden-item-number--products}) {
+                display: none;
+
+                @include mq($screen-m) {
+                    display: flex;
+                }
+            }
+
+            &:nth-child(n + #{$slider__hidden-item-number\@medium--products}) {
+                @include mq($screen-m) {
+                    display: none;
+                }
+
+                @include mq($screen-l) {
+                    display: flex;
+                }
+            }
+
+            &:nth-child(n + #{$slider__hidden-item-number\@large--products}) {
+                @include mq($screen-l) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &--brands {
+        .slider__container {
+            width: $slider__handler-max-width--brands;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+
+            @include mq($screen-m) {
+                width: $slider__handler-max-width\@medium--brands;
+            }
+
+            @include mq($screen-l) {
+                width: $slider__handler-max-width\@large--brands;
+            }
+
+            @include mq($max-content-width) {
+                width: $slider__handler-max-width\@max-width--brands;
+            }
+
+            &:before,
+            &:after {
+                display: block;
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 100%;
+                z-index: $z-index-low;
+
+                @include mq($slider__navigation-display-breakpoint) {
+                    display: none;
+                }
+            }
+
+            &:before {
+                background: $slider__container-before-bg;
+                right: 100%;
+            }
+
+            &:after {
+                background: $slider__container-after-bg;
+                left: 100%;
+            }
+        }
+
+        .slider__handler {
+            overflow: hidden;
+
+            @include mq($slider__navigation-display-breakpoint) {
+                overflow: visible;
+            }
+        }
+
+        .slick-list {
+            overflow: visible;
+
+            @include mq($slider__navigation-display-breakpoint) {
+                overflow: hidden;
+            }
+        }
+
+        .slider__slides {
+            justify-content: center;
+        }
+
+        .slider__item {
+            max-width: $slider__item-width--brands;
+            &:nth-child(n + 2) {
+                display: block;
+
+                .slick-initialized & {
+                    display: flex;
+                }
+            }
+
+            @include mq($screen-m) {
+                max-width: $slider__item-width\@medium--brands;
+            }
+
+            @include mq($screen-l) {
+                max-width: $slider__item-width\@large--brands;
+            }
+
+            @include mq($max-content-width) {
+                max-width: $slider__item-width\@max-width--brands;
+            }
+        }
+    }
+
+    &--nested {
+        .slider__slides {
+            display: block;
+        }
+    }
+
+    &--full-width {
+        width: calc(100vw - #{$spacer} / 2);
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+
+    &--catalog-events {
+        max-width: $slider__max-width--catalog-events;
+        margin: $slider__margin--catalog-events;
+    }
+
+    &__handler {
+        position: relative;
+    }
+
+    &__slides {
+        height: auto;
+
+        .slick-list {
+            min-height: $slider__nav-button-size;
+        }
+    }
+
+    &__item {
+        height: auto;
+        display: flex;
+
+        &:nth-child(n + 2) {
+            display: none;
+
+            .slick-initialized & {
+                display: flex;
+            }
+        }
+    }
+
+    &__navigation {
+        display: $slider__navigation-display;
+        position: absolute;
+        width: $slider__navigation-width;
+        top: $slider__navigation-top;
+        margin-top: -$slider__nav-button-size / 2;
+        padding: 0;
+        z-index: $z-index-low;
+
+        @include mq($slider__navigation-display-breakpoint) {
+            display: block;
+
+            @include isIE() {
+                top: $slider__navigation-IE-width;
+            }
+        }
+    }
+
+    &__nav-button {
+        width: $slider__nav-button-size;
+        height: $slider__nav-button-size;
+        min-width: $slider__nav-button-size;
+        border-radius: $slider__nav-button-border-radius;
+        padding: 0;
+        position: absolute;
+    }
+
+    &__nav-icon {
+        width: $slider__nav-icon-size;
+        height: $slider__nav-icon-size;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -$slider__nav-icon-size / 2;
+        margin-left: -$slider__nav-icon-size / 2;
+        transition: $transition-base;
+    }
+
+    &__prev {
+        left: $slider__prev-left;
+
+        &:before {
+            transform-origin: 100% 0;
+        }
+    }
+
+    &__next {
+        left: auto;
+        right: $slider__next-right;
+    }
+
+    &__dots {
+        display: block;
+        position: relative;
+        list-style: none;
+        margin: $slider__dots-margin;
+        padding: $slider__dots-padding;
+        text-align: center;
+        width: 100%;
+        left: 0;
+        bottom: $slider__dots-bottom;
+
+        li {
+            display: inline-block;
+            position: relative;
+            margin: 0;
+            padding: 0;
+
+            &.slick-active {
+                &:before {
+                    display: block;
+                    position: absolute;
+                    z-index: 1;
+                    content: '';
+                    width: $slider__dot-size;
+                    height: $slider__dot-size;
+                    padding: 0;
+                    background: $slider__dot-background-color--active;
+                    border-radius: 50%;
+                    top: 50%;
+                    margin-top: -($slider__dot-size / 2);
+                }
+            }
+
+            &:only-child {
+                display: none;
+            }
+        }
+
+        button {
+            display: block;
+            position: relative;
+            width: $slider__dot-size;
+            height: $slider__dot-size;
+            padding: 0;
+            background-color: $slider__dot-background-color;
+            border: 0;
+            border-radius: 50%;
+            text-indent: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            margin: $slider__dots-margin;
+        }
+    }
+
+    &__link {
+        align-items: center;
+        font-size: $slider__link-font-size;
+        font-weight: $slider__link-font-weight;
+        min-height: $slider__link-min-height;
+        text-align: $slider__link-text-align;
+
+        &--button,
+        &--button-secondary {
+            @extend .button;
+        }
+    }
+
+    &__after {
+        padding: $slider__after-padding;
+        text-align: $slider__after-text-align;
+    }
+}

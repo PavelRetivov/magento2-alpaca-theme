@@ -1,0 +1,48 @@
+<div class="page-wrapper">
+    {{ render '@header--checkout' }}
+
+    <main
+        class="container"
+        id="maincontent"
+    >
+        <div class="row success-page">
+            <div class="col-xs-12 center-xs">
+                <h1 class="heading heading--page">
+                    Thank you for your purchase!
+                </h1>
+
+                <div class="success-page__order-confirmation">
+                    <p>Your order # is: <strong>000000002</strong>.</p>
+                    <p>We'll email you an order confirmation with details and tracking info.</p>
+
+                    <a
+                        href="#"
+                        class="button link--button"
+                    >
+                        Continue Shopping
+                    </a>
+                </div>
+
+                <!-- Knockout component - registration -->
+                <div class="success-page__registration">
+                    <div>
+                        <p>You can track your order status by creating an account.</p>
+                        <p><span>Email Address</span>: <span>john@doe.com</span></p>
+                        <a
+                            class="
+                                action
+                                primary
+                                link--button
+                            "
+                            href="#"
+                        >
+                            <span>Create an Account</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{{ render '@footer--checkout' }}
